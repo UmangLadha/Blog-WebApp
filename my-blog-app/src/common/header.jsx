@@ -6,7 +6,7 @@ const Header = () => {
     <>
       <div className="px-14 p-7 rounded-b-2xl items-center shadow-xl">
         <div className="flex justify-between items-center">
-          <Link to="/">Blog App</Link>
+          <Link to="/">The Digital Diaries</Link>
           <div className="flex justify-evenly items-center gap-4">
             <NavLink
               to="/my-blogs"

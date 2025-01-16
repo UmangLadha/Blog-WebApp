@@ -5,16 +5,26 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { RouteNotFound } from "./common/routeNotFound";
-import { Header } from "./component/header";
+// import { Header } from "./common/header";
+import { MyBlog } from "./component/myblogs/myBlogs";
+import { WriteBlogs } from "./component/writeblogs/writeBlogs";
+import { MyProfile } from "./component/profile/myProfile";
+import { LoginPage } from "./component/login-page/loginPage";
+import { SignUpPage } from "./component/signup-page/signup";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-	<Header/>
+      {/* <Header /> */}
       <Routes>
-        <Route path="/" element={<App />}/>
-		<Route path="*" element={<RouteNotFound/>} />
+        <Route path="/" element={<App />} />
+        <Route path="my-blogs" element={<MyBlog />} />
+        <Route path="write" element={<WriteBlogs />} />
+        <Route path="profile" element={<MyProfile />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="*" element={<RouteNotFound />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
