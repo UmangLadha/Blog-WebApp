@@ -32,7 +32,7 @@ const Dashboard = () => {
             <div className="flex flex-col gap-4 items-start w-3/4">
               <div className="flex flex-col items-start">
 				<h1 className="text-2xl font-semibold">{blogData.title}</h1>
-                <small className=" leading-6">{blogData.writerName}</small>
+                <small className=" leading-6">Writer: {blogData.writerName}</small>
 			  </div>
               <p className=" line-clamp-2">{blogData.highlightText}</p>
               <div className="flex items-center gap-2">

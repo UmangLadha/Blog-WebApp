@@ -21,15 +21,16 @@ const LoginPage = () => {
 
 	const handleLogin = (e)=>{
 		e.preventDefault();
-		const userCred = JSON.parse(localStorage.getItem('userData'));
-		if(userCred.username === inputValue.username && userCred.confirmPassword === inputValue.password){
-			console.log("login Successfully")
+		const userCred = JSON.parse(localStorage.getItem(inputValue.username));
+		if(userCred && userCred.username === inputValue.username && userCred.password === inputValue.password){
+			console.log("login Successfully");
+			localStorage.setItem('token', '1230');
 			navigate("/");
 		}
 		else{
 			alert("username or password incorrect!");
 		}
-	}
+	};
 
   return (
     <div className="flex h-screen items-center justify-center text-center w-full">
