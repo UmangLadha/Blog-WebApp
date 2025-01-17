@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate} from "react-router";
 
 const LoginPage = () => {
 	const [inputValue, setInputValue] = useState({
@@ -8,18 +8,27 @@ const LoginPage = () => {
 	});
 	const [errorMsg, setErrorMsg] = useState('');
 
-	const handleBlur = useCallback((e)=>{
+	const navigate = useNavigate();
+
+	const handleBlur = (e)=>{
 		e.preventDefault();
 		if (!inputValue.username || !inputValue.password) {
 			setErrorMsg('Username or Password fields cannot be blank!');
 		  } else {
 			setErrorMsg('');
 		  }
-	},[inputValue]);
+	};
 
-	const handleSubmit = (e)=>{
+	const handleLogin = (e)=>{
 		e.preventDefault();
-		console.log('form submitted');
+		const userCred = JSON.parse(localStorage.getItem('userData'));
+		if(userCred.username === inputValue.username && userCred.confirmPassword === inputValue.password){
+			console.log("login Successfully")
+			navigate("/");
+		}
+		else{
+			alert("username or password incorrect!");
+		}
 	}
 
   return (
@@ -28,7 +37,7 @@ const LoginPage = () => {
         <h1 className="text-xl font-bold pb-6 pt-3">LOGIN</h1>
         <form
           className="flex flex-col justify-between mx-auto items-start w-3/5"	
-		  onSubmit={handleSubmit}
+		  onSubmit={handleLogin}
         >
 			{errorMsg && <p className="text-red-600">{errorMsg}</p>}
 

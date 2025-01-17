@@ -1,11 +1,11 @@
 import { Dashboard } from './component/dashboard/dashboard';
-import { Header } from './common/header';
+// import { Header } from './common/header';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-		<Header />
+		{/* <Header /> */}
 	  <Dashboard />
     </div>
   );
