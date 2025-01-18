@@ -3,19 +3,28 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { BiComment } from "react-icons/bi";
 import { Blogs } from "./blog.Data";
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement, liked, disLiked } from "../../features/counter/counterSlice";
+
 
 const Dashboard = () => {
-  const [liked, setLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(10);
+	const dispatch = useDispatch();
+	const likesCount = useSelector(state => state.counter.value);
+	const likes = useSelector(state => state.counter.like);
 
-  const handleDislike = () => {
-    setLiked(false);
-    setLikesCount(likesCount- 1);
+//   const [liked, setLiked] = useState(false);
+//   const [likesCount, setLikesCount] = useState(10); 
+
+  const handleDislike = (e) => {
+    // setLiked(false);
+	dispatch(disLiked());
+    dispatch(decrement());
   };
 
-  const handleLike = () => {
-    setLiked(true);
-    setLikesCount(likesCount + 1);
+  const handleLike = (e) => {
+    // setLiked(true);
+	dispatch(liked());
+    dispatch(increment());
   };
 
   return (
@@ -36,7 +45,7 @@ const Dashboard = () => {
 			  </div>
               <p className=" line-clamp-2">{blogData.highlightText}</p>
               <div className="flex items-center gap-2">
-                {liked ? (
+                {likes ? (
                   <FaHeart className="text-xl" onClick={handleDislike} />
                 ) : (
                   <FaRegHeart className="text-xl" onClick={handleLike} />

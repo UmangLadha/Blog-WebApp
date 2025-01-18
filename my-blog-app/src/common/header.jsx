@@ -1,30 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Link } from "react-router";
-import { IoPersonCircleSharp } from "react-icons/io5";
+import { logout } from "../features/auth/authSlice";
+
+// import { IoPersonCircleSharp } from "react-icons/io5";
 
 const Header = () => {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
-
-  useEffect(() => {
-	const authStatus = ()=>{
-	const logInToken = localStorage.getItem("token");
-    setUserLoggedIn(logInToken !== null);
-};
-
-authStatus();
-window.addEventListener('storage', authStatus);
-const interval = setInterval(authStatus, 1000);
-return () => {
-  window.removeEventListener('storage', authStatus);
-  clearInterval(interval);
-};
-}, []);
+  const dispatch = useDispatch();	
+  const isLoggedIn = useSelector((state)=> state.auth.isLoggedIn);
 
   const handleLogout=(e)=>{
 	e.preventDefault();
-	localStorage.removeItem('token');
-	localStorage.removeItem('userData');
-	setUserLoggedIn(false);
+	dispatch(logout());
   }
 
   return (
@@ -55,7 +42,7 @@ return () => {
             >
               Write
             </NavLink>
-            {userLoggedIn ? (
+            {isLoggedIn ? (
               <>
                 <NavLink to="/profile">
                   {/* <IoPersonCircleSharp className="text-5xl" /> */}
