@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Link } from "react-router";
 import { logout } from "../features/auth/authSlice";
+import { BsPencilSquare } from "react-icons/bs";
 
 // import { IoPersonCircleSharp } from "react-icons/io5";
 
@@ -36,11 +37,11 @@ const Header = () => {
               to="/write"
               className={({ isActive }) =>
                 isActive
-                  ? "text-white font-semibold bg-black rounded-lg py-2 px-4 "
-                  : "text-black"
+                  ? "text-white font-semibold bg-black rounded-lg py-2 px-4 flex items-center gap-2 "
+                  : "text-black, flex items-center gap-2"
               }
             >
-              Write
+              <BsPencilSquare />Write
             </NavLink>
             {isLoggedIn ? (
               <>

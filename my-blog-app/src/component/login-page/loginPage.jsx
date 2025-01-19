@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { login } from "../../features/auth/authSlice";
 
@@ -30,14 +30,6 @@ const LoginPage = () => {
       userCred.username === inputValue.username &&
       userCred.password === inputValue.password
     ) {
-      //   const userData = {
-      //     user: {
-      //       fullname: userCred.fullname,
-      //       username: userCred.username,
-      //       email: userCred.email,
-      //     },
-      //     token: "admin123",
-      //   };
       dispatch(login({ token: "loggedIn123", userData: inputValue }));
       navigate("/");
     } else {

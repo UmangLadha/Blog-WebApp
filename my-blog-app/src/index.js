@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { RouteNotFound } from "./common/routeNotFound";
 import { Header } from "./common/header";
 import { MyBlog } from "./component/myblogs/myBlogs";
-import { WriteBlogs } from "./component/writeblogs/writeBlogs";
+import { NewBlogs } from "./component/writeblogs/newBlogs";
 import { MyProfile } from "./component/profile/myProfile";
 import { LoginPage } from "./component/login-page/loginPage";
 import { SignUpPage } from "./component/signup-page/signupPage";
@@ -23,7 +23,7 @@ root.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="my-blogs" element={<MyBlog />} />
-          <Route path="write" element={<WriteBlogs />} />
+          <Route path="write" element={<NewBlogs />} />
           <Route path="profile" element={<MyProfile />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />

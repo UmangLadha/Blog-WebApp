@@ -1,7 +1,8 @@
 export const Blogs = [
   {
+	id:"1",
     link: "//",
-    img: "/public/PatrikaGate.jpeg",
+    img: "/public/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
     highlightText:
@@ -11,8 +12,9 @@ export const Blogs = [
     commentCount: "4",
   },
   {
+	id:"2",
     link: "//",
-    img: "/public/PatrikaGate.jpeg",
+    img: "/public/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
     highlightText:
@@ -22,8 +24,9 @@ export const Blogs = [
     commentCount: "4",
   },
   {
+	id:"3",
     link: "//",
-    img: "/public/PatrikaGate.jpeg",
+    img: "/public/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
     highlightText:
@@ -33,8 +36,9 @@ export const Blogs = [
     commentCount: "4",
   },
   {
+	id:"4",
     link: "//",
-    img: "/public/PatrikaGate.jpeg",
+    img: "/public/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
     highlightText:
