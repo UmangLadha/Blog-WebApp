@@ -1,11 +1,11 @@
 export const Blogs = [
   {
 	id:"1",
-    link: "//",
-    img: "/public/images/PatrikaGate.jpeg",
+    link: "/blog:id",
+    img: "/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
-    highlightText:
+    subtitle:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     blogContent: "",
     likesCount: "20",
@@ -13,11 +13,11 @@ export const Blogs = [
   },
   {
 	id:"2",
-    link: "//",
-    img: "/public/images/PatrikaGate.jpeg",
+    link: "/blog:id",
+    img: "/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
-    highlightText:
+    subtitle:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     blogContent: "",
     likesCount: "20",
@@ -25,11 +25,11 @@ export const Blogs = [
   },
   {
 	id:"3",
-    link: "//",
-    img: "/public/images/PatrikaGate.jpeg",
+    link: "/blog:id",
+    img: "/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
-    highlightText:
+    subtitle:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     blogContent: "",
     likesCount: "20",
@@ -37,11 +37,11 @@ export const Blogs = [
   },
   {
 	id:"4",
-    link: "//",
-    img: "/public/images/PatrikaGate.jpeg",
+    link: "/blog:id",
+    img: "/images/PatrikaGate.jpeg",
     title: "Write here your Blog title",
     writerName: "Writers name",
-    highlightText:
+    subtitle:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     blogContent: "",
     likesCount: "20",

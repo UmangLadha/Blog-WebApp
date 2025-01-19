@@ -13,6 +13,8 @@ import { LoginPage } from "./component/login-page/loginPage";
 import { SignUpPage } from "./component/signup-page/signupPage";
 import store from "./app/store";
 import { Provider } from "react-redux";
+import CompleteBlogViewPage from "./component/dashboard/elements/completeBlogViewPage";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,11 +24,12 @@ root.render(
         <Header />
         <Routes>
           <Route path="/" element={<App />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+		  <Route path="/blog:id" element={<CompleteBlogViewPage />} />
           <Route path="my-blogs" element={<MyBlog />} />
           <Route path="write" element={<NewBlogs />} />
           <Route path="profile" element={<MyProfile />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
           <Route path="*" element={<RouteNotFound />} />
         </Routes>
       </BrowserRouter>
