@@ -42,6 +42,7 @@ const SignUpPage = () => {
       password: "",
       confirmPassword: "",
     });
+	// e.target.reset();
     alert("You are successfully register!");
     navigate("/");
   };

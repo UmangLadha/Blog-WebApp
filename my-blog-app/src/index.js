@@ -3,37 +3,13 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route, Routes } from "react-router";
-import { RouteNotFound } from "./common/routeNotFound";
-import { Header } from "./common/header";
-import { MyBlog } from "./component/myblogs/myBlogs";
-import { NewBlogs } from "./component/writeblogs/newBlogs";
-import { MyProfile } from "./component/profile/myProfile";
-import { LoginPage } from "./component/login-page/loginPage";
-import { SignUpPage } from "./component/signup-page/signupPage";
-import store from "./app/store";
-import { Provider } from "react-redux";
-import CompleteBlogViewPage from "./component/dashboard/elements/completeBlogViewPage";
+
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-		  <Route path="/blog:id" element={<CompleteBlogViewPage />} />
-          <Route path="my-blogs" element={<MyBlog />} />
-          <Route path="write" element={<NewBlogs />} />
-          <Route path="profile" element={<MyProfile />} />
-          <Route path="*" element={<RouteNotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <App />
   </React.StrictMode>
 );
 

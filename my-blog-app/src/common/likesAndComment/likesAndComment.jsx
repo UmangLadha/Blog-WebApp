@@ -3,12 +3,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { BiComment } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  increment,
-  disLiked,
-  decrement,
-  liked,
-} from "../../../features/counter/counterSlice";
+import { increment, decrement, liked, disLiked } from "../../redux/features/counter/counterSlice";
 import { useNavigate } from "react-router";
 
 const LikesAndComment = (props) => {

@@ -1,6 +1,8 @@
 import React from "react";
-import LikesAndComment from "./likesAndComment";
-import CommentComponent from "./commentComponent";
+import LikesAndComment from "../likesAndComment/likesAndComment";
+import CommentComponent from "../commentComponent/commentComponent";
+
+
 // import { Blogs } from '../blog.Data';
 
 const CompleteBlogViewPage = () => {
@@ -17,7 +19,7 @@ const CompleteBlogViewPage = () => {
         <div className="my-7">
           <hr />
           <div className="py-4 px-8">
-            <LikesAndComment	 />
+            <LikesAndComment />
           </div>
           <hr />
         </div>
