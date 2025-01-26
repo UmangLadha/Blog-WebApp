@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { login } from "../../redux/features/auth/authSlice"
+import axios from "axios";
 
 const LoginPage = () => {
   const [inputValue, setInputValue] = useState({
@@ -31,6 +32,10 @@ const LoginPage = () => {
       userCred.password === inputValue.password
     ) {
       dispatch(login({ token: "loggedIn123", userData: inputValue }));
+
+	//   axios.get("http:://localhost/5000/users").then((data)=>{
+	// 	console.log("hello backend",data);
+	//   })
       navigate("/");
     } else {
       alert("username or password incorrect! Please try again.");

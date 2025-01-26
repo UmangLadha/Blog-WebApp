@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import  DefaultProfile from "../../images/defaultProfile.png";
 
 
-const CommentComponent = () => {
-  const [comment, setComment] = useState("");
+const CommentComponent = (props) => {
+	const {comments, setComments} = props;
+  const [commentValue, setCommentValue] = useState("");
   const [cmtBtn, setCmtBtn] = useState(true);
-  const [showComment, setShowComment] = useState([]);
+  
 
   useEffect(() => {
-    if (comment.trim() !== "") {
+    if (commentValue.trim() !== "") {
       setCmtBtn(false);
     } else {
       setCmtBtn(true);
     }
-  }, [comment]);
+  }, [commentValue]);
 
   const handleComment = (e) => {
     e.preventDefault();
@@ -21,26 +22,26 @@ const CommentComponent = () => {
     const newComment = {
       username: "Umang123",
       profile: "/",
-      commentValue: comment,
+      commentValue: commentValue,
     };
 
-    setShowComment((prevComments) => [...prevComments, newComment]);
-    setComment("");
-    console.log(showComment);
+    setComments((prevComments) => [...prevComments, newComment]);
+    setCommentValue("");
+    console.log(comments);
   };
 
   return (
     <div id="comments" className="my-6 px-4">
       <h2 className="text-2xl font-semibold pb-7">
-        Comments({showComment.length})
+        Comments({comments.length})
       </h2>
       <div className="flex items-start justify-start gap-4 px-2">
         <input
           type="text"
           name="comments"
-          id="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          id="commentValue"
+          value={commentValue}
+          onChange={(e) => setCommentValue(e.target.value)}
           placeholder="What are your thoughts?"
           className="py-2 rounded-lg mx-auto w-full border px-4 outline-none shadow-md"
           required
@@ -55,8 +56,8 @@ const CommentComponent = () => {
         </button>
       </div>
       <div className="w-full flex flex-col gap-6 my-8 p-4">
-        {showComment.length > 0 ? (
-          showComment.map((commentData, id) => (
+        {comments.length > 0 ? (
+          comments.map((commentData, id) => (
             <div key={id} className="flex w-full items-start gap-2">
               <img
                 className="border rounded-full size-11"

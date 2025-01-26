@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router";
 
@@ -34,16 +35,30 @@ const SignUpPage = () => {
       }
   }
 
+  const sendDataToServer = async()=>{
+	const userData = {
+		fullname:inputValue.fullname,
+		username:inputValue.username,
+		email:inputValue.email,
+		password:inputValue.password,
+	};
+	try {
+		const response = await axios.post("http://localhost:5000/users", userData);
+		console.log(response);
+	} catch (error) {
+		console.log("error in sending userdata: ",error);
+	}
+  }
+
   const handleSignup = (e) => {
     e.preventDefault();
 	let isFormValid = checkFormValidation();
 	if (!isFormValid) return
-	// const prevUserData = localStorage.setItem('userData', JSON.stringify(inputValue)) || {};
-	// const currentUserData = {
-	// 	...prevUserData,
-	// 	...inputValue
-	// };
-    localStorage.setItem(inputValue.username,JSON.stringify(inputValue));
+
+	//sending data to server
+	 sendDataToServer();
+
+    // localStorage.setItem(inputValue.username,JSON.stringify(inputValue));
     setInputValue({
       fullname: "",
       username: "",
@@ -51,9 +66,8 @@ const SignUpPage = () => {
       password: "",
       confirmPassword: "",
     });
-	// e.target.reset();
     alert("You are successfully register!");
-    navigate("/");
+    navigate("/login");
   };
 
   return (

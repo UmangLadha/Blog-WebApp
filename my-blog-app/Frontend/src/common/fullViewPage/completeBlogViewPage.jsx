@@ -1,10 +1,12 @@
-import React from "react";
+import React,{useState} from "react";
 import LikesAndComment from "../likesAndComment/likesAndComment";
 import CommentComponent from "../commentComponent/commentComponent";
 
 // import { Blogs } from '../blog.Data';
 
 const CompleteBlogViewPage = () => {
+	const [showComment, setShowComment] = useState([]);
+
   return (
     <div className="w-11/12 md:w-3/6 mx-auto pt-6 font-serif">
       <div className="mx-auto">
@@ -13,12 +15,13 @@ const CompleteBlogViewPage = () => {
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Perferendis, quis?
           </h1>
-          <span className="font-light text-lg">Written by : <span className="text-purple-500">Umang Ladha</span></span>
+          <span className="font-light text-lg">Written by : Umang Ladha</span>
         </div>
         <div className="my-7">
           <hr />
           <div className="py-4 px-8">
-            <LikesAndComment />
+            <LikesAndComment
+			blogCommentCount = {showComment.lenght} />
           </div>
           <hr />
         </div>
@@ -55,7 +58,7 @@ const CompleteBlogViewPage = () => {
         </div>
 
         <hr />
-        <CommentComponent/>
+        <CommentComponent comments={showComment} setComments={setShowComment}/>
       </div>
     </div>
   );

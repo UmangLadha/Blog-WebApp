@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 
 const LikesAndComment = (props) => {
   const { blogDataId, blogCommentCount, navigateTo } = props;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -36,7 +37,7 @@ const LikesAndComment = (props) => {
     <div className="flex items-center gap-2">
       {likes ? (
         <FaHeart
-          className="text-xl"
+          className="text-xl text-red-500"
           onClick={(prevLike) => handleDislike(prevLike, blogDataId)}
         />
       ) : (

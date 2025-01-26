@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import CompleteBlogViewPage from "./common/fullViewPage/completeBlogViewPage";
 import "./App.css";
 import store from "./redux/app/store";
+import ProtectedRoutes from "./utils/protectedRoutes";
 
 function App() {
   return (
@@ -18,17 +19,19 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Header />
-		  <div className="w-full h-[calc(100vh-12vh)] mt-[12vh] overflow-auto">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="write" element={<NewBlogs />} />
-            <Route path="profile" element={<MyProfile />} />
-            <Route path="/blog:id" element={<CompleteBlogViewPage />} />
-            <Route path="*" element={<RouteNotFound />} />
-          </Routes>
-		  </div>
+          <div className="w-full h-[calc(100vh-12vh)] mt-[12vh] overflow-auto">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="write" element={<NewBlogs />} />
+                <Route path="profile" element={<MyProfile />} />
+              </Route>
+              <Route path="/blog:id" element={<CompleteBlogViewPage />} />
+              <Route path="*" element={<RouteNotFound />} />
+            </Routes>
+          </div>
         </BrowserRouter>
       </Provider>
     </div>

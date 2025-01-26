@@ -1,16 +1,35 @@
-import express from 'express';
-import bodyParser from 'body-parser'
+const express = require("express");
+const cors = require("cors");
+const userRouter = require("./routes/users");
+const blogRouter = require("./routes/blogs");
+const { sequelize } = require("./config/database");
+
 const app = express();
-import userRoutes from './routes/users.js'
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Connect to database and create table function 
+const connectAndCreate = async()=>{
+	try {
+		await sequelize.authenticate();
+		console.log("Connected to database");
+		await sequelize.sync();
+		console.log("Database & tables synchronized successfully!");
+	} catch (error) {
+		console.error("Database connection failed:", error);
+	}
+}
+
+connectAndCreate();
+
+// Mount routes
+app.use("/users", userRouter);
+app.use("/blogs", blogRouter);
 
 const PORT = 5000;
 
-app.use(bodyParser.json());
-
-app.use('/users', userRoutes);
-
-app.get('/', (res) => res.send('HELLO FROM HOMEPAGE'))
-
-//  
-
-app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
