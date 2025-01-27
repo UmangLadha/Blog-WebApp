@@ -7,18 +7,13 @@ export const counterSlice = createSlice({
 	like: false,
   },
   reducers: {
-    increment: (state, action) => {
-		
-      state.value++
-    },
-    decrement: (state,action) => {
-      state.value--
-    },
     liked: (state) => {
-			state.like = true
+		state.like = true
+		state.value++
     },
     disLiked: state => {
 		state.like = false
+		state.value--
     }
     
   }

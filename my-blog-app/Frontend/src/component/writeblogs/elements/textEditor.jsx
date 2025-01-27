@@ -10,8 +10,6 @@ const TextEditor = (props) => {
     setContent(newEditorState);
   };
 
-  console.log(content)
-
   return (
     <>
       <Editor

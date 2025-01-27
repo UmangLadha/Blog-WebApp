@@ -2,21 +2,6 @@ const express = require("express");
 const userRouter = express.Router();
 const Users = require("../models/users");
 
-// middleware
-// const checkIDExist = async (req, res, next) => {
-//   //console.log('Check ID exist');
-//   try {
-//     const { id } = req.body;
-//     const count = await Users.count({ where: { id: id } });
-//     if (count != 0) {
-//       next();
-//     }
-//   } catch (error) {
-// 	console.log(error);
-//     res.status(400).json("User not found");
-//   }
-// };
-
 // accessing the user data
 userRouter.get("/", async (req, res) => {
   try {
@@ -49,7 +34,7 @@ userRouter.post("/", async (req, res) => {
 // accessing the spcific user data
 userRouter.get("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body;
 	if (!id) {
 		res.status(400).json(`${id} not found or may be it doesnt exits`);
 	  }

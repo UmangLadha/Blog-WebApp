@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const userRouter = require("./routes/users");
 const blogRouter = require("./routes/blogs");
+const loginRouter = require("./routes/login")
 const { sequelize } = require("./config/database");
 
 const app = express();
@@ -25,6 +26,7 @@ const connectAndCreate = async()=>{
 connectAndCreate();
 
 // Mount routes
+app.use("/login", loginRouter);
 app.use("/users", userRouter);
 app.use("/blogs", blogRouter);
 

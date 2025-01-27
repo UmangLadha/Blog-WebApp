@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
-import { login } from "../../redux/features/auth/authSlice"
+import { login } from "../../redux/features/auth/authSlice";
 import axios from "axios";
 
 const LoginPage = () => {
@@ -23,21 +23,22 @@ const LoginPage = () => {
     }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const userCred = JSON.parse(localStorage.getItem(inputValue.username));
-    if (
-      userCred &&
-      userCred.username === inputValue.username &&
-      userCred.password === inputValue.password
-    ) {
-      dispatch(login({ token: "loggedIn123", userData: inputValue }));
-
-	//   axios.get("http:://localhost/5000/users").then((data)=>{
-	// 	console.log("hello backend",data);
-	//   })
+    try {
+      const userInsertedValue = {
+        username: inputValue.username,
+        password: inputValue.password,
+      };
+      const res = await axios.post(
+        "http://localhost:5000/login",
+        userInsertedValue
+      );
+      console.log(res.data.user); //printing respone in console
+      dispatch(login(res.data.user)); //
       navigate("/");
-    } else {
+    } catch (error) {
+      console.log("error fetching user", error);
       alert("username or password incorrect! Please try again.");
     }
   };

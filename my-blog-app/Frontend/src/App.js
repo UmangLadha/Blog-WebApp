@@ -28,7 +28,7 @@ function App() {
                 <Route path="write" element={<NewBlogs />} />
                 <Route path="profile" element={<MyProfile />} />
               </Route>
-              <Route path="/blog:id" element={<CompleteBlogViewPage />} />
+              <Route path="/blog/:id" element={<CompleteBlogViewPage />} />
               <Route path="*" element={<RouteNotFound />} />
             </Routes>
           </div>

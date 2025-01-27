@@ -1,12 +1,13 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import TextEditor from "./elements/textEditor";
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw } from "draft-js";
+import axios from "axios";
 
 const NewBlogs = () => {
   const [blogContent, setBlogContent] = useState({
     title: "",
     subtitle: "",
-    blogImg: "",
+    blogImg: [],
   });
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -16,31 +17,49 @@ const NewBlogs = () => {
   useEffect(() => {
     const isContentValid =
       blogContent.title.trim() !== "" &&
-      blogContent.subtitle.trim() !== ""&&
+      blogContent.subtitle.trim() !== "" &&
       editorState.getCurrentContent().hasText();
     setBtnActive(!isContentValid);
   }, [blogContent, editorState]);
 
   const handleFile = (e) => {
-	e.preventDefault();
-    // const arrOfImg = Array.from(e.target.files);
-	const file = e.target.files[0];
-	setBlogContent({...blogContent, blogImg: file});
+    e.preventDefault();
+    const file = e.target.files[0].name;
+    setBlogContent({ ...blogContent, blogImg: file });
   };
+
+  const publishBlogInServer = async(rawContent)=>{
+	try {
+		const fullBlogData = {
+		  title: blogContent.title,
+		  subtitle: blogContent.subtitle,
+		  imageLink: blogContent.blogImg,
+		  content: rawContent,
+		};
+		const res = await axios.post("http://localhost:5000/blogs", fullBlogData);
+		console.log("Blog has been published successfully", res);
+		
+	  } catch (error) {
+		console.log(error);
+	  }
+  }
 
   const handlePublish = (e) => {
     e.preventDefault();
+    const contentState = editorState.getCurrentContent(); //getting the content of the blog
+    const rawContent = convertToRaw(contentState); // converting the blog content into JSON
 
-	const contentState = editorState.getCurrentContent();
-    const rawContent = convertToRaw(contentState);
+    // sending blogs to server
+    publishBlogInServer(rawContent);
 
-	const blogData = {
-		...blogContent,
-		content: rawContent
-	};
-
-    console.log("Publishing the blog", blogData);
-  };
+	setBlogContent({
+		title: "",
+		subtitle: "",
+		blogImg: [],
+	}); 
+	setEditorState(EditorState.createEmpty());
+	alert("wow! the blog has been published!");
+};
 
   return (
     <div className="w-full mx-auto py-10 md:w-4/5 font-serif ">
@@ -91,23 +110,11 @@ const NewBlogs = () => {
               accept="image/*"
               onChange={handleFile}
             />
-			
+
             <label className="text-lg" htmlFor="content">
               Blog Content
             </label>
-			<TextEditor content={editorState} setContent={setEditorState} />
-            {/* <textarea
-              id="content"
-              name="content"
-              value={blogContent.content}
-              onChange={(e) =>
-                setBlogContent({ ...blogContent, content: e.target.value })
-              }
-              placeholder="Tell your story..."
-              className="border outline-none py-2 px-4 rounded-lg w-full text-2xl mb-6 "
-              rows={5}
-              cols={50}
-            /> */}
+            <TextEditor content={editorState} setContent={setEditorState} />
 
             <button
               onClick={handlePublish}

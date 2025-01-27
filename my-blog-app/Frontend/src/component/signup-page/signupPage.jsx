@@ -14,51 +14,55 @@ const SignUpPage = () => {
 
   const navigate = useNavigate();
 
+  // callback function to check validation
   const handleBlur = useCallback(
     (e) => {
       e.preventDefault();
-      checkFormValidation()
+      checkFormValidation();
     },
     [inputValue]
   );
 
+  // checking form input valid or not function
   const checkFormValidation = () => {
-	if (!inputValue.username || !inputValue.password || !inputValue.email) {
-        setErrorMsg("Input fields cannot be blank!");
-		return false;
-      } else if (inputValue.password !== inputValue.confirmPassword) {
-        setErrorMsg("Passwords do not match!");
-		return false;
-      } else {
-        setErrorMsg("");
-		return true;
-      }
-  }
+    if (!inputValue.username || !inputValue.password || !inputValue.email) {
+      setErrorMsg("Input fields cannot be blank!");
+      return false;
+    } else if (inputValue.password !== inputValue.confirmPassword) {
+      setErrorMsg("Passwords do not match!");
+      return false;
+    } else {
+      setErrorMsg("");
+      return true;
+    }
+  };
 
-  const sendDataToServer = async()=>{
-	const userData = {
-		fullname:inputValue.fullname,
-		username:inputValue.username,
-		email:inputValue.email,
-		password:inputValue.password,
-	};
-	try {
-		const response = await axios.post("http://localhost:5000/users", userData);
-		console.log(response);
-	} catch (error) {
-		console.log("error in sending userdata: ",error);
-	}
-  }
+  //sending data to server
+  const sendDataToServer = async () => {
+	  try {
+    const userData = {
+      fullname: inputValue.fullname,
+      username: inputValue.username,
+      email: inputValue.email,
+      password: inputValue.password,
+    };
+      const response = await axios.post(
+        "http://localhost:5000/users",
+        userData
+      );
+      console.log(response);
+    } catch (error) {
+      console.log("error in sending userdata: ", error);
+    }
+  };
 
+  //form submiting function
   const handleSignup = (e) => {
     e.preventDefault();
-	let isFormValid = checkFormValidation();
-	if (!isFormValid) return
+    let isFormValid = checkFormValidation();
+    if (!isFormValid) return;
 
-	//sending data to server
-	 sendDataToServer();
-
-    // localStorage.setItem(inputValue.username,JSON.stringify(inputValue));
+    sendDataToServer();
     setInputValue({
       fullname: "",
       username: "",
@@ -179,7 +183,7 @@ const SignUpPage = () => {
             Sign up
           </button>
         </form>
-        <p>
+        <p className="mt-4">
           Already have an account?{" "}
           <Link to="/login" className="underline text-purple-600">
             Login

@@ -1,6 +1,7 @@
 const express = require("express");
 const blogRouter = express.Router();
 const Blogs = require("../models/blogs");
+const { where } = require("sequelize");
 
 // accessing the blog data
 blogRouter.get("/", async (req, res) => {
@@ -8,7 +9,7 @@ blogRouter.get("/", async (req, res) => {
     const blog = await Blogs.findAll();
     res.status(200).json(blog);
   } catch (error) {
-	console.log(error);
+    console.log(error);
     res.status(400).json({ error: "error in fetching blog" });
   }
 });
@@ -16,13 +17,16 @@ blogRouter.get("/", async (req, res) => {
 //adding the new blog in database
 blogRouter.post("/", async (req, res) => {
   try {
-    const { title, subtitle, imageLink, content } = req.body;
+    const { title, subtitle, imageLink, content, likesCounts, comments } =
+      req.body;
     console.log(req.body); // log incoming changes
     const blog = await Blogs.create({
       title: title,
       subtitle: subtitle,
       imageLink: imageLink,
       content: content,
+      likesCounts: likesCounts,
+      comments: comments,
     });
     res.status(200).json(`${blog} blog added in the database`);
   } catch (error) {
@@ -42,7 +46,7 @@ blogRouter.get("/:id", async (req, res) => {
     const blog = await Blogs.findByPk(id);
     res.status(202).json(blog);
   } catch (error) {
-	console.log(error);
+    console.log(error);
     res.status(400).json({ error: "error in fetching blog" });
   }
 });
@@ -50,35 +54,40 @@ blogRouter.get("/:id", async (req, res) => {
 // updating the specific blog data
 blogRouter.patch("/:id", async (req, res) => {
   try {
-	const { id, title, subtitle, imageLink, content } = req.body;
+	const { id } = req.params;
+    const { title, subtitle, imageLink, content, likesCounts, comments } = req.body;
     if (!id) {
       res.status(400).json(`${id} not found may be it doesnt exits`);
     }
-    const blog = await Blogs.findByPk(id);
-    blog.update({
-      title: title,
-      subtitle: subtitle,
-      imageLink: imageLink,
-      content: content,
-    });
+    // const blog = await Blogs.findByPk(id);
+    const blog = await Blogs.update(
+      {
+        title: title,
+        subtitle: subtitle,
+        imageLink: imageLink,
+        content: content,
+		likesCounts: likesCounts,
+		comments: comments,
+      },
+      { where: { blogId: id } }
+    );
     res.status(200).json(blog);
   } catch (error) {
-	console.log(error);
+    console.log(error);
     res.status(400).json({ error: "error updating blog" });
   }
 });
 
 //deleting the specific blog
-// blogRouter.delete('/:id', [checkIDExist], (req,res)=>{
-// 	try {
-// 		const { id } = req.params;
-// 		const blog = await Blogs.findone({where:{
-// id:id// }});
-// 		blog.destroy();
-// 		res.status(200).noContent();
-// 	} catch (error) {
-// 		res.status(400).json({error:"error in deleting blog"})
-// 	}
-// })
+blogRouter.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    Blogs.destroy({ where: { blogId: id } });
+    res.status(200).json("blog deleted");
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: "error in deleting blog" });
+  }
+});
 
 module.exports = blogRouter;

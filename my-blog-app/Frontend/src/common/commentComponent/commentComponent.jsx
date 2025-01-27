@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import  DefaultProfile from "../../images/defaultProfile.png";
-
+import DefaultProfile from "../../images/defaultProfile.png";
+import { useSelector } from "react-redux";
 
 const CommentComponent = (props) => {
-	const {comments, setComments} = props;
+  const { comments, setComments } = props;
+
   const [commentValue, setCommentValue] = useState("");
   const [cmtBtn, setCmtBtn] = useState(true);
-  
+  const user = useSelector(state=>state.auth.user)
 
   useEffect(() => {
     if (commentValue.trim() !== "") {
@@ -18,13 +19,10 @@ const CommentComponent = (props) => {
 
   const handleComment = (e) => {
     e.preventDefault();
-
     const newComment = {
-      username: "Umang123",
-      profile: "/",
+      username: user.username,
       commentValue: commentValue,
     };
-
     setComments((prevComments) => [...prevComments, newComment]);
     setCommentValue("");
     console.log(comments);
