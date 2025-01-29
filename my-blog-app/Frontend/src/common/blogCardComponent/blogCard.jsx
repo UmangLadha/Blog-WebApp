@@ -22,7 +22,7 @@ const BlogCard = (props) => {
             className=" w-full md:w-[48%] flex flex-col items-start p-2 gap-3 border rounded-lg shadow cursor-pointer hover:shadow-lg"
             key={blog.blogId}
           >
-            <div className="flex flex-row-reverse gap-2 justify-between items-center">
+            <div className="flex flex-row-reverse gap-2 justify-between items-start">
               <div className="w-56 h-36">
                 <img
                   src={blog.imageLink}
@@ -35,13 +35,13 @@ const BlogCard = (props) => {
                 <div className="flex flex-col items-start">
                   <h1
                     className="text-2xl font-semibold"
-                    onClick={() => navigate(`/blog/${blog.blogId}`)}
+                    onClick={() => navigate(`/blog/${blog.blogId}`, {state:blog})}
                   >
                     {blog.title}
                   </h1>
                   <small>
                     Written by :{" "}
-                    <span className="text-purple-500">{blog.writeName}</span>
+                    <span className="text-purple-500">{blog.author}</span>
                   </small>
                 </div>
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import TextEditor from "./elements/textEditor";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertFromHTML, convertToRaw } from "draft-js";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const NewBlogs = () => {
   const [blogContent, setBlogContent] = useState({
@@ -10,9 +11,11 @@ const NewBlogs = () => {
     blogImg: [],
   });
 
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(EditorState.createEmpty()); //initializiing the editor state
 
   const [btnActive, setBtnActive] = useState(false);
+
+  const user = useSelector(state=>state.auth.user); // getting user form redux
 
   useEffect(() => {
     const isContentValid =
@@ -35,12 +38,14 @@ const NewBlogs = () => {
 		  subtitle: blogContent.subtitle,
 		  imageLink: blogContent.blogImg,
 		  content: rawContent,
+		  author: user.username,
 		};
 		const res = await axios.post("http://localhost:5000/blogs", fullBlogData);
 		console.log("Blog has been published successfully", res);
-		
+		alert("wow! the blog has been published!");
 	  } catch (error) {
 		console.log(error);
+		alert("unable to publish the blog! please try again later")
 	  }
   }
 
@@ -48,17 +53,14 @@ const NewBlogs = () => {
     e.preventDefault();
     const contentState = editorState.getCurrentContent(); //getting the content of the blog
     const rawContent = convertToRaw(contentState); // converting the blog content into JSON
-
-    // sending blogs to server
-    publishBlogInServer(rawContent);
-
+	// JSON.stringify(rawContent, null, 4)
+    publishBlogInServer(rawContent); // sending blogs to server
 	setBlogContent({
 		title: "",
 		subtitle: "",
 		blogImg: [],
 	}); 
 	setEditorState(EditorState.createEmpty());
-	alert("wow! the blog has been published!");
 };
 
   return (

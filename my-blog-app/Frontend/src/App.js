@@ -19,7 +19,7 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Header />
-          <div className="w-full h-[calc(100vh-12vh)] mt-[12vh] overflow-auto">
+          <div className="w-full h-[calc(100vh-12vh)] mt-[12vh]">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/login" element={<LoginPage />} />

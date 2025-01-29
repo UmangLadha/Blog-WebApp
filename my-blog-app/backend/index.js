@@ -16,8 +16,14 @@ const connectAndCreate = async()=>{
 	try {
 		await sequelize.authenticate();
 		console.log("Connected to database");
-		await sequelize.sync();
-		console.log("Database & tables synchronized successfully!");
+		await sequelize.sync({ alter: true })
+		.then(() => {
+			console.log("Database & tables created!");
+			console.log("Database & tables synchronized successfully!");
+		  })
+		  .catch(err => {
+			console.error('Error syncing database:', err);
+		  });
 	} catch (error) {
 		console.error("Database connection failed:", error);
 	}

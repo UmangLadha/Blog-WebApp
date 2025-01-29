@@ -1,27 +1,39 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import LikesAndComment from "../likesAndComment/likesAndComment";
 import CommentComponent from "../commentComponent/commentComponent";
-
-// import { Blogs } from '../blog.Data';
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 const CompleteBlogViewPage = () => {
 	const [showComment, setShowComment] = useState([]);
+	const [fullBlog, setFullBlog] = useState([]);
+	const location = useLocation();
+
+	useEffect(()=>{
+		console.log("here is the current location of the blog ",location);
+		setFullBlog(location.state);
+	})
+
+	const content = JSON.stringify(fullBlog.content)
 
   return (
     <div className="w-11/12 md:w-3/6 mx-auto pt-6 font-serif">
       <div className="mx-auto">
         <div className="w-11/12 mx-auto">
           <h1 className="text-5xl font-semibold py-6">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Perferendis, quis?
+            {fullBlog.title}
           </h1>
-          <span className="font-light text-lg">Written by : Umang Ladha</span>
+          <span className="font-light text-lg">Written by : {fullBlog.author}</span>
         </div>
         <div className="my-7">
           <hr />
           <div className="py-4 px-8">
             <LikesAndComment
-			blogCommentCount = {showComment.lenght} />
+			blogDataId={fullBlog.blogId}
+			likeCounts= {fullBlog.likesCounts}
+			blogCommentCount={fullBlog.comment}
+			/>
           </div>
           <hr />
         </div>
@@ -30,30 +42,7 @@ const CompleteBlogViewPage = () => {
         </div>
         <div className="px-4 mb-7 text-lg">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam,
-            fuga quisquam reiciendis ex non nobis natus, iste illum qui quasi
-            deleniti repellendus nostrum quia inventore sint vero incidunt
-            debitis sit similique magni voluptates! Tempore architecto commodi
-            fugiat, veritatis sunt totam dolore ad nobis? Esse, dolor
-            consequatur odio sit recusandae deleniti error assumenda fugit
-            quidem. Doloribus, at. Quisquam ullam rem, excepturi molestiae quam
-            nam impedit beatae corporis, voluptates illum assumenda iure nisi
-            dolore laboriosam consequuntur repellendus vero a. Perspiciatis
-            dolore voluptatem, dignissimos esse, vero impedit voluptate eaque,
-            autem ut tempora doloribus doloremque! Nemo inventore fuga
-            laudantium aliquam doloribus fugit similique? Lorem, ipsum dolor sit
-            amet consectetur adipisicing elit. Hic quis ex reiciendis sit quia
-            mollitia iure tempora corporis cupiditate iusto nihil architecto
-            doloribus, libero distinctio, beatae, at unde dicta ipsa eveniet
-            vero accusamus. Atque non voluptates exercitationem, voluptate
-            consequatur dignissimos! Fugit architecto expedita obcaecati ipsum
-            nulla voluptatem sit illo dolorem libero itaque unde nostrum totam
-            atque placeat molestias excepturi soluta, hic aperiam adipisci
-            maxime repellat facere magnam aliquid eius? Architecto ab, quisquam
-            repellendus consequatur veniam dolorem nobis deleniti vel iste
-            laboriosam omnis mollitia in impedit eum soluta facilis ratione
-            recusandae rem praesentium veritatis debitis ex? Eveniet enim est
-            veritatis ipsam.
+            {content}
           </p>
         </div>
 

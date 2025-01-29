@@ -25,13 +25,16 @@ const LikesAndComment = (props) => {
         const updatingCount = liked ? likeCounts - 1 : likeCounts + 1;
         await axios.patch(`http://localhost:5000/blogs/${blogDataId}`, {
           likesCounts: updatingCount,
-        });
+        }); // updating the like counts in backend
         setLiked(true);
         setUpdatingLikesCount(updatingCount); // updating the likes count
-      }
+	}else{
+
+		alert("Ohhoo! Its seem you have not login please login to continue");
+		navigate("/login");
+	}
     } catch (error) {
-      alert("Ohhoo! Its seem you have not login please login to continue");
-      navigate("/login");
+		console.log("error updating likes")
     }
   };
   return (

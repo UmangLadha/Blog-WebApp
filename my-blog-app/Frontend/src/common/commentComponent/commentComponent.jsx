@@ -7,7 +7,7 @@ const CommentComponent = (props) => {
 
   const [commentValue, setCommentValue] = useState("");
   const [cmtBtn, setCmtBtn] = useState(true);
-  const user = useSelector(state=>state.auth.user)
+  const user = useSelector(state=>state.auth.user) // getting the user data from redux 
 
   useEffect(() => {
     if (commentValue.trim() !== "") {
@@ -20,10 +20,10 @@ const CommentComponent = (props) => {
   const handleComment = (e) => {
     e.preventDefault();
     const newComment = {
-      username: user.username,
+      username: user.username, //
       commentValue: commentValue,
     };
-    setComments((prevComments) => [...prevComments, newComment]);
+    setComments((prevComments) => [...prevComments, newComment]); //saving the comments in the setComments useState 
     setCommentValue("");
     console.log(comments);
   };

@@ -14,8 +14,9 @@ const MostPopularBlog = () => {
         const Blogs = await axios.get("http://localhost:5000/blogs");
         console.log("here is the blog data", Blogs.data);
         const mostLikedBlogs = Blogs.data.filter(
-          (blog) => blog.likesCounts >= 10
+          (blog) => blog.likesCounts > 10
         ); // filtering out the most liked blogs from server respones
+        mostLikedBlogs.sort((b, a) => a.likesCounts - b.likesCounts); // after filtering we are sorting the blogs on the base of its like counts
         setBlogData(mostLikedBlogs);
       } catch (error) {
         console.log(error);

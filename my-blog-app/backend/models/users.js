@@ -5,10 +5,13 @@ const Users = sequelize.define("users", {
   userId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
+	unique: true,
+	autoIncrement:true,
   },
   fullname: { type: DataTypes.STRING },
-  username: { type: DataTypes.STRING },
+  username: { type: DataTypes.STRING,
+	unique: true
+   },
   email: { type: DataTypes.STRING },
   password: { type: DataTypes.STRING },
 });

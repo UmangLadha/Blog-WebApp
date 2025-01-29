@@ -1,6 +1,6 @@
 import React  from "react";
 import { MostPopularBlog } from "./elements/mostPopularBlog";
-import RecentBlogs from "./elements/recentBlogs";
+// import RecentBlogs from "./elements/recentBlogs";
 
 const Dashboard = () => {
 
@@ -8,7 +8,7 @@ const Dashboard = () => {
     <>
       <MostPopularBlog />
 	  <hr />
-	  <RecentBlogs />
+	  {/* <RecentBlogs /> */}
     </>
   );
 };

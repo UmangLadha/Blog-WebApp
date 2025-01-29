@@ -7,7 +7,7 @@ import DefaultProfile from "../../../images/defaultProfile.png";
 const UserProfileSection = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user); // getting user from redux
   const [userData, setUserData] = useState({});
 
   // calling data from redux
@@ -21,14 +21,14 @@ const UserProfileSection = () => {
     navigate("/");
   };
   return (
-    <div className="shadow-md w-full md:w-2/6 border rounded-xl flex justify-between gap-3 flex-col p-4">
+    <div className="shadow-md w-full  md:w-2/6 border rounded-xl flex justify-between gap-3 flex-col p-4">
       <div className="flex items-start leading-3 justify-start gap-3">
         <div className="size-20 border rounded-full">
           <img className="w-20 h-20 " src={DefaultProfile} alt="Profile" />
         </div>
 
         <div className="flex flex-col gap-2">
-          <h2 className="font-medium text-xl">{userData.username}</h2>
+          <h2 className="font-medium text-xl">{userData.fullname}</h2>
           <p>{userData.email}</p>
         </div>
       </div>

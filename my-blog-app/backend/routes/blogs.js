@@ -17,7 +17,7 @@ blogRouter.get("/", async (req, res) => {
 //adding the new blog in database
 blogRouter.post("/", async (req, res) => {
   try {
-    const { title, subtitle, imageLink, content, likesCounts, comments } =
+    const { title, subtitle, imageLink, content, likesCounts, comments , author} =
       req.body;
     console.log(req.body); // log incoming changes
     const blog = await Blogs.create({
@@ -25,6 +25,7 @@ blogRouter.post("/", async (req, res) => {
       subtitle: subtitle,
       imageLink: imageLink,
       content: content,
+	  author: author,
       likesCounts: likesCounts,
       comments: comments,
     });
@@ -42,7 +43,7 @@ blogRouter.get("/:id", async (req, res) => {
     if (!id) {
       res.status(400).json(`${id} not found may be it doesnt exits`);
     }
-    console.log("inside id", id);
+    // console.log("inside id", id);
     const blog = await Blogs.findByPk(id);
     res.status(202).json(blog);
   } catch (error) {
@@ -51,11 +52,12 @@ blogRouter.get("/:id", async (req, res) => {
   }
 });
 
+
 // updating the specific blog data
 blogRouter.patch("/:id", async (req, res) => {
   try {
 	const { id } = req.params;
-    const { title, subtitle, imageLink, content, likesCounts, comments } = req.body;
+    const { title, subtitle, imageLink, content, likesCounts, comments, author } = req.body;
     if (!id) {
       res.status(400).json(`${id} not found may be it doesnt exits`);
     }
@@ -68,6 +70,7 @@ blogRouter.patch("/:id", async (req, res) => {
         content: content,
 		likesCounts: likesCounts,
 		comments: comments,
+		author:author
       },
       { where: { blogId: id } }
     );
