@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const userRouter = require("./routes/users");
 const blogRouter = require("./routes/blogs");
-const loginRouter = require("./routes/login")
+const loginRouter = require("./routes/login");
+const commentRouter = require("./routes/comments");
 const { sequelize } = require("./config/database");
 
 const app = express();
@@ -10,20 +11,15 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static("my-uploads")); //accessing the my-uploads folder  ----------learn about it----------- 
 
 // Connect to database and create table function 
 const connectAndCreate = async()=>{
 	try {
-		await sequelize.authenticate();
+		await sequelize.authenticate(); //Testing the connection before syncing with it
 		console.log("Connected to database");
-		await sequelize.sync({ alter: true })
-		.then(() => {
-			console.log("Database & tables created!");
-			console.log("Database & tables synchronized successfully!");
-		  })
-		  .catch(err => {
-			console.error('Error syncing database:', err);
-		  });
+
+		await sequelize.sync({ force: false, alter: true })
 	} catch (error) {
 		console.error("Database connection failed:", error);
 	}
@@ -31,10 +27,12 @@ const connectAndCreate = async()=>{
 
 connectAndCreate();
 
+
 // Mount routes
 app.use("/login", loginRouter);
 app.use("/users", userRouter);
 app.use("/blogs", blogRouter);
+app.use("/comments", commentRouter);
 
 const PORT = 5000;
 

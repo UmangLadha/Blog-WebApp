@@ -9,7 +9,7 @@ userRouter.get("/", async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
 	console.log(error);
-    res.status(400).json({ error: "users not found database in empty" });
+    res.status(400).json({ error: "users not found in database" });
   }
 });
 
@@ -18,13 +18,21 @@ userRouter.post("/", async (req, res) => {
   try {
     const { username, fullname, email, password } = req.body;
     console.log(req.body); // Log incoming data
-    const user = await Users.create({
-      username: username,
-      fullname: fullname,
-      email: email,
-      password: password,
-    });
-    res.status(200).json(`${user} added in the database`);
+	if(username === Users.username){
+		res.status(400).json({message:`this ${username} already exist please write other username`});
+	}
+	else if(email === Users.email){
+		res.status(400).json({message: `this ${email} already resigterd try with other email`});
+	}
+	else{
+		const user = await Users.create({
+			username: username,
+			fullname: fullname,
+			email: email,
+			password: password,
+		});
+		res.status(200).json({message: `${user.username} added in the database`});
+	}
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: "error in adding user in database" });
@@ -47,5 +55,17 @@ userRouter.get("/:id", async (req, res) => {
     res.status(400).json(` ${id} user not found in the database`);
   }
 });
+
+//deleting the specific user
+userRouter.delete("/:id", async (req, res) => {
+	try {
+	  const { id } = req.params;
+	  Users.destroy({ where: { userId: id } });
+	  res.status(200).json("user deleted");
+	} catch (error) {
+	  console.log(error);
+	  res.status(400).json({ error: "error in deleting user" });
+	}
+  });
 
 module.exports = userRouter;

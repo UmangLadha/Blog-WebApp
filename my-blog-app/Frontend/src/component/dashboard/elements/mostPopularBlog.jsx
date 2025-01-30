@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import BlogCard from "../../../common/blogCardComponent/blogCard";
 import axios from "axios";
 
@@ -27,11 +27,18 @@ const MostPopularBlog = () => {
 
   return (
     <>
-      <div className="w-4/5 mx-auto text-start py-10 ">
+      <div className="w-11/12 mx-auto text-start py-10 md:w-5/6 ">
         <h1 className="font-semibold text-3xl pb-10">Most Popular Blogs</h1>
-        <BlogCard blogData={blogData} />
+        <Suspense fallback={<Loading />}>
+          <BlogCard blogData={blogData} />
+        </Suspense>
       </div>
     </>
   );
 };
+
+export function Loading() {
+  return <div>Loading...</div>;
+}
+
 export { MostPopularBlog };

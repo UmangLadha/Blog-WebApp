@@ -7,6 +7,7 @@ const MyBlogSection = () => {
 	const [userBlogs , setUserBlogs] = useState([])
 	const user = useSelector(state=>state.auth.user);
 
+	// calling the function to get data from database and filtering the blog on the basis of author name and renderning it to state
 	useEffect(()=>{
 		async function getBlogs(){
 			try {
@@ -22,7 +23,7 @@ const MyBlogSection = () => {
 	},[user.username])
 
   return (
-    <div className="w-full border rounded-xl shadow-md p-4">
+    <div className="w-full border rounded-xl shadow-md p-2">
       <h1 className="font-semibold text-3xl pb-10">My Blogs</h1>
 	  { userBlogs.length >= 0 ? (<BlogCard 
 	  blogData = {userBlogs}

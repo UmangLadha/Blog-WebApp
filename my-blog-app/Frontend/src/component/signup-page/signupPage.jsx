@@ -37,7 +37,7 @@ const SignUpPage = () => {
     }
   };
 
-  //sending data to server
+  //sending userdata to server
   const sendDataToServer = async () => {
 	  try {
     const userData = {
@@ -50,7 +50,9 @@ const SignUpPage = () => {
         "http://localhost:5000/users",
         userData
       );
-      console.log(response);
+      console.log("this is the user",response);
+	  alert(response.data.message);
+	  navigate("/login");
     } catch (error) {
       console.log("error in sending userdata: ", error);
     }
@@ -62,7 +64,7 @@ const SignUpPage = () => {
     let isFormValid = checkFormValidation();
     if (!isFormValid) return;
 
-    sendDataToServer();
+    sendDataToServer(); //calling the function to submit the data
     setInputValue({
       fullname: "",
       username: "",
@@ -70,8 +72,7 @@ const SignUpPage = () => {
       password: "",
       confirmPassword: "",
     });
-    alert("You are successfully register!");
-    navigate("/login");
+    // alert("You are successfully register!");
   };
 
   return (

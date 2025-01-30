@@ -11,11 +11,12 @@ loginRouter.post("/", async (req, res)=>{
 		}})
 		if(!user){
 			console.log(error);
-			res.status(401).json("username or password incorrect")
+			res.status(401).json({error:"username or password incorrect"})
 		}
 		else{
 			res.status(200).json({
 				user,
+				authenticated: true,
 				message: "user authenticated succesfully",
 				timestampe: Date.now(),
 			})

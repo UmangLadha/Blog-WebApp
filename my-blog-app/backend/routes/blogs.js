@@ -1,7 +1,31 @@
 const express = require("express");
 const blogRouter = express.Router();
 const Blogs = require("../models/blogs");
-const { where } = require("sequelize");
+const multer = require("multer");
+
+// middelwear function for saving the image in database
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./my-uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueImgName = Date.now() + "-" + file.originalname;
+    cb(null, uniqueImgName);
+  },
+});
+
+// error checking for multer
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const filetypes = /jpeg|jpg|png|gif/; // Acceptable file types
+    const mimetype = filetypes.test(file.mimetype);
+    if (mimetype) {
+      return cb(null, true);
+    }
+    cb(new Error("Invalid file type!"));
+  },
+});
 
 // accessing the blog data
 blogRouter.get("/", async (req, res) => {
@@ -15,21 +39,28 @@ blogRouter.get("/", async (req, res) => {
 });
 
 //adding the new blog in database
-blogRouter.post("/", async (req, res) => {
+blogRouter.post("/", upload.single("blogCoverImg"), async (req, res) => {
   try {
-    const { title, subtitle, imageLink, content, likesCounts, comments , author} =
-      req.body;
-    console.log(req.body); // log incoming changes
+    const { title, subtitle, content, likesCounts, author } = req.body;
+
+    if (!title || !subtitle || !content || !author) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const imageLink = req.file ? req.file.filename : null; // Get the file path
+
+    console.log(req.body); // logging incoming body changes
+    console.log("here is the img data: ", req.file); //consoling full req.file object
+
     const blog = await Blogs.create({
       title: title,
       subtitle: subtitle,
       imageLink: imageLink,
-      content: content,
-	  author: author,
+      content: JSON.parse(content),
+      author: author,
       likesCounts: likesCounts,
-      comments: comments,
     });
-    res.status(200).json(`${blog} blog added in the database`);
+    res.status(200).json(`${blog.title} blog added in the database`);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: "error in adding blog in the database" });
@@ -52,28 +83,34 @@ blogRouter.get("/:id", async (req, res) => {
   }
 });
 
-
 // updating the specific blog data
 blogRouter.patch("/:id", async (req, res) => {
   try {
-	const { id } = req.params;
-    const { title, subtitle, imageLink, content, likesCounts, comments, author } = req.body;
-    if (!id) {
-      res.status(400).json(`${id} not found may be it doesnt exits`);
+    const { id } = req.params;
+    const { title, subtitle, imageLink, content, likesCounts, author } =
+      req.body;
+    // Validate required fields
+    if (!title || !subtitle || !content || !author) {
+      return res.status(400).json({ error: "All fields are required" });
     }
+
     // const blog = await Blogs.findByPk(id);
     const blog = await Blogs.update(
       {
         title: title,
         subtitle: subtitle,
         imageLink: imageLink,
-        content: content,
-		likesCounts: likesCounts,
-		comments: comments,
-		author:author
+        content: JSON.parse(content),
+        likesCounts: likesCounts,
+        author: author,
       },
       { where: { blogId: id } }
     );
+
+    if (!id) {
+      res.status(400).json(`${id} not found may be it doesnt exits`);
+    }
+
     res.status(200).json(blog);
   } catch (error) {
     console.log(error);

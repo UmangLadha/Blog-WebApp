@@ -1,45 +1,72 @@
 import React, { useEffect, useState } from "react";
-import DefaultProfile from "../../images/defaultProfile.png";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import ShowingComments from "./elements/showComments";
+import { useNavigate } from "react-router";
 
 const CommentComponent = (props) => {
-  const { comments, setComments } = props;
-
-  const [commentValue, setCommentValue] = useState("");
-  const [cmtBtn, setCmtBtn] = useState(true);
+  const { blogId } = props;
+  const navigate = useNavigate();
+  const [showComment, setShowComment] = useState([]);
+  const [inputCommentValue, setInputCommentValue] = useState("");
+  const [cmtBtn, setCmtBtn] = useState(true); // state for handling toggel of comment button
   const user = useSelector(state=>state.auth.user) // getting the user data from redux 
 
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+  //running the comment toggle btn function  
   useEffect(() => {
-    if (commentValue.trim() !== "") {
+    if (inputCommentValue.trim() !== "") {
       setCmtBtn(false);
     } else {
       setCmtBtn(true);
     }
-  }, [commentValue]);
+  }, [inputCommentValue]);
 
+  //saving the comments in database
+  async function postComments(newComment){
+		try {
+			const comment  = await axios.post("http://localhost:5000/comments", newComment);
+			console.log(comment); 
+		} catch (error) {
+			console.log("unable to send comments to server",error);
+		}
+	}
+
+  //running the function on clicking the comment btn
   const handleComment = (e) => {
     e.preventDefault();
-    const newComment = {
-      username: user.username, //
-      commentValue: commentValue,
-    };
-    setComments((prevComments) => [...prevComments, newComment]); //saving the comments in the setComments useState 
-    setCommentValue("");
-    console.log(comments);
+	console.log(isLoggedIn);
+	if(isLoggedIn){
+
+		const commentContent = {
+			blogId : blogId,
+			username: user.username, //
+			commentText: inputCommentValue,
+		};
+		
+		postComments(commentContent);
+		console.log(showComment);
+	}
+	else{
+		alert("please login to write the comment");
+		navigate("/login");
+	}
+		setInputCommentValue("");
   };
 
   return (
     <div id="comments" className="my-6 px-4">
       <h2 className="text-2xl font-semibold pb-7">
-        Comments({comments.length})
+        Comments({showComment.length})
       </h2>
       <div className="flex items-start justify-start gap-4 px-2">
         <input
           type="text"
           name="comments"
           id="commentValue"
-          value={commentValue}
-          onChange={(e) => setCommentValue(e.target.value)}
+          value={inputCommentValue}
+          onChange={(e) => setInputCommentValue(e.target.value)}
           placeholder="What are your thoughts?"
           className="py-2 rounded-lg mx-auto w-full border px-4 outline-none shadow-md"
           required
@@ -53,25 +80,9 @@ const CommentComponent = (props) => {
           Comment
         </button>
       </div>
-      <div className="w-full flex flex-col gap-6 my-8 p-4">
-        {comments.length > 0 ? (
-          comments.map((commentData, id) => (
-            <div key={id} className="flex w-full items-start gap-2">
-              <img
-                className="border rounded-full size-11"
-                src={DefaultProfile}
-                alt="user profile"
-              />
-              <div>
-                <p className="font-semibold text-sm">{commentData.username}</p>
-                <p>{commentData.commentValue}</p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No comments write know</p>
-        )}
-      </div>
+
+      <ShowingComments blogId={blogId} comments={showComment} setComments={setShowComment}/>
+       
     </div>
   );
 };
