@@ -4,6 +4,7 @@ const userRouter = require("./routes/users");
 const blogRouter = require("./routes/blogs");
 const loginRouter = require("./routes/login");
 const commentRouter = require("./routes/comments");
+const likeRouter = require("./routes/likes");
 const { sequelize } = require("./config/database");
 
 const app = express();
@@ -19,7 +20,7 @@ const connectAndCreate = async()=>{
 		await sequelize.authenticate(); //Testing the connection before syncing with it
 		console.log("Connected to database");
 
-		await sequelize.sync({ force: false, alter: true })
+		await sequelize.sync({ force: false, alter: true }) //------------------------------
 	} catch (error) {
 		console.error("Database connection failed:", error);
 	}
@@ -27,11 +28,11 @@ const connectAndCreate = async()=>{
 
 connectAndCreate();
 
-
 // Mount routes
-app.use("/login", loginRouter);
 app.use("/users", userRouter);
+app.use("/login", loginRouter);
 app.use("/blogs", blogRouter);
+app.use("/likes", likeRouter);
 app.use("/comments", commentRouter);
 
 const PORT = 5000;

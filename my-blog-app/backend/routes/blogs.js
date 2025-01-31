@@ -122,7 +122,7 @@ blogRouter.patch("/:id", async (req, res) => {
 blogRouter.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    Blogs.destroy({ where: { blogId: id } });
+    await Blogs.destroy({ where: { blogId: id } });
     res.status(200).json("blog deleted");
   } catch (error) {
     console.log(error);

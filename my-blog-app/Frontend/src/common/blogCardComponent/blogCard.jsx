@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useEffect} from "react";
 import LikesAndComment from "../likesAndComment/likesAndComment";
 import { useNavigate } from "react-router";
 import { BsPencilSquare } from "react-icons/bs";
+import axios from "axios";
 // import { MdDelete } from "react-icons/md";
 // import axios from "axios";
 
@@ -56,7 +57,7 @@ const BlogCard = (props) => {
                   </h1>
                   <small>
                     Written by :{" "}
-                    <span className="text-purple-500">{blog.author}</span>
+                    {blog.author}
                   </small>
                 </div>
 
@@ -66,10 +67,7 @@ const BlogCard = (props) => {
 
             <div className="flex w-full justify-between items-center px-2 ">
               <LikesAndComment
-                blogDataId={blog.blogId}
-                likeCounts={blog.likesCounts}
-                blogCommentCount={blog.commentCount}
-                navigateTo={true}
+                blogData ={blog}
               />
               {editOption && (
                 <div className="flex items-center gap-2">

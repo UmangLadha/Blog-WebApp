@@ -10,10 +10,12 @@ export const authSlice = createSlice({
   reducers: {
     login: (state,actions) => {
       state.isLoggedIn = true; // it tells that user has successfully logged in
+	//   localStorage.setItem("authenticated", "true");
 	  state.user = actions.payload; // saving userdata in initial state
     },
     logout: (state) => {
       state.isLoggedIn = false; //setting isloggedIn value to false
+	//   localStorage.removeItem("authenticated");
 	  state.user = null //clearing user 
     },
   },

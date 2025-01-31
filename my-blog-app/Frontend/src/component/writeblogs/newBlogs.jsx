@@ -17,11 +17,10 @@ const NewBlogs = () => {
   const [btnActive, setBtnActive] = useState(false); // publish toggel button
 
   const user = useSelector((state) => state.auth.user); // getting userData form redux to show in author name
+  
 //   const [isEditing, setIsEditing] = useState(false);
-
 //   const location = useLocation();
 //   const editingData = location.state;
-  
 //   console.log("this is the data got from navigate:", editingData);
 //   useEffect(()=>{
 // 	if (editingData) {
@@ -30,14 +29,12 @@ const NewBlogs = () => {
 //     subtitle: editingData.subtitle,
 //     blogCoverImg: editingData.imageLink,
 // 	});
-
 // 	if (editingData.content) {
 // 		const contentState = convertFromRaw(editingData.content);
 // 		setEditorState(EditorState.createWithContent(contentState));
 // 	  } else {
 // 		console.error("Content is undefined or invalid");
 // 	  }
-
 // 	setIsEditing(true);
 // }
 //   },[editingData])
@@ -79,7 +76,7 @@ const NewBlogs = () => {
 
 	console.log("here is the editor content", rawContent)
 
-	//storing the data in formData
+	//storing the data in formData 
     const formData = new FormData();
     formData.append("title", blogContent.title);
     formData.append("subtitle", blogContent.subtitle);

@@ -6,8 +6,8 @@ import { useNavigate } from "react-router";
 
 const CommentComponent = (props) => {
   const { blogId } = props;
-  const navigate = useNavigate();
   const [showComment, setShowComment] = useState([]);
+  const navigate = useNavigate();
   const [inputCommentValue, setInputCommentValue] = useState("");
   const [cmtBtn, setCmtBtn] = useState(true); // state for handling toggel of comment button
   const user = useSelector(state=>state.auth.user) // getting the user data from redux 

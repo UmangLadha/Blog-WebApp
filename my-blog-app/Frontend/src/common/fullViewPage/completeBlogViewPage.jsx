@@ -30,9 +30,7 @@ const CompleteBlogViewPage = () => {
           <hr />
           <div className="py-4 px-8">
             <LikesAndComment
-              blogDataId={fullBlog.blogId}
-              likeCounts={fullBlog.likesCounts}
-              blogCommentCounts={fullBlog.comments} /////////// have to change this code ///////////////////
+              blogData={fullBlog}
             />
           </div>
           <hr />
