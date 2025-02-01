@@ -84,15 +84,21 @@ blogRouter.get("/:id", async (req, res) => {
 });
 
 // updating the specific blog data
-blogRouter.patch("/:id", async (req, res) => {
+blogRouter.patch("/:id",upload.single("blogCoverImg"), async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, subtitle, imageLink, content, likesCounts, author } =
+    const { title, subtitle, content, likesCounts, author } =
       req.body;
+	  
     // Validate required fields
     if (!title || !subtitle || !content || !author) {
       return res.status(400).json({ error: "All fields are required" });
     }
+
+	const imageLink = req.file ? req.file.filename : null; // Get the file path
+
+    console.log(req.body); // logging incoming body changes
+    console.log("here is the img data: ", req.file); //consoling full req.file object
 
     // const blog = await Blogs.findByPk(id);
     const blog = await Blogs.update(

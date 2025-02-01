@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TextEditor from "./elements/textEditor";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
@@ -17,37 +17,37 @@ const NewBlogs = () => {
   const [btnActive, setBtnActive] = useState(false); // publish toggel button
 
   const user = useSelector((state) => state.auth.user); // getting userData form redux to show in author name
+
+  const [isEditing, setIsEditing] = useState(false);
+  const location = useLocation();
+  const editingData = location.state;
+  //   console.log("this is the data got from navigate:", editingData);
   
-//   const [isEditing, setIsEditing] = useState(false);
-//   const location = useLocation();
-//   const editingData = location.state;
-//   console.log("this is the data got from navigate:", editingData);
-//   useEffect(()=>{
-// 	if (editingData) {
-// 	setBlogContent({
-// 	title: editingData.title,
-//     subtitle: editingData.subtitle,
-//     blogCoverImg: editingData.imageLink,
-// 	});
-// 	if (editingData.content) {
-// 		const contentState = convertFromRaw(editingData.content);
-// 		setEditorState(EditorState.createWithContent(contentState));
-// 	  } else {
-// 		console.error("Content is undefined or invalid");
-// 	  }
-// 	setIsEditing(true);
-// }
-//   },[editingData])
-
-
   // function doing input validation
   useEffect(() => {
-    const isContentValid =
-      blogContent.title.trim() !== "" &&
-      blogContent.subtitle.trim() !== "" &&
-      editorState.getCurrentContent().hasText();
-    setBtnActive(!isContentValid);
+	const isContentValid =
+	  blogContent.title &&
+	  blogContent.title.trim() !== "" &&
+	  blogContent.subtitle &&
+	  blogContent.subtitle.trim() !== "" &&
+	  editorState.getCurrentContent().hasText();
+	setBtnActive(!isContentValid);
   }, [blogContent, editorState]);
+
+  //adding the values in inputfields to edit the blog
+  useEffect(() => {
+    if (editingData) { // checking if editingData is available and then updating the state value of the inputfield
+      setBlogContent({
+        title: editingData.title || "",
+        subtitle: editingData.subtitle || "",
+        blogCoverImg: editingData.imageLink || "",
+      }); 
+      const contentState = convertFromRaw(editingData.content); // converting the html value into raw content
+      setEditorState(EditorState.createWithContent(contentState)); // updating the content state after getting the editing data
+      setIsEditing(true); 
+    }
+  }, [editingData]);
+
 
   //handling the image file
   const handleFile = (e) => {
@@ -68,15 +68,27 @@ const NewBlogs = () => {
     }
   };
 
-  //publishing the blog in the click of the publish button
-  const handlePublish = (e) => {
+  //calling the patch method for updating the blog in server
+  const updateTheBlog = async (formData) => {
+	try {
+		const response = await axios.patch(`http://localhost:5000/blogs/${editingData.blogId}`, formData );
+		console.log("blog has been updated", response);
+		alert("The blogs has been updated!");
+	} catch (error) {
+		console.log("error in updating the blog",error);
+		alert("Unable to update the blog! please try again later");
+	}
+  }
+
+  //handling(publishing or updating) the blog on the click of handleSubmit function
+  const handleSubmit = (e) => {
     e.preventDefault();
     const contentState = editorState.getCurrentContent(); //getting the content of the blog from editor state
     const rawContent = JSON.stringify(convertToRaw(contentState)); // converting the blog content into html format and saving it as a raw content
 
-	console.log("here is the editor content", rawContent)
+    console.log("here is the editor content", rawContent);
 
-	//storing the data in formData 
+    //storing the data in formData
     const formData = new FormData();
     formData.append("title", blogContent.title);
     formData.append("subtitle", blogContent.subtitle);
@@ -84,7 +96,12 @@ const NewBlogs = () => {
     formData.append("blogCoverImg", blogContent.blogCoverImg);
     formData.append("content", rawContent);
 
-    publishBlogInServer(formData); // calling the post function sending blogs to server
+	if(editingData){ //run this function only when editingData in presented
+		updateTheBlog(formData);
+	}
+	else{
+		publishBlogInServer(formData); // calling the post function sending blogs to server
+	}
     setBlogContent({
       title: "",
       subtitle: "",
@@ -101,7 +118,7 @@ const NewBlogs = () => {
         </h1>
         <div className="border shadow-lg p-5 rounded-lg">
           <form
-            onSubmit={handlePublish}
+            onSubmit={handleSubmit}
             className="flex flex-col justify-between mx-auto items-start gap-2 w-4/5 md:w-3/4"
             encType="multipart/form-data"
           >
@@ -152,10 +169,10 @@ const NewBlogs = () => {
 
             <button
               disabled={btnActive}
+              type="submit"
               className="bg-green-600 font-semibold text-lg text-white py-2 mt-4 px-4 rounded-lg w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-				Publish
-              {/* {isEditing? "Update" : "Publish"} */}
+              {isEditing ? "Update" : "Publish"}
             </button>
           </form>
         </div>

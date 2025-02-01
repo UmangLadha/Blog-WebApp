@@ -10,6 +10,33 @@ const TextEditor = (props) => {
     setContent(newEditorState);
   };
 
+  //showing the seleted options in toolbar 
+  const toolbarOptions = {
+    options: ["inline", "fontSize", "fontFamily", "list", "textAlign"], // selected options
+    inline: {
+      options: ["bold", "italic", "underline"],
+    },
+    fontSize: {
+      options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96],
+    },
+    fontFamily: {
+      options: [
+        "Arial",
+        "Georgia",
+        "Impact",
+        "Tahoma",
+        "Times New Roman",
+        "Verdana",
+      ],
+    },
+    list: {
+      options: ["unordered", "ordered"], 
+    },
+    textAlign: {
+      options: ["left", "center", "right"],
+    },
+  };
+
   return (
     <>
       <Editor
@@ -17,7 +44,8 @@ const TextEditor = (props) => {
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
-		placeholder="Tell your story..."
+        placeholder="Tell your story..."
+        toolbar={toolbarOptions}
         onEditorStateChange={onEditorStateChange}
       />
     </>

@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React from "react";
 import LikesAndComment from "../likesAndComment/likesAndComment";
 import { useNavigate } from "react-router";
 import { BsPencilSquare } from "react-icons/bs";
@@ -10,9 +10,11 @@ const BlogCard = (props) => {
   const { editOption, blogData } = props;
   const navigate = useNavigate();
 
-  const handleEdit = (e) => {
+  console.log("this is blogData: ", blogData);
+
+  const handleEdit = (e, blog) => {
     e.preventDefault();
-    navigate("/write", {state: blogData}); //sending blogData to write page component
+    navigate("/write", {state: blog}); //sending blogData to write page component
     console.log("editing the blog");
   };
 
@@ -71,7 +73,7 @@ const BlogCard = (props) => {
               />
               {editOption && (
                 <div className="flex items-center gap-2">
-				<div onClick={handleEdit} className="flex items-center gap-1">
+				<div onClick={(e)=> handleEdit(e, blog)} className="flex items-center gap-1">
                   <BsPencilSquare />
                   Edit
                 </div>
