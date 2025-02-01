@@ -3,7 +3,6 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { BiComment } from "react-icons/bi";
 import { useSelector } from "react-redux";
-// import { liked, disLiked } from "../../redux/features/counter/counterSlice";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -47,23 +46,26 @@ const LikesAndComment = (props) => {
 
   //filtering the likes of user by username
   useEffect(() => {
-    async function getLikesByUsername() {
-      try {
-        const allLikes = await axios.get("http://localhost:5000/likes");
-        const userLikedBlogs = allLikes.data.filter(
-          (likes) => likes.username === user.username
-        ); // getting the response and filtering them out
-        setUserLikes(userLikedBlogs); //------------------------------------------------
-        setLiked(
-          userLikedBlogs.some((like) => like.blogId === blogData.blogId)
-        ); // checking the blog if user has liked it or not ------------------------------------------------
-        // console.log("fetched the user likedata", userLikedBlogs); //-------------------
-      } catch (error) {
-        console.log("error in fetching the user liked blog", error);
+    if (isLoggedIn) {
+      // calling this function only when user is
+      async function getLikesByUsername() {
+        try {
+          const allLikes = await axios.get("http://localhost:5000/likes");
+          const userLikedBlogs = allLikes.data.filter(
+            (likes) => likes.username === user.username
+          ); // getting the response and filtering them out
+          setUserLikes(userLikedBlogs); //------------------------------------------------
+          setLiked(
+            userLikedBlogs.some((like) => like.blogId === blogData.blogId)
+          ); // checking the blog if user has liked it or not ------------------------------------------------
+          // console.log("fetched the user likedata", userLikedBlogs); //-------------------
+        } catch (error) {
+          console.log("error in fetching the user liked blog", error);
+        }
       }
+      getLikesByUsername();
     }
-    getLikesByUsername();
-  }, [user, blogData.blogId]);
+  }, [user, blogData.blogId, isLoggedIn]);
 
   // create post api for updateing the likes count
   async function sendingLikeDataToServer(likeData) {

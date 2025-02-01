@@ -72,7 +72,6 @@ const SignUpPage = () => {
       password: "",
       confirmPassword: "",
     });
-    // alert("You are successfully register!");
   };
 
   return (
@@ -178,7 +177,6 @@ const SignUpPage = () => {
 
           <button
             type="submit"
-            value="sign in"
             className="bg-purple-600 mt-5 text-white py-2 px-4 mb-3 w-full rounded-xl font-semibold hover:bg-purple-700 "
           >
             Sign up

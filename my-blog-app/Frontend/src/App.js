@@ -10,13 +10,15 @@ import { SignUpPage } from "./component/signup-page/signupPage";
 import { Provider } from "react-redux";
 import CompleteBlogViewPage from "./common/fullViewPage/completeBlogViewPage";
 import "./App.css";
-import store from "./redux/app/store";
 import ProtectedRoutes from "./utils/protectedRoutes";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from './redux/app/store';
 
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
+	  <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Header />
           <div className="w-full h-[calc(100vh-12vh)] mt-[12vh]">
@@ -33,6 +35,7 @@ function App() {
             </Routes>
           </div>
         </BrowserRouter>
+		</PersistGate>
       </Provider>
     </div>
   );

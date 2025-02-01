@@ -24,7 +24,7 @@ const UserProfileSection = () => {
     <div className="shadow-md w-full  md:w-2/6 border rounded-xl flex justify-between gap-3 flex-col p-4">
       <div className="flex items-start leading-3 justify-start gap-3">
         <div className="size-20 border rounded-full">
-          <img className="w-20 h-20 " src={DefaultProfile} alt="Profile" />
+          <img className="w-20 h-20 rounded-full border" src={DefaultProfile} alt="Profile" />
         </div>
 
         <div className="flex flex-col gap-2">

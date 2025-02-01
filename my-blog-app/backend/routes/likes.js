@@ -53,7 +53,7 @@ likeRouter.delete("/:blogId/:username", async (req, res)=>{
 
 		const updatelikeCount = blog.likeCounts - 1; // decrementing the like count
 	
-		await Blogs.update(
+		await Blogs.update(    
 		  {
 			likeCounts: updatelikeCount,
 		  },

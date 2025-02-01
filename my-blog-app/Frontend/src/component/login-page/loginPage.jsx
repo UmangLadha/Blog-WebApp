@@ -33,8 +33,9 @@ const LoginPage = () => {
       const res = await axios.post(
         "http://localhost:5000/login",
         userInsertedValue
-      );
-      console.log(res.data.user); //printing respone in console
+      ); // checking the username and password weather user exit or not
+      console.log("User has been authenticated succesfully", res.data.user); //printing respone in console
+	  localStorage.setItem("authenticated", res.data.authenticated);
       dispatch(login(res.data.user)); //
       navigate("/");
     } catch (error) {
@@ -42,6 +43,8 @@ const LoginPage = () => {
       alert("username or password incorrect! Please try again.");
     }
   };
+
+//   console.log("Data store in this dataype", typeof Boolean(localStorage.getItem("authenticated")));
 
   return (
     <div className="flex py-10 items-center justify-center text-center w-full">
