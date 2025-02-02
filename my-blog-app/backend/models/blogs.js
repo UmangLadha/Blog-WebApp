@@ -12,7 +12,7 @@ const Blogs = sequelize.define("blogs", {
   subtitle: { type: DataTypes.STRING },
   imageLink: { type: DataTypes.STRING },
   content: { type: DataTypes.JSON },
-  likesCounts: { type: DataTypes.INTEGER, defaultValue: 11 },
+  likesCounts: { type: DataTypes.INTEGER },
 });
 
 module.exports = Blogs;

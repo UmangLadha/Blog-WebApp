@@ -54,7 +54,10 @@ const SignUpPage = () => {
 	  alert(response.data.message);
 	  navigate("/login");
     } catch (error) {
-      console.log("error in sending userdata: ", error);
+		if(error.response && error.response.data){ // checking that of there is error or not
+			console.log("error in sending userdata: ", error);
+			setErrorMsg(error.response.data.message);
+		}
     }
   };
 
