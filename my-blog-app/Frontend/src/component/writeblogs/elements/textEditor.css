@@ -1,0 +1,47 @@
+.wrapper-class {
+  border: 1px solid black;
+  width: 100%;
+  max-width: 100%;
+  height: 50vh;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar-class {
+  flex-shrink: 0;
+  height: 40px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  padding: 5px;
+  border-radius: 10px 10px 0 0;
+  z-index: 10;
+}
+
+.editor-class {
+  height: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  line-height: 1.5;
+}
+
+.editor-class:focus {
+  outline: none;
+}
+
+.rdw-editor-wrapper {
+  margin-bottom: 10px;
+}
+
+.rdw-editor-main {
+  min-height: 200px;
+}
+
+.rdw-toolbar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
