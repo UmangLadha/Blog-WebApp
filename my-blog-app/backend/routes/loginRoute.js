@@ -1,13 +1,13 @@
 const express = require("express");
 const loginRouter = express.Router();
-const Users = require("../models/users");
+const Users = require("../models/userDetailsTable");
 
 loginRouter.post("/", async (req, res)=>{
 	try {
 		const { username, password } = req.body;
 		const user = await Users.findOne({where:{
-			username: username,
-			password: password
+			userName: username,
+			userPassword: password
 		}})
 		if(!user){
 			console.log(error);

@@ -41,7 +41,7 @@ const BlogCard = (props) => {
             <div className="w-full flex flex-row-reverse gap-2 justify-between items-start">
               <div className="size-40">
                 <img
-                  src={`http://localhost:5000/${blog.imageLink}`} // getting the image
+                  src={`http://localhost:5000/${blog.blogImageLink}`} // getting the image
                   alt="Blog related"
                   className=" w-full h-full rounded-lg"
                 />
@@ -55,15 +55,15 @@ const BlogCard = (props) => {
                       navigate(`/blog/${blog.blogId}`, { state: blog })
                     } //sending blogData with navigate function of router
                   >
-                    {blog.title}
+                    {blog.blogTitle}
                   </h1>
                   <small>
                     Written by :{" "}
-                    {blog.author}
+                    {blog.blogAuthor}
                   </small>
                 </div>
 
-                <p className="line-clamp-2">{blog.subtitle}</p>
+                <p className="line-clamp-2">{blog.blogSubtitle}</p>
               </div>
             </div>
 

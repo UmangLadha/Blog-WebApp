@@ -67,7 +67,7 @@ const LikesAndComment = (props) => {
     }
   }, [user, blogData.blogId, isLoggedIn]);
 
-  // create post api for updateing the likes count
+  // create post api for updating the likes count
   async function sendingLikeDataToServer(likeData) {
     try {
       const response = await axios.post(

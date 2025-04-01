@@ -15,15 +15,15 @@ const CompleteBlogViewPage = () => {
     setFullBlog(location.state); //getting the data from location object of router and rendering it in useState
   }, [location]);
 
-  const blogContent = draftToHtml((fullBlog.content)); // converting the raw content in to html
+  const blogContent = draftToHtml((fullBlog.blogContent)); // converting the raw content in to html
 
   return (
     <div className="w-11/12 md:w-3/6 mx-auto pt-6 font-serif">
       <div className="mx-auto">
         <div className="w-11/12 mx-auto">
-          <h1 className="text-5xl font-semibold py-6">{fullBlog.title}</h1>
+          <h1 className="text-5xl font-semibold py-6">{fullBlog.blogTitle}</h1>
           <span className="font-light text-lg">
-            Written by : {fullBlog.author}
+            Written by : {fullBlog.blogAuthor}
           </span>
         </div>
         <div className="my-7">
@@ -38,7 +38,7 @@ const CompleteBlogViewPage = () => {
         <div className="border w-4/5 mx-auto h-80 mb-14">
           <img
             className="w-full h-full"
-            src={`http://localhost:5000/${fullBlog.imageLink}`}
+            src={`http://localhost:5000/${fullBlog.blogImageLink}`}
             alt="CoverImg"
           />{" "}
         </div>

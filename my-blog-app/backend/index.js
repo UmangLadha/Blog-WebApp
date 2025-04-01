@@ -1,20 +1,20 @@
 const express = require("express");
 const cors = require("cors");
-const userRouter = require("./routes/users");
+const userRouter = require("./routes/signupRoute");
 const blogRouter = require("./routes/blogs");
-const loginRouter = require("./routes/login");
+const loginRouter = require("./routes/loginRoute");
 const commentRouter = require("./routes/comments");
 const likeRouter = require("./routes/likes");
 const { sequelize } = require("./config/database");
 
 const app = express();
 
-// Middleware
+// Middleware functions
 app.use(cors());
 app.use(express.json());
-app.use(express.static("my-uploads")); //accessing the my-uploads folder  ----------learn about it----------- 
+app.use(express.static("my-uploads")); //accessing the my-uploads folder
 
-// Connect to database and create table function 
+// Connecting with the database and creating the database in table form 
 const connectAndCreate = async()=>{
 	try {
 		await sequelize.authenticate(); //Testing the connection before syncing with it
@@ -26,7 +26,7 @@ const connectAndCreate = async()=>{
 	}
 }
 
-connectAndCreate();
+connectAndCreate(); // calling the above function
 
 // Mount routes
 app.use("/users", userRouter);

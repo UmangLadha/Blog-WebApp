@@ -1,6 +1,6 @@
 const express = require("express");
 const blogRouter = express.Router();
-const Blogs = require("../models/blogs");
+const Blogs = require("../models/blogsTable");
 const multer = require("multer");
 
 // middelwear function for saving the image in database
