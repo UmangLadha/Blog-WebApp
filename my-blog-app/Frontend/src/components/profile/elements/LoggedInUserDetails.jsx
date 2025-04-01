@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { logout } from "../../..//redux/features/auth/authSlice";
+import { logout } from "../../../redux/features/auth/authSlice";
 import DefaultProfile from "../../../images/defaultProfile.png";
 
-const UserProfileSection = () => {
+const LoggedInUserDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user); // getting user from redux
@@ -28,8 +28,8 @@ const UserProfileSection = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <h2 className="font-medium text-xl">{userData.fullname}</h2>
-          <p>{userData.email}</p>
+          <h2 className="font-medium text-xl">{userData.userFullname}</h2>
+          <p>{userData.userEmail}</p>
         </div>
       </div>
 
@@ -44,4 +44,4 @@ const UserProfileSection = () => {
   );
 };
 
-export default UserProfileSection;
+export default LoggedInUserDetails;

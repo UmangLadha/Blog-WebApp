@@ -7,7 +7,6 @@ import { BsPencilSquare } from "react-icons/bs";
 
 const Header = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-//   const isLoggedIn = Boolean(localStorage.getItem("authenticated"));
 
   return (
     <>

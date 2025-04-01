@@ -1,7 +1,7 @@
 const express = require("express");
 const likeRouter = express.Router();
-const Likes = require("../models/blogLikes");
-const Blogs = require("../models/blogs");
+const Likes = require("../models/blogLikesTable");
+const Blogs = require("../models/blogsTable");
 
 // fetching all the likes from the table
 likeRouter.get("/", async (req, res) => {

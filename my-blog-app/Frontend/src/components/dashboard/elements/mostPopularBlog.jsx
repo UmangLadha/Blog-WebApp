@@ -14,16 +14,19 @@ const MostPopularBlog = () => {
         const Blogs = await axios.get("http://localhost:5000/blogs");
         console.log("here is the blog data", Blogs.data);
         const mostLikedBlogs = Blogs.data.filter(
-          (blog) => blog.likesCounts > 10
+          (blog) => blog.blogLikesCounts > 10
         ); // filtering out the most liked blogs from server respones
-        mostLikedBlogs.sort((b, a) => a.likesCounts - b.likesCounts); // after filtering we are sorting the blogs on the base of its like counts
+        mostLikedBlogs.sort((b, a) => a.blogLikesCounts - b.blogLikesCounts); // after filtering we are sorting the blogs on the base of its like counts
+        console.log("here is the moreLikedBlogData:",mostLikedBlogs);
         setBlogData(mostLikedBlogs);
       } catch (error) {
-        console.log(error);
+        console.log("Error in fetching the data:",error);
       }
     }
     fetchBlogs();
   }, []);
+  
+
 
   return (
     <>

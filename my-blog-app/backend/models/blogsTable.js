@@ -7,12 +7,12 @@ const Blogs = sequelize.define("blogs", {
     primaryKey: true,
     autoIncrement: true,
   },
-  author: { type: DataTypes.STRING },
-  title: { type: DataTypes.STRING },
-  subtitle: { type: DataTypes.STRING },
-  imageLink: { type: DataTypes.STRING },
-  content: { type: DataTypes.JSON },
-  likesCounts: { type: DataTypes.INTEGER },
+  blogAuthor: { type: DataTypes.STRING },
+  blogTitle: { type: DataTypes.STRING },
+  blogSubtitle: { type: DataTypes.STRING },
+  blogImageLink: { type: DataTypes.STRING },
+  blogContent: { type: DataTypes.JSON },
+  blogLikesCounts: { type: DataTypes.INTEGER },
 });
 
 module.exports = Blogs;
