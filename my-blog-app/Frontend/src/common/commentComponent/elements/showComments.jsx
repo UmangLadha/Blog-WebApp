@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DefaultProfile from "../../../images/defaultProfile.png";
 import axios from 'axios';
 
 
-const ShowingComments = (props) => {
-	const {blogId , comments, setComments} = props;
+const ShowingComments = ({blogId}) => {
+  const [showComment, setShowComment] = useState([]);
 
 	// requesting the server and getting the comments and then filtering it out on the basis of blogId
 	useEffect(()=>{
@@ -12,18 +12,18 @@ const ShowingComments = (props) => {
 			try {
 				const resFromServer = await axios.get("http://localhost:5000/comments");
 				const spacificBlogComments =  resFromServer.data.filter(comment=>comment.blogId === blogId);
-				setComments(spacificBlogComments);
+				setShowComment(spacificBlogComments);
 			} catch (error) {
 				console.log(error, "cannot get the comments of this blog");
 			}
 		}
 		getComments();
-	},[comments, blogId, setComments])
+	},[showComment, blogId, setShowComment])
 
   return (
 	<div className="w-full flex flex-col gap-6 my-8 p-4">
-        {comments.length > 0 ? (
-          comments.map((commentData, id) => (
+        {showComment.length > 0 ? (
+          showComment.map((commentData, id) => (
             <div key={id} className="flex w-full items-start gap-2">
               <img
                 className="border rounded-full size-11"

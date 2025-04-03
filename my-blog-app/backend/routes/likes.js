@@ -26,11 +26,11 @@ likeRouter.post("/", async (req, res) => {
 
     const blog = await Blogs.findOne({ where: { blogId: blogId } }); //retriving the likes count from the blog
 
-    const updatelikeCount = blog.likeCounts + 1; // incrementing the like count
+    const updatelikeCount = blog.blogLikesCounts + 1; // incrementing the like count
 
     await Blogs.update(
       {
-        likeCounts: updatelikeCount,
+        blogLikesCounts: updatelikeCount,
       },
       { where: { blogId: blogId } }
     );
@@ -51,16 +51,16 @@ likeRouter.delete("/:blogId/:username", async (req, res)=>{
 
 		const blog = await Blogs.findOne({ where: { blogId: blogId } }); //retriving the likes count from the blog
 
-		const updatelikeCount = blog.likeCounts - 1; // decrementing the like count
+		const updatelikeCount = blog.blogLikesCounts - 1; // decrementing the like count
 	
 		await Blogs.update(    
 		  {
-			likeCounts: updatelikeCount,
+        blogLikesCounts: updatelikeCount,
 		  },
 		  { where: { blogId: blogId } }
 		);
 
-		res.status(200).json({message:"dislikes the blog"});
+		res.status(200).json({message:"disliked the blog"});
 	} catch (error) {
 		console.log("error in deleting the like data", error);
 		res.status(400).json({error:"error in deleting the likeData"});

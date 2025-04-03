@@ -4,15 +4,11 @@ import axios from "axios";
 import ShowingComments from "./elements/showComments";
 import { useNavigate } from "react-router";
 
-const CommentComponent = (props) => {
-  const { blogId } = props;
-  const [showComment, setShowComment] = useState([]);
+const CommentComponent = ({ blogData }) => {
   const navigate = useNavigate();
   const [inputCommentValue, setInputCommentValue] = useState("");
   const [cmtBtn, setCmtBtn] = useState(true); // state for handling toggel of comment button
-  const user = useSelector(state=>state.auth.user) // getting the user data from redux 
-
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const { isLoggedIn, user } = useSelector((state) => state.auth); // getting the user data and isloggedIn boolen from redux 
 
   //running the comment toggle btn function  
   useEffect(() => {
@@ -36,17 +32,16 @@ const CommentComponent = (props) => {
   //running the function on clicking the comment btn
   const handleComment = (e) => {
     e.preventDefault();
-	console.log(isLoggedIn);
-	if(isLoggedIn){
+	console.log(isLoggedIn); // have to remove this later
 
+	if(isLoggedIn){
 		const commentContent = {
-			blogId : blogId,
-			username: user.username, //
+			blogId : blogData.blogId,
+			username: user.userName, //
 			commentText: inputCommentValue,
 		};
 		
 		postComments(commentContent);
-		console.log(showComment);
 	}
 	else{
 		alert("please login to write the comment");
@@ -58,13 +53,13 @@ const CommentComponent = (props) => {
   return (
     <div id="comments" className="my-6 px-4">
       <h2 className="text-2xl font-semibold pb-7">
-        Comments({showComment.length})
+        Comments({blogData.blogCommentsCounts || 0})
       </h2>
       <div className="flex items-start justify-start gap-4 px-2">
         <input
+          id="commentValue"
           type="text"
           name="comments"
-          id="commentValue"
           value={inputCommentValue}
           onChange={(e) => setInputCommentValue(e.target.value)}
           placeholder="What are your thoughts?"
@@ -81,7 +76,7 @@ const CommentComponent = (props) => {
         </button>
       </div>
 
-      <ShowingComments blogId={blogId} comments={showComment} setComments={setShowComment}/>
+      <ShowingComments blogId={blogData.blogId} />
        
     </div>
   );

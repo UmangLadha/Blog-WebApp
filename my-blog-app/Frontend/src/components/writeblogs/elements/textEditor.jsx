@@ -3,8 +3,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./textEditor.css";
 
-const TextEditor = (props) => {
-  const { content, setContent } = props;
+const TextEditor = ({ content, setContent }) => {
 
   const onEditorStateChange = (newEditorState) => {
     setContent(newEditorState);

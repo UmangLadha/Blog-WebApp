@@ -49,16 +49,16 @@ blogRouter.post("/", upload.single("blogCoverImg"), async (req, res) => {
 
     const imageLink = req.file ? req.file.filename : null; // Get the file path
 
-    console.log(req.body); // logging incoming body changes
+    console.log("here is the blog Data coming from client", req.body); // logging incoming body changes
     console.log("here is the img data: ", req.file); //consoling full req.file object
 
     const blog = await Blogs.create({
-      title: title,
-      subtitle: subtitle,
-      imageLink: imageLink,
-      content: JSON.parse(content),
-      author: author,
-      likesCounts: likesCounts,
+      blogTitle: title,
+      blogAuthor: author,
+      blogSubtitle: subtitle,
+      blogImageLink: imageLink,
+      blogContent: JSON.parse(content),
+      blogLikesCounts: likesCounts,
     });
     res.status(200).json(`${blog.title} blog added in the database`);
   } catch (error) {
@@ -84,18 +84,17 @@ blogRouter.get("/:id", async (req, res) => {
 });
 
 // updating the specific blog data
-blogRouter.patch("/:id",upload.single("blogCoverImg"), async (req, res) => {
+blogRouter.patch("/:id", upload.single("blogCoverImg"), async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, subtitle, content, likesCounts, author } =
-      req.body;
-	  
+    const { title, subtitle, content, likesCounts, author } = req.body;
+
     // Validate required fields
     if (!title || !subtitle || !content || !author) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-	const imageLink = req.file ? req.file.filename : null; // Get the file path
+    const imageLink = req.file ? req.file.filename : null; // Get the file path
 
     console.log(req.body); // logging incoming body changes
     console.log("here is the img data: ", req.file); //consoling full req.file object
@@ -103,12 +102,12 @@ blogRouter.patch("/:id",upload.single("blogCoverImg"), async (req, res) => {
     // const blog = await Blogs.findByPk(id);
     const blog = await Blogs.update(
       {
-        title: title,
-        subtitle: subtitle,
-        imageLink: imageLink,
-        content: JSON.parse(content),
-        likesCounts: likesCounts,
-        author: author,
+        blogTitle: title,
+        blogAuthor: author,
+        blogSubtitle: subtitle,
+        blogImageLink: imageLink,
+        blogContent: JSON.parse(content),
+        blogLikesCounts: likesCounts,
       },
       { where: { blogId: id } }
     );

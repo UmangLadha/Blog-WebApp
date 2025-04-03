@@ -1,6 +1,7 @@
 const express = require("express");
 const commentRouter = express.Router();
 const Comments = require("../models/comments");
+const Blogs = require("../models/blogsTable");
 
 commentRouter.post("/", async (req, res) => {
   try {
@@ -10,7 +11,19 @@ commentRouter.post("/", async (req, res) => {
       username: username,
       commentText: commentText,
     });
-    res.status(200).json("comment has been saved");
+
+    const blog = await Blogs.findOne({ where: { blogId: blogId } }); //updating the comments count in the blog table
+
+    const updateCommentCount = blog.blogCommentsCounts + 1; // incrementing the comments count
+
+    await Blogs.update(
+      {
+        blogCommentsCounts: updateCommentCount,
+      },
+      { where: { blogId: blogId } }
+    );
+
+    res.status(200).json({message:"comment has been saved"});
   } catch (error) {
     console.log(error);
     res

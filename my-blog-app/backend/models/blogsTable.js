@@ -13,6 +13,7 @@ const Blogs = sequelize.define("blogs", {
   blogImageLink: { type: DataTypes.STRING },
   blogContent: { type: DataTypes.JSON },
   blogLikesCounts: { type: DataTypes.INTEGER },
+  blogCommentsCounts: { type: DataTypes.INTEGER },
 });
 
 module.exports = Blogs;
