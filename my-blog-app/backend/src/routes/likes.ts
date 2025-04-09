@@ -67,4 +67,4 @@ likeRouter.delete("/:blogId/:username", async (req, res)=>{
 	}
 })
 
-module.exports = likeRouter;
+export default likeRouter;

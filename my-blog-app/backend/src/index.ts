@@ -1,11 +1,11 @@
-const express = require("express");
-const cors = require("cors");
-const userRouter = require("./routes/signupRoute");
-const blogRouter = require("./routes/blogs");
-const loginRouter = require("./routes/loginRoute");
-const commentRouter = require("./routes/comments");
-const likeRouter = require("./routes/likes");
-const { sequelize } = require("./config/database");
+import express from "express";
+import cors from "cors";
+import userRouter from "./routes/signupRoute";
+import blogRouter from "./routes/blogs";
+import loginRouter from "./routes/loginRoute";
+import commentRouter from "./routes/comments";
+import likeRouter from "./routes/likes";
+import { sequelize } from "../config/database";
 
 const app = express();
 

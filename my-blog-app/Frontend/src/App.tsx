@@ -1,4 +1,3 @@
-// import reportWebVitals from "./reportWebVitals";
 import { Dashboard } from "./components/dashboard/dashboard";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { RouteNotFound } from "./common/errorPage/routeNotFound";
@@ -8,7 +7,6 @@ import { LoginPage } from "./components/login-page/loginPage";
 import { SignUpPage } from "./components/signup-page/signupPage";
 import { Provider } from "react-redux";
 import CompleteBlogViewPage from "./common/fullViewPage/completeBlogViewPage";
-import "./App.css";
 import ProtectedRoutes from "./utils/protectedRoutes";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./redux/app/store";

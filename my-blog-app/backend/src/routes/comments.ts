@@ -42,4 +42,4 @@ commentRouter.delete("/:blogId", async (req, res) => {
 	}
   });
 
-module.exports = commentRouter;
+  export default commentRouter;

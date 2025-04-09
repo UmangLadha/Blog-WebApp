@@ -4,9 +4,11 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
-  },
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "nodemon dist/index.js",
+  "dev": "ts-node src/index.ts",
+  "build": "tsc"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,5 +22,12 @@
     "sqlite3": "^5.1.7",
     "uuid": "^11.0.5"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
 }
