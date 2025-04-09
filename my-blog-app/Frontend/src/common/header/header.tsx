@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink, Link } from "react-router";
 import { BsPencilSquare } from "react-icons/bs";

@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../config/database");
+import { sequelize } from "../config/database";
+import DataTypes from "sequelize";
 
 const UsersDetails = sequelize.define("usersDetails", {
   userId: {
@@ -14,4 +14,4 @@ const UsersDetails = sequelize.define("usersDetails", {
   userPassword: { type: DataTypes.STRING },
 });
 
-module.exports = UsersDetails;
+export default UsersDetails;

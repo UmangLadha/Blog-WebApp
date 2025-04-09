@@ -1,5 +1,5 @@
-const { DataTypes } =  require("sequelize");
-const { sequelize } =  require("../config/database");
+import { sequelize } from "../config/database";
+import DataTypes from "sequelize";
 
 const BlogComments = sequelize.define("Comments", {
 	blogId: {type: DataTypes.INTEGER},
@@ -7,5 +7,5 @@ const BlogComments = sequelize.define("Comments", {
 	commentText: {type: DataTypes.TEXT}, 
 });
 
-module.exports = BlogComments;
+export default BlogComments;
 

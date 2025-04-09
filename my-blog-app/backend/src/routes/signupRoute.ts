@@ -55,8 +55,8 @@ userRouter.post("/", async (req, res) => {
 
 // accessing the spcific user data
 userRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const { id } = req.body;
     if (!id) {
       res.status(400).json(`${id} not found or may be it doesnt exits`);
     }
@@ -72,8 +72,8 @@ userRouter.get("/:id", async (req, res) => {
 
 //deleting the specific user
 userRouter.delete("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
     UserTable.destroy({ where: { userId: id } });
     res.status(200).json("user deleted");
   } catch (error) {

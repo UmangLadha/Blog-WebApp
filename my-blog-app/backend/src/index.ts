@@ -1,16 +1,16 @@
 import express from "express";
 import cors from "cors";
-import userRouter from "./routes/signupRoute";
+import  userRouter from "./routes/signupRoute";
 import blogRouter from "./routes/blogs";
 import loginRouter from "./routes/loginRoute";
 import commentRouter from "./routes/comments";
 import likeRouter from "./routes/likes";
-import { sequelize } from "../config/database";
+import { sequelize } from "./config/database";
 
 const app = express();
 
 // Middleware functions
-app.use(cors());
+app.use(cors()); // Enables the backend to accept requests from frontend  
 app.use(express.json());
 app.use(express.static("my-uploads")); //accessing the my-uploads folder
 

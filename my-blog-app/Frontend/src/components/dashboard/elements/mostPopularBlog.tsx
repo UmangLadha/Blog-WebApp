@@ -1,10 +1,8 @@
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import BlogCard from "../../../common/blogCardComponent/blogCard";
 import axios from "axios";
 
 const MostPopularBlog = () => {
-  //   const [liked, setLiked] = useState(false);
-  //   const [likesCount, setLikesCount] = useState(10);
 
   const [blogData, setBlogData] = useState([]);
 

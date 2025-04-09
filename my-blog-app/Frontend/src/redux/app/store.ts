@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import  counterReducer  from '../features/counter/counterSlice';
 import  authReducer from '../features/auth/authSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -10,7 +9,6 @@ const persistConfig = {
 }; // storing the redux in localstorage in key value pair
 
 const nestedReducers = combineReducers({
-	counter: counterReducer,
 	auth: authReducer,
 }); // using the combineReducer feature for nesting the redux slice
 

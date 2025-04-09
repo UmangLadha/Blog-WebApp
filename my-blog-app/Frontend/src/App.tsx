@@ -11,6 +11,7 @@ import ProtectedRoutes from "./utils/protectedRoutes";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./redux/app/store";
 import { UserProfileOverview } from "./components/profile/userProfileOverview";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <BrowserRouter>
             <Header />
             <div className="w-full h-[calc(100vh-12vh)] mt-[12vh]">
+            <Toaster />
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/login" element={<LoginPage />} />

@@ -1,10 +1,15 @@
-import React from "react";
 import LikesAndComment from "../likesAndComment/likesAndComment";
 import { useNavigate } from "react-router";
 import { BsPencilSquare } from "react-icons/bs";
-import axios from "axios";
-// import { MdDelete } from "react-icons/md";
 // import axios from "axios";
+// import { MdDelete } from "react-icons/md";
+
+type blogDetails = {
+  editOption:Boolean;
+  blogData:{
+    
+  }[]
+}
 
 const BlogCard = (props) => {
   const { editOption, blogData } = props;

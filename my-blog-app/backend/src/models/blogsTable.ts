@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../config/database");
+import { sequelize } from "../config/database";
+import DataTypes from "sequelize";
 
 const Blogs = sequelize.define("blogs", {
   blogId: {
@@ -12,7 +12,9 @@ const Blogs = sequelize.define("blogs", {
   blogSubtitle: { type: DataTypes.STRING },
   blogImageLink: { type: DataTypes.STRING },
   blogContent: { type: DataTypes.JSON },
-  blogLikesCounts: { type: DataTypes.INTEGER },
+  blogLikesCount: { type: DataTypes.INTEGER, defaultValue: 0, },
+  blogCommentsCount: { type: DataTypes.INTEGER, defaultValue: 0, },
 });
 
-module.exports = Blogs;
+export default Blogs;
+
