@@ -1,30 +1,8 @@
-const express = require("express");
-const loginRouter = express.Router();
-const Users = require("../models/userDetailsTable");
+import { Router } from "express";
+import { loginUser } from "../controllers/loginRoute";
 
-loginRouter.post("/", async (req, res)=>{
-	try {
-		const { username, password } = req.body;
-		const user = await Users.findOne({where:{
-			userName: username,
-			userPassword: password
-		}})
-		if(!user){
-			console.log(error);
-			res.status(401).json({error:"username or password incorrect"})
-		}
-		else{
-			res.status(200).json({
-				user,
-				authenticated: true,
-				message: "user authenticated succesfully",
-				timestampe: Date.now(),
-			})
-		}
-	} catch (error) {
-		console.log(error);
-		res.status(400).json({error: "error finding user"})
-	}
-})
+const loginRouter = Router();
+
+loginRouter.post("/",loginUser);
 
 export default loginRouter;
