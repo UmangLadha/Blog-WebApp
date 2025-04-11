@@ -1,5 +1,5 @@
 import { Dashboard } from "./components/dashboard/dashboard";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { RouteNotFound } from "./common/errorPage/routeNotFound";
 import { Header } from "./common/header/header";
 import { NewBlogs } from "./components/writeblogs/newBlogs";
@@ -15,7 +15,7 @@ import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
@@ -37,7 +37,7 @@ function App() {
           </BrowserRouter>
         </PersistGate>
       </Provider>
-    </div>
+    </>
   );
 }
 

@@ -18,4 +18,7 @@ export const store = configureStore({
   reducer: persistedReducer
 }) // this is the redux store
 
+
 export const persistor = persistStore(store); // storing the full redux store in persist store
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
