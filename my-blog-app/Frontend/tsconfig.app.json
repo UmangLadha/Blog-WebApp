@@ -9,6 +9,7 @@
 
     /* Bundler mode */
     "types": [],
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,

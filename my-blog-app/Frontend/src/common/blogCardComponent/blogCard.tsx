@@ -44,7 +44,7 @@ const BlogCard = ({ editOption, blogData }:BlogCardProps ) => {
             {/* //sending blogData with navigate function of router */}
             <div
               className="w-full flex flex-row-reverse gap-2 justify-between items-start"
-              onClick={() => navigate(`/blog/${blog.blogId}`, { state: blog })}
+              onClick={() => navigate(`/blog/${blog.blogId}`)}
               >
               <div className="size-40">
                 <img

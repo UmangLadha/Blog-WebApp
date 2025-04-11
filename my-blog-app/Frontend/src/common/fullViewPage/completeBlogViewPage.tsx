@@ -1,27 +1,39 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LikesAndComment from "../likesAndComment/likesAndComment";
 import CommentComponent from "../commentComponent/commentComponent";
-// import axios from "axios";
-// import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
+import axios from "axios";
+import { useParams } from "react-router";
 import draftToHtml from "draftjs-to-html";
+import { Blog } from "../types/types";
 
 const CompleteBlogViewPage = () => {
-  const [fullBlog, setFullBlog] = useState([]);
-  const location = useLocation();
+  const [fullBlog, setFullBlog] = useState<Blog|null>(null);
+  const {id} = useParams<{ id: string }>();
+  const blogId = Number(id);
 
   useEffect(() => {
-    console.log("here is the current location of the blog ", location);
-    setFullBlog(location.state); //getting the data from location object of router and rendering it in useState
-  }, [location]);
+    async function fetchingBlogById() {
+      try{
+        const response  = await axios.get<Blog>(`https://localhost:5000/blogs/${blogId}`);
+        setFullBlog(response.data); //fetching the blogdata and rendering it in useState
+        // console.log("here is the blogData ", response.data);
+      }catch(error){
+        console.log("Error in fetching blog: ",error)
+      }
+    }
+      fetchingBlogById()
+  }, [blogId]);
 
-  const blogContent = draftToHtml((fullBlog.blogContent)); // converting the raw content in to html
+  if (!fullBlog) return <p className="text-center py-20">Loading blog...</p>;
+
+  const blogContent = draftToHtml(JSON.parse(fullBlog.blogContent)); // converting the raw content in to html
 
   return (
     <div className="w-11/12 md:w-3/6 mx-auto pt-6 font-serif">
       <div className="mx-auto">
         <div className="w-11/12 mx-auto">
           <h1 className="text-5xl font-semibold py-6">{fullBlog.blogTitle}</h1>
+          <p className="text-2xl font-medium text-slate-300">{fullBlog.blogSubtitle}</p>
           <span className="font-light text-lg">
             Written by : {fullBlog.blogAuthor}
           </span>
@@ -29,9 +41,7 @@ const CompleteBlogViewPage = () => {
         <div className="my-7">
           <hr />
           <div className="py-4 px-8">
-            <LikesAndComment
-              blogData={fullBlog}
-            />
+          <LikesAndComment blogId={fullBlog.blogId} likeCounts={fullBlog.blogLikesCount} commentCounts= {fullBlog.blogCommentsCount}/>
           </div>
           <hr />
         </div>

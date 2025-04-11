@@ -21,7 +21,7 @@ function App() {
           <BrowserRouter>
             <Header />
             <div className="w-full h-[calc(100vh-12vh)] mt-[12vh]">
-            <Toaster />
+            <Toaster position="top-center" />
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/login" element={<LoginPage />} />
