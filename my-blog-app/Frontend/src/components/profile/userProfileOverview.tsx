@@ -1,4 +1,3 @@
-import React from "react";
 import UserWrittenBlogs from "./elements/UserWrittenBlogs";
 import LoggedInUserDetails from "./elements/LoggedInUserDetails";
 

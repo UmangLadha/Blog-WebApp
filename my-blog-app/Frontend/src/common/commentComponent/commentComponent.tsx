@@ -47,7 +47,7 @@ const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
 
     if (isLoggedIn && userName) {
       const commentContent = {
-        blogId: blogId,
+        blogId,
         username: userName, //
         commentText: data.comment,
       };

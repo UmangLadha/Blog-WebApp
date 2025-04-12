@@ -1,113 +1,92 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router";
+import { useAppDispatch } from "../../redux/app/hooks/hooks";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../redux/features/auth/authSlice";
 import axios from "axios";
+import Input from "../../common/formHandler/inputHandle";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { UserDetails } from "../../common/types/types";
 
 const LoginPage = () => {
-  const [inputValue, setInputValue] = useState({
-    username: "",
-    password: "",
-  });
-  const [errorMsg, setErrorMsg] = useState("");
+  const {
+    handleSubmit,
+    watch,
+    register,
+    formState: { errors },
+    reset,
+  } = useForm<UserDetails>(); // giving typescript
 
+  const userText = watch();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const handleBlur = (e) => {
-    e.preventDefault();
-    if (!inputValue.username || !inputValue.password) {
-      setErrorMsg("Username or Password fields cannot be blank!");
-    } else {
-      setErrorMsg("");
+  async function authenticatingUser(user: UserDetails) {
+    try {
+      const response = await axios.post("http://localhost:5000/login", user);
+      // console.log("User has been authenticated succesfully", res.data.user); //printing response in console
+      localStorage.setItem("authenticated", response.data.authenticated);
+      dispatch(login(response.data.user)); //
+      reset();
+      toast.success("Login successfully!");
+      navigate("/");
+    } catch (error) {
+      console.log("login error", error);
+      toast.error("username or password incorrect. Try again!");
     }
-  };
-
-  const handleInputChange = (e) => {
-    const {name, value} = e.target;
-    setInputValue((prev)=>({
-      ...prev,
-      [name]:value,
-    }));
   }
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const userInsertedValue = {
-        username: inputValue.username,
-        password: inputValue.password,
-      };
-      const res = await axios.post(
-        "http://localhost:5000/login",
-        userInsertedValue
-      ); // checking the username and password weather user exit or not
-      console.log("User has been authenticated succesfully", res.data.user); //printing response in console
-	  localStorage.setItem("authenticated", res.data.authenticated);
-      dispatch(login(res.data.user)); //
-      navigate("/");
-
-    } catch (error) {
-      console.log("error fetching user", error);
-      alert("username or password incorrect! Please try again.");
-    }
+  const handleLogin = (data: UserDetails) => {
+    authenticatingUser(data);
   };
 
-//   console.log("Data store in this dataype", typeof Boolean(localStorage.getItem("authenticated")));
+  //   console.log("Data store in this dataype", typeof Boolean(localStorage.getItem("authenticated")));
 
   return (
-    <div className="flex py-8 items-center justify-center text-center w-full min-h-screen bg-gray-100">
+    <div className="flex py-8 items-center justify-center text-center w-full">
       <div className="shadow-xl bg-white w-full mx-4 border rounded-lg p-8 sm:w-4/5 md:w-3/5 lg:w-2/5 xl:1/3">
         <h1 className="text-2xl font-bold pb-6 pt-3 text-gray-700">Login</h1>
         <form
           className="flex flex-col justify-between mx-auto items-start w-3/5"
-          onSubmit={handleLogin}
+          onSubmit={handleSubmit(handleLogin)}
         >
-          {errorMsg && <p className="text-red-600 text-sm mb-3 w-full text-left">{errorMsg}</p>}
-
-          <label htmlFor="userName" className="font-semibold ">
-            Username
-          </label>
-          <input
-            id="username"
-            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
-            type="text"
+          <Input<UserDetails>
+            label="Username"
+            inputType="text"
             name="username"
-            autoComplete="username"
-            value={inputValue.username}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            placeholder="Enter your username"
-            required
+            register={register}
+            minLength={5}
+            error={errors.username}
+            errorMsg="Username is required"
+            inputPlaceholder="Enter your username"
+            required={true}
           />
 
-          <label htmlFor="Password" className="font-semibold">
-            Password
-          </label>
-          <input
-          id="password"
-            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
-            type="password"
+          <Input<UserDetails>
+            label="Password"
+            inputType="password"
             name="password"
-            autoComplete="new-password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+            register={register}
+            pattern={{
+              value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
+              message:
+                "Password must contain uppercase, lowercase, digit and 8+ characters",
+            }}
+            error={errors.password}
+            errorMsg="Password must include a capital, number, and be at least 8 chars"
             minLength={8}
-            value={inputValue.password}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            placeholder="Enter your password"
-            required
+            inputPlaceholder="Enter your password"
+            required={true}
           />
 
           <button
             type="submit"
-            className="bg-purple-600 mt-5 text-white py-2 px-4 mb-3 w-full rounded-xl font-semibold hover:bg-purple-700 transition-colors "
+            disabled={!userText.username || !userText.password}
+            className={`bg-purple-600 mt-4 text-white py-2 px-4 mb-3 w-full rounded-xl font-semibold hover:bg-purple-700 transition-colors disabled:bg-purple-300`}
           >
             Login
           </button>
         </form>
-        <p>
+        <p className="mt-2 text-sm text-gray-600">
           Don&apos;t have an account?{" "}
           <Link
             to="/signup"

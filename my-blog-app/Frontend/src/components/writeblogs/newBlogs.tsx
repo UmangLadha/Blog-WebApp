@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TextEditor from "./elements/textEditor";
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/app/hooks/hooks";
 import { useLocation } from "react-router";
+import Input from "../../common/formHandler/inputHandle";
+import { useForm } from "react-hook-form";
+import { NewBlogData } from "../../common/types/types";
 
 const NewBlogs = () => {
+const {register ,watch, formState:{errors}, handleSubmit} = useForm();
+const newBlogData = watch();
+
   const [blogContent, setBlogContent] = useState({
     title: "",
     subtitle: "",
@@ -14,25 +20,12 @@ const NewBlogs = () => {
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty()); //initializiing the editor state
 
-  const [btnActive, setBtnActive] = useState(false); // publish toggel button
-
-  const user = useSelector((state) => state.auth.user); // getting userData form redux to show in author name
+  const user = useAppSelector((state) => state.auth.user); // getting userData form redux to show in author name
 
   const [isEditing, setIsEditing] = useState(false);
   const location = useLocation();
   const editingData = location.state;
   //   console.log("this is the data got from navigate:", editingData);
-  
-  // function doing input validation
-  useEffect(() => {
-	const isContentValid =
-	  blogContent.title &&
-	  blogContent.title.trim() !== "" &&
-	  blogContent.subtitle &&
-	  blogContent.subtitle.trim() !== "" &&
-	  editorState.getCurrentContent().hasText();
-	setBtnActive(!isContentValid);
-  }, [blogContent, editorState]);
 
   //adding the values in inputfields to edit the blog
   useEffect(() => {
@@ -50,7 +43,7 @@ const NewBlogs = () => {
 
 
   //handling the image file
-  const handleFile = (e) => {
+  const handleFile = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const file = e.target.files[0];
     setBlogContent({ ...blogContent, blogCoverImg: file });
@@ -81,7 +74,7 @@ const NewBlogs = () => {
   }
 
   //handling(publishing or updating) the blog on the click of handleSubmit function
-  const handleSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const contentState = editorState.getCurrentContent(); //getting the content of the blog from editor state
     const rawContent = JSON.stringify(convertToRaw(contentState)); // converting the blog content into html format and saving it as a raw content
@@ -118,36 +111,31 @@ const NewBlogs = () => {
         </h1>
         <div className="border shadow-lg p-5 rounded-lg">
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col justify-between mx-auto items-start gap-2 w-4/5 md:w-3/4"
             encType="multipart/form-data"
           >
-            <label htmlFor="title" className="text-lg">
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              value={blogContent.title}
-              onChange={(e) =>
-                setBlogContent({ ...blogContent, title: e.target.value })
-              }
-              placeholder="Title"
-              className="border outline-none text-2xl font-medium py-1 px-4 mb-2 rounded-lg w-full"
+            <Input<NewBlogData>
+            label="Title"
+            inputType="text"
+            name="title"
+            inputPlaceholder="Write your title"
+            error={errors.title}
+            errorMsg="Input cannot be blank"
+            minLength={10}
+            required={true}
+            register={register}
             />
-
-            <label className="text-lg" htmlFor="subtitle">
-              Subtitle
-            </label>
-            <input
-              type="text"
-              id="subtitle"
-              value={blogContent.subtitle}
-              onChange={(e) =>
-                setBlogContent({ ...blogContent, subtitle: e.target.value })
-              }
-              placeholder="Subtitle"
-              className="border outline-none py-1 px-4 text-2xl mb-2 rounded-lg w-full"
+            <Input<NewBlogData>
+            label="Subtitle"
+            inputType="text"
+            name="subtitle"
+            inputPlaceholder="Write your subtitle"
+            error={errors.subtitle}
+            errorMsg="Input cannot be blank"
+            minLength={10}
+            required={true}
+            register={register}
             />
 
             <label className="text-lg" htmlFor="blogCoverImg">
@@ -168,7 +156,7 @@ const NewBlogs = () => {
             <TextEditor content={editorState} setContent={setEditorState} />
 
             <button
-              disabled={btnActive}
+              disabled={newBlogData}
               type="submit"
               className="bg-green-600 font-semibold text-lg text-white py-2 mt-4 px-4 rounded-lg w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
             >

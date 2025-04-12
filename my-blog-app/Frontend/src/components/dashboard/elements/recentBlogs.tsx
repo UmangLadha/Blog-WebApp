@@ -1,5 +1,4 @@
-import React from 'react'
-import BlogCard from '../../../common/blogCardComponent/blogCard';
+import BlogCard from "../../../common/blogCardComponent/blogCard";
 
 const RecentBlogs = () => {
   return (

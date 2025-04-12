@@ -34,3 +34,18 @@ export type BlogCardProps = {
     commentCounts: number;
   };
 
+  //using this interface in login and signup page
+  export interface UserDetails {
+    username:string;
+    fullname:string;
+    email:string;
+    password:string;
+    confirmPassword:string;
+  }
+
+export interface NewBlogData {
+  title:string;
+  subtitle:string;
+  blogCoverImg:string;
+  blogContent:object;
+}

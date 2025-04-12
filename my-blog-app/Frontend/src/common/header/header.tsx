@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/app/hooks/hooks";
 import { NavLink, Link } from "react-router";
 import { BsPencilSquare } from "react-icons/bs";
 
 // import { IoPersonCircleSharp } from "react-icons/io5";
 
 const Header = () => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   return (
     <>
