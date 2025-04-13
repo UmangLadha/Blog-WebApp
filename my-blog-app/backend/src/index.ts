@@ -12,7 +12,7 @@ const app = express();
 // Middleware functions
 app.use(cors()); // Enables the backend to accept requests from frontend  
 app.use(express.json());
-app.use(express.static("../uploads")); //accessing the my-uploads folder
+app.use(express.static("uploads")); //accessing the my-uploads folder
 
 // Connecting with the database and creating the database in table form 
 const connectAndCreate = async()=>{

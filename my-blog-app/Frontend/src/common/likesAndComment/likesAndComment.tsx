@@ -64,7 +64,7 @@ const LikesAndComment = ({ blogId, likeCounts, commentCounts }:BlogInteractionPr
       setLiked(true);
       setUpdatingLikesCount((prev)=> prev +1); // updating the likes count
     } else {
-      toast.error("Please login to continue");
+      toast.error("Please login to like the blog");
       navigate("/login");
     }
   };

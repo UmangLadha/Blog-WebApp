@@ -9,9 +9,8 @@ type CommentProps = {
 
 const ShowingComments = ({blogId}:CommentProps) => {
     const [showComment, setShowComment] = useState<CommentsData[]>([]);
-  
 
-	// requesting the server and getting the comments and then filtering it out on the basis of blogId
+	// getting the comments
 	useEffect(()=>{
 		async function getComments (){
 			try {
@@ -22,12 +21,12 @@ const ShowingComments = ({blogId}:CommentProps) => {
 			}
 		}
 		getComments();
-	},[blogId, setShowComment])
+	},[blogId])
 
   return (
-	<div className="w-full flex flex-col gap-6 my-8 p-4">
+	<div className="w-full flex flex-col gap-6 p-2 rounded-xl my-2">
         {showComment.length > 0 ? (
-          showComment.map((commentData:CommentsData, id) => (
+          showComment?.map((commentData:CommentsData, id) => (
             <div key={id} className="flex w-full items-start gap-2">
               <img
                 className="border rounded-full size-11"

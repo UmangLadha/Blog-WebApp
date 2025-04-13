@@ -6,7 +6,7 @@ import {
   FieldError,
 } from "react-hook-form";
 
-export interface InputProps<T extends FieldValues> {
+interface InputProps<T extends FieldValues> {
   name: Path<T>;
   label?: string;
   inputPlaceholder: string;
@@ -34,7 +34,7 @@ function Input<T extends FieldValues>({
   matchWith
 }: InputProps<T>) {
   return (
-    <div className="flex flex-col mb-4 w-full text-left">
+    <div className="flex flex-col mb-3 w-full text-left">
       {label && (
         <label className="mb-1 font-medium text-gray-700">{label}</label>
       )}

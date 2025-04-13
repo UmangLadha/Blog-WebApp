@@ -1,12 +1,10 @@
 import { Request, Response } from "express";
 import Users from "../models/userDetailsTable";
-import expressAsyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 
-export const loginUser = expressAsyncHandler(
-  async (req: Request, res: Response) => {
-    const { username, password } = req.body;
-
+export const loginUser = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+  try {
     if (!username || !password) {
       res.status(400);
       throw new Error("username or password required");
@@ -35,5 +33,8 @@ export const loginUser = expressAsyncHandler(
         timestampe: Date.now(),
       });
     }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: "error finding user" });
   }
-);
+};

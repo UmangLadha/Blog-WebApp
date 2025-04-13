@@ -1,11 +1,12 @@
+import { RawDraftContentState } from "draft-js";
 
-
+//usting this interface in fullview page
 export type Blog = {
   blogId: number;
   blogAuthor: string;
   blogTitle: string;
   blogSubtitle: string;
-  blogContent:string;
+  blogContent:RawDraftContentState;
   blogImageLink?: string;
   blogLikesCount: number;
   blogCommentsCount: number;
@@ -46,6 +47,7 @@ export type BlogCardProps = {
 export interface NewBlogData {
   title:string;
   subtitle:string;
-  blogCoverImg:string;
-  blogContent:object;
+  author:string;
+  blogCoverImg:string|File;
+  blogContent:string;
 }

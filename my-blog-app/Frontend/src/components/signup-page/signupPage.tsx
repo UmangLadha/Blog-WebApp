@@ -19,9 +19,10 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   //sending userdata to server
-  const sendingDataToServer = async (user: UserDetails) => {
+  const sendingDataToServer = async (data: UserDetails) => {
+    console.log(data);
     try {
-      const response = await axios.post("http://localhost:5000/users", user);
+      const response = await axios.post("http://localhost:5000/users", data);
       console.log("here is the response from backend:", response);
       toast.success("Signup successfull!");
       reset();
@@ -62,7 +63,7 @@ const SignUpPage = () => {
             label="Username"
             inputType="text"
             name="username"
-            register={register}
+            register={register} 
             minLength={5}
             error={errors.username}
             errorMsg="Username is required"

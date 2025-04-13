@@ -7,12 +7,17 @@ import { useLocation } from "react-router";
 import Input from "../../common/formHandler/inputHandle";
 import { useForm } from "react-hook-form";
 import { NewBlogData } from "../../common/types/types";
+import toast from "react-hot-toast";
 
 const NewBlogs = () => {
-const {register ,watch, formState:{errors}, handleSubmit} = useForm();
+const {register, watch, formState:{errors}, handleSubmit, reset} = useForm<NewBlogData>();
 const newBlogData = watch();
 
-  const [blogContent, setBlogContent] = useState({
+  const [blogContent, setBlogContent] = useState<{
+    title: string,
+    subtitle: string,
+    blogCoverImg: File | string |undefined,
+  }>({
     title: "",
     subtitle: "",
     blogCoverImg: "",
@@ -21,6 +26,7 @@ const newBlogData = watch();
   const [editorState, setEditorState] = useState(EditorState.createEmpty()); //initializiing the editor state
 
   const user = useAppSelector((state) => state.auth.user); // getting userData form redux to show in author name
+  const username:string = (user && typeof user==="object")?user.userName:"";
 
   const [isEditing, setIsEditing] = useState(false);
   const location = useLocation();
@@ -45,61 +51,60 @@ const newBlogData = watch();
   //handling the image file
   const handleFile = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const file = e.target.files[0];
+    const file = e.target?.files?.[0];
+    console.log(typeof file);
+    console.log(file);
     setBlogContent({ ...blogContent, blogCoverImg: file });
   };
 
   // calling the post method to publish the blog data in backend
-  const publishBlogInServer = async (blogData) => {
+  const publishTheBlog = async (blogData:FormData) => {
+    console.log(blogData)
     try {
-      const res = await axios.post("http://localhost:5000/blogs", blogData);
-      console.log("Blog has been published successfully", res);
-      alert("wow! the blog has been published!");
+      const response = await axios.post("http://localhost:5000/blogs", blogData);
+      console.log("Blog has been published successfully", response);
+      toast.success("Blog has been published!");
+      reset();
     } catch (error) {
       console.log("here is the error why blog has not published: ", error);
-      alert("unable to publish the blog! please try again later");
+      toast.error("Unable to publish the blog!");
     }
   };
 
   //calling the patch method for updating the blog in server
-  const updateTheBlog = async (formData) => {
+  const updateTheBlog = async (formData:FormData) => {
 	try {
 		const response = await axios.patch(`http://localhost:5000/blogs/${editingData.blogId}`, formData );
 		console.log("blog has been updated", response);
-		alert("The blogs has been updated!");
+		toast.success("Blog has updated!");
+    reset();
 	} catch (error) {
 		console.log("error in updating the blog",error);
-		alert("Unable to update the blog! please try again later");
+		toast.error("Unable to update the blog! please try again later");
 	}
   }
 
   //handling(publishing or updating) the blog on the click of handleSubmit function
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data:NewBlogData) => {
     const contentState = editorState.getCurrentContent(); //getting the content of the blog from editor state
-    const rawContent = JSON.stringify(convertToRaw(contentState)); // converting the blog content into html format and saving it as a raw content
+    const rawContent = JSON.stringify(convertToRaw(contentState)); // converting the blog content into html format and saving it as a string type raw content
 
     console.log("here is the editor content", rawContent);
 
-    //storing the data in formData
+    //storing the data in FormData object
     const formData = new FormData();
-    formData.append("title", blogContent.title);
-    formData.append("subtitle", blogContent.subtitle);
-    formData.append("author", user.username);
-    formData.append("blogCoverImg", blogContent.blogCoverImg);
+    formData.append("title", data.title);
+    formData.append("subtitle", data.subtitle);
+    formData.append("author", username);
+    formData.append("blogCoverImg", data.blogCoverImg);
     formData.append("content", rawContent);
 
 	if(editingData){ //run this function only when editingData in presented
 		updateTheBlog(formData);
 	}
 	else{
-		publishBlogInServer(formData); // calling the post function sending blogs to server
+    publishTheBlog(formData); // calling the post function sending blogs to server
 	}
-    setBlogContent({
-      title: "",
-      subtitle: "",
-      blogCoverImg: "",
-    });
     setEditorState(EditorState.createEmpty());
   };
 
@@ -156,7 +161,7 @@ const newBlogData = watch();
             <TextEditor content={editorState} setContent={setEditorState} />
 
             <button
-              disabled={newBlogData}
+              disabled={!newBlogData}
               type="submit"
               className="bg-green-600 font-semibold text-lg text-white py-2 mt-4 px-4 rounded-lg w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
             >

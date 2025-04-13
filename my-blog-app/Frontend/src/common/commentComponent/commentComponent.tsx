@@ -12,7 +12,7 @@ interface Comment {
 }
 
 const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
-  const { register, handleSubmit, watch ,reset } = useForm<Comment>();
+  const { register, handleSubmit, watch, reset } = useForm<Comment>();
 
   const navigate = useNavigate();
   const { user, isLoggedIn } = useAppSelector((state) => state.auth); // getting the user data from redux
@@ -33,7 +33,7 @@ const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
         "http://localhost:5000/comments",
         newComment
       );
-      toast.success("comment posted successfully")
+      toast.success("comment posted successfully");
       console.log(comment.data);
     } catch (error) {
       console.log("unable to send comments to server", error);
@@ -42,18 +42,15 @@ const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
   }
 
   //running the function on clicking the comment btn
-  const handleComment = (data: Comment) => { //getting the comment data from Form
-    // console.log(isLoggedIn);
-
+  const handleComment = (data: Comment) => {
+    //getting the comment data from Form
     if (isLoggedIn && userName) {
       const commentContent = {
         blogId,
         username: userName, //
         commentText: data.comment,
       };
-
       postComments(commentContent);
-      // console.log(showComment);
       reset(); //reseting the comment after submit
     } else {
       toast.error("please login to write the comment");
@@ -61,35 +58,30 @@ const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
     }
   };
 
-  return (
-    <div id="comments" className="my-6 px-4">
-      <h2 className="text-2xl font-semibold pb-7">
-        Comments(100)
-      </h2>
-      <div className="flex items-start justify-start gap-4 px-2">
-        <form onSubmit={handleSubmit(handleComment)}>
-          <Input<Comment>
-            label="Your Comment"
-            name="comment"
-            inputType="text"
-            inputPlaceholder="What are your views?"
-            register={register}
-            required={true}
-          />
-          <button
-            type="submit"
-            disabled={!commentText?.comment.trim()}
-            className="py-2 px-2 text-white rounded-lg bg-purple-600 disabled:bg-purple-300"
-          >
-            Comment
-          </button>
-        </form>
-      </div>
-
-      <ShowingComments
-        blogId={blogId}
-      />
-    </div>
+  return (  
+    <>
+      <form
+        className=" w-full flex items-end justify-between gap-4"
+        onSubmit={handleSubmit(handleComment)}
+      >
+        <Input<Comment>
+          label="Your Comment"
+          name="comment"
+          inputType="text"
+          inputPlaceholder="What are your views?"
+          register={register}
+          required={true}
+        />
+        <button
+          type="submit"
+          disabled={!commentText?.comment}
+          className="py-2 px-2 mb-3 text-white rounded-lg bg-purple-600 disabled:bg-purple-300"
+        >
+          Comment
+        </button>
+      </form>
+      <ShowingComments blogId={blogId} />
+    </>
   );
 };
 

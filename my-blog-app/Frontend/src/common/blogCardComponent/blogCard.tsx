@@ -1,13 +1,11 @@
 import LikesAndComment from "../likesAndComment/likesAndComment";
 import { Link, useNavigate } from "react-router-dom";
 import { BsPencilSquare } from "react-icons/bs";
-import { Blog,BlogCardProps } from "../types/types";
+import { Blog, BlogCardProps } from "../types/types";
 // import axios from "axios";
 // import { MdDelete } from "react-icons/md";
 
-
-
-const BlogCard = ({ editOption, blogData }:BlogCardProps ) => {
+const BlogCard = ({ editOption, blogData }: BlogCardProps) => {
   const navigate = useNavigate();
 
   // console.log("this is blogData: ", blogData);
@@ -34,23 +32,20 @@ const BlogCard = ({ editOption, blogData }:BlogCardProps ) => {
 
   return (
     <div className="flex items-start w-full gap-4 p-2 flex-wrap">
-      {
-        blogData?.map((blog) => (
+      {blogData?.map((blog) => (
+        <div
+          className=" w-full md:w-[48%] flex flex-col items-start p-3 gap-3 border rounded-lg shadow cursor-pointer hover:shadow-lg"
+          key={blog.blogId}
+        >
+          {/* //sending blogData with navigate function of router */}
           <Link to={`/blog/${blog.blogId}`}>
-          <div
-            className=" w-full md:w-[48%] flex flex-col items-start p-2 gap-3 border rounded-lg shadow cursor-pointer hover:shadow-lg"
-            key={blog.blogId}
-            >
-            {/* //sending blogData with navigate function of router */}
-            <div
-              className="w-full flex flex-row-reverse gap-2 justify-between items-start"
-              >
+            <div className="w-full flex flex-row-reverse gap-2 justify-between items-start">
               <div className="size-40">
                 <img
-                  src={`http://localhost:5000/${blog.blogImageLink ?? ""}`} // getting the image
+                  src={`http://localhost:5000/uploads/${blog.blogImageLink ?? ""}`} // getting the image
                   alt="Blog related"
                   className=" w-full h-full rounded-lg"
-                  />
+                />
               </div>
               <div className="flex flex-col justify-between gap-2 items-start w-3/4">
                 <div className="flex flex-col items-start">
@@ -64,28 +59,32 @@ const BlogCard = ({ editOption, blogData }:BlogCardProps ) => {
                 <p className="line-clamp-2">{blog.blogSubtitle}</p>
               </div>
             </div>
+          </Link>
 
-            <div className="flex w-full justify-between items-center px-2 ">
-              <LikesAndComment blogId={blog.blogId} likeCounts={blog.blogLikesCount} commentCounts= {blog.blogCommentsCount}/>
-              {editOption && (
-                <div className="flex items-center gap-2">
-                  <div
-                    onClick={(e) => handleEdit(e, blog)}
-                    className="flex items-center gap-1"
-                    >
-                    <BsPencilSquare />
-                    Edit
-                  </div>
-                  {/* <div onClick={handleDelete} className="flex items-center gap-1">
+          <div className="flex w-full justify-between items-center px-2 ">
+            <LikesAndComment
+              blogId={blog.blogId}
+              likeCounts={blog.blogLikesCount}
+              commentCounts={blog.blogCommentsCount}
+            />
+            {editOption && (
+              <div className="flex items-center gap-2">
+                <div
+                  onClick={(e) => handleEdit(e, blog)}
+                  className="flex items-center gap-1"
+                >
+                  <BsPencilSquare />
+                  Edit
+                </div>
+                {/* <div onClick={handleDelete} className="flex items-center gap-1">
                   <MdDelete className="text-lg" />
                   Delete
                   </div> */}
-                </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        </Link>
-        ))}
+        </div>
+      ))}
     </div>
   );
 };

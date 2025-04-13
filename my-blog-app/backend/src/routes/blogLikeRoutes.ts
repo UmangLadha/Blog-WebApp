@@ -3,7 +3,7 @@ import { getLikes, deleteLike, createLike } from "../controllers/likes";
 
 const likeRouter = Router();
 
-likeRouter.get("/",getLikes);
+likeRouter.get("/:blogId",getLikes);
 likeRouter.post("/",createLike);
 likeRouter.delete("/:blogId/:username",deleteLike);
 

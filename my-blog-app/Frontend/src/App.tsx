@@ -2,7 +2,7 @@ import { Dashboard } from "./components/dashboard/dashboard";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { RouteNotFound } from "./common/errorPage/routeNotFound";
 import { Header } from "./common/header/header";
-import { NewBlogs } from "./components/writeblogs/newBlogs";
+import { NewBlogs } from "./components/writeblogs/writeBlogs";
 import { LoginPage } from "./components/login-page/loginPage";
 import { SignUpPage } from "./components/signup-page/signupPage";
 import { Provider } from "react-redux";
@@ -20,7 +20,7 @@ function App() {
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
             <Header />
-            <div className="w-full h-[calc(100vh-12vh)] mt-[12vh] bg-gray-100">
+            <div className="w-full h-[calc(100vh-12vh)] mt-[10vh] pb-10">
             <Toaster position="top-center" />
               <Routes>
                 <Route path="/" element={<Dashboard />} />
