@@ -5,8 +5,8 @@ const blogRouter = Router();
 
 blogRouter.post("/",createBlog);
 blogRouter.get("/",getBlogs);
-blogRouter.get("/:id",getBlogById);
-blogRouter.patch( "/:id",updateBlog);
-blogRouter.delete( "/:id",deleteBlog);
+blogRouter.get("/:blogId",getBlogById);
+blogRouter.patch( "/:blogId",updateBlog);
+blogRouter.delete( "/:blogId",deleteBlog);
 
 export default blogRouter;

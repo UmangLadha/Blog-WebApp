@@ -37,17 +37,17 @@ export type BlogCardProps = {
 
   //using this interface in login and signup page
   export interface UserDetails {
-    username:string;
-    fullname:string;
-    email:string;
-    password:string;
-    confirmPassword:string;
+    username?:string;
+    fullname?:string;
+    email?:string;
+    password?:string;
+    confirmPassword?:string;
   }
 
 export interface NewBlogData {
-  title:string;
-  subtitle:string;
-  author:string;
-  blogCoverImg:string|File;
-  blogContent:string;
+  author?:string;
+  title?:string;
+  subtitle?:string;
+  blogContent?:string;
+  blogImageLink?:string|ArrayBuffer|null;
 }

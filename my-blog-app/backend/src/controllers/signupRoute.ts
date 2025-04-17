@@ -3,7 +3,7 @@ import Users from "../models/userDetailsTable";
 import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 
-interface userBodyRequest {
+interface UserBodyRequest {
   username: string;
   fullname: string;
   email: string;
@@ -11,24 +11,23 @@ interface userBodyRequest {
 }
 
 // accessing the all user data
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response) =>{
   try {
     const user = await Users.findAll();
     res.status(200).json(user);
   } catch (error) {
-    console.log(error);
-    res.status(400).json({ error: "users not found in database" });
+    console.log("Error in fetching users:",error);
+    res.status(400).json({ message: "users not found in database" });
   }
 };
 
 //adding the new user data in database
 export const registerUser = async (req: Request, res: Response) => {
-  const { username, fullname, email, password } = req.body as userBodyRequest;
-  // console.log("user data recived from client:",req.body);
+  const { username, fullname, email, password } = req.body as UserBodyRequest;
   try {
     if (!username || !email || !fullname || !password) {
-      res.status(400);
-      throw new Error("All fields are required");
+      res.status(400).json({message:"All fields are required"});
+      return;
     }
 
     const existingUser = await Users.findOne({
@@ -39,12 +38,12 @@ export const registerUser = async (req: Request, res: Response) => {
 
     if (existingUser) {
       if (existingUser.userName === username) {
-        res.status(400);
-        throw new Error(`Username "${username}" already exists`);
+        res.status(400).json({message:`Username "${username}" already exists`});
+         return;
       }
       if (existingUser.userEmail === email) {
-        res.status(400);
-        throw new Error(`Email "${email}" is already registered`);
+        res.status(400).json({message:`Email "${email}" is already registered`});
+         return;
       }
     }
 
@@ -58,7 +57,7 @@ export const registerUser = async (req: Request, res: Response) => {
     });
     res.status(200).json({ message: `${user.userName} added in the database` });
   } catch (error) {
-    console.log(error);
+    console.log("Error in registering user:",error);
     res.status(400).json({ message: "error in adding user in database" });
   }
 };
@@ -68,21 +67,18 @@ export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     if (!id) {
-      res.status(400);
-      throw new Error(`${id} not found or may be it doesnt exits`);
+      res.status(400).json({message:`${id} not found or may be it doesnt exits`});
+       return;
     }
-    // console.log("inside id", id);
     const user = await Users.findByPk(id);
-
     if (!user) {
-      res.status(404);
-      throw new Error("user not found");
+      res.status(404).json({message:"user not found"});
+       return;
     }
-    // console.log(user);
-    res.status(202).json(user);
+    res.status(200).json(user);
   } catch (error) {
-    console.log(error);
-    res.status(400).json(` ${id} user not found in the database`);
+    console.log("Error in getting user:",error);
+    res.status(400).json({message:`${id} user not found in the database`});
   }
 };
 
@@ -90,10 +86,15 @@ export const getUserById = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    await Users.destroy({ where: { userId: id } });
-    res.status(200).json("user deleted");
+    const user = await Users.destroy({ where: { userId: id } });
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+       return;
+    }
+    res.status(200).json({message:"user deleted"});
   } catch (error) {
-    console.log(error);
+    console.log("Error in deleting user:",error);
+    
     res.status(400).json({ error: "error in deleting user" });
   }
 };

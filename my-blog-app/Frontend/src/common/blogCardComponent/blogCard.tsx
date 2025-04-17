@@ -8,15 +8,12 @@ import { Blog, BlogCardProps } from "../types/types";
 const BlogCard = ({ editOption, blogData }: BlogCardProps) => {
   const navigate = useNavigate();
 
-  // console.log("this is blogData: ", blogData);
-
   const handleEdit = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     blog: Blog
   ) => {
     e.preventDefault();
     navigate("/write", { state: blog }); //sending blogData to write page component
-    // console.log("editing the blog");
   };
 
   //   const handleDelete = (e)=>{
@@ -31,10 +28,10 @@ const BlogCard = ({ editOption, blogData }: BlogCardProps) => {
   //   }
 
   return (
-    <div className="flex items-start w-full gap-4 p-2 flex-wrap">
+    <div className="flex items-stretch w-full gap-4 flex-wrap">
       {blogData?.map((blog) => (
         <div
-          className=" w-full md:w-[48%] flex flex-col items-start p-3 gap-3 border rounded-lg shadow cursor-pointer hover:shadow-lg"
+          className=" w-full md:w-[49%] flex flex-col items-start p-3 gap-3 border rounded-lg shadow cursor-pointer hover:shadow-lg overflow-hidden"
           key={blog.blogId}
         >
           {/* //sending blogData with navigate function of router */}
@@ -49,10 +46,10 @@ const BlogCard = ({ editOption, blogData }: BlogCardProps) => {
               </div>
               <div className="flex flex-col justify-between gap-2 items-start w-3/4">
                 <div className="flex flex-col items-start">
-                  <h1 className="text-2xl font-semibold">{blog.blogTitle}</h1>
+                  <h1 className="text-2xl font-semibold hover:text-purple-600 transition-colors">{blog.blogTitle}</h1>
                   <small>
                     Written by :{" "}
-                    <span className="text-purple-400">{blog.blogAuthor}</span>
+                    <span className="text-gray-600 dark:text-gray-500">{blog.blogAuthor}</span>
                   </small>
                 </div>
 

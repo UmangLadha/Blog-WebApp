@@ -6,7 +6,7 @@ const Dashboard = () => {
   return(
     <>
       <MostPopularBlog />
-	  <hr />
+	  {/* <hr /> */}
 	  {/* <RecentBlogs /> */}
     </>
   );

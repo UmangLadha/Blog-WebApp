@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/app/hooks/hooks";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../../redux/features/auth/authSlice";
 import DefaultProfile from "../../../images/defaultProfile.png";
+import { MdLogout } from "react-icons/md";
 
 interface UserData{
   userFullname:string;
@@ -41,8 +42,9 @@ const LoggedInUserDetails = () => {
       <button
         type="button"
         onClick={handleLogout}
-        className="font-semibold text-white py-2 w-2/5 mx-auto rounded-lg bg-red-600"
+        className="font-semibold text-white py-2 w-full flex items-center justify-center mx-auto rounded-lg bg-red-400"
       >
+        <MdLogout className="mr-2 h-4 w-4" />
         Log Out
       </button>
     </div>

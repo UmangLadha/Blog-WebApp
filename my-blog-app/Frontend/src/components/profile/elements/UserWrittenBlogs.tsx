@@ -32,7 +32,7 @@ const UserWrittenBlogs = () => {
   }, [username]);
 
   return (
-    <div className="w-full border rounded-xl shadow-md p-2">
+    <div className="w-full border rounded-xl shadow-md p-5">
       <h1 className="font-semibold text-3xl pb-10">My Blogs</h1>
       {userBlogs.length > 0 ? (
         <BlogCard blogData={userBlogs} editOption={true} />

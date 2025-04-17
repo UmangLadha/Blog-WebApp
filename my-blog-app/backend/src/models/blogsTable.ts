@@ -21,7 +21,6 @@ interface BlogCreationAttributes extends Optional<BlogAttributes, "id"|"createdA
 // telling the typescript which values are required and also inherting the model class funtions from sequilize
 interface BlogInstance extends Model<BlogAttributes, BlogCreationAttributes>, BlogAttributes{} 
 
-
 const Blogs = sequelize.define<BlogInstance>("blogs", {
   blogId: {
     type: DataTypes.INTEGER,

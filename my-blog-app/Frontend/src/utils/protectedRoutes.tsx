@@ -1,5 +1,5 @@
 import { useAppSelector } from "../redux/app/hooks/hooks"
-import { Navigate, Outlet } from 'react-router'
+import { Navigate, Outlet } from 'react-router-dom'
 
 const ProtectedRoutes = () => {
 	const isLoggedIn = useAppSelector(state=>state.auth.isLoggedIn) 

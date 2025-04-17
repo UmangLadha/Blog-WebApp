@@ -1,41 +1,94 @@
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
-import Input from "../../common/formHandler/inputHandle";
+import axios, { AxiosError } from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { UserDetails } from "../../common/types/types";
+import { useState, useCallback } from "react";
 
 const SignUpPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm<UserDetails>();
-
-  const formData = watch();
-  const matchPassword = watch("password");
   const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState<UserDetails>({
+    fullname: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  // const [isFormValid, setIsFormValid] = useState<boolen>(true);
+
+  // checking form input valid or not function
+  const checkFormValidation = useCallback(() => {
+    if (
+      !inputValue.fullname ||
+      !inputValue.username ||
+      !inputValue.password ||
+      !inputValue.confirmPassword ||
+      !inputValue.email
+    ) {
+      setErrorMsg("Input fields cannot be blank!");
+      return false;
+    } else if (inputValue.password !== inputValue.confirmPassword) {
+      setErrorMsg("Passwords do not match!");
+      return false;
+    } else {
+      setErrorMsg("");
+      return true;
+    }
+  }, [inputValue]);
+
+  // callback function to check validation
+  const handleBlur = () => {
+    checkFormValidation();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   //sending userdata to server
-  const sendingDataToServer = async (data: UserDetails) => {
-    console.log(data);
+  const sendingDataToServer = async (userdata: UserDetails) => {
     try {
-      const response = await axios.post("http://localhost:5000/users", data);
-      console.log("here is the response from backend:", response);
-      toast.success("Signup successfull!");
-      reset();
+      const response = await axios.post(
+        "http://localhost:5000/users",
+        userdata
+      );
+      toast.success(response.data.message || "Signup successfull!");
+      setInputValue({
+        fullname: "",
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
       navigate("/login");
     } catch (error) {
-      console.log("error in sending userdata: ", error);
-      toast.error("User Registration failed");
+      if (error instanceof AxiosError) {
+        console.log("error in sending userdata: ", error);
+        toast.error(
+          error.response?.data?.message || "User Registration failed"
+        );
+      }
     }
   };
 
   //form submiting function
-  const createUser = (data: UserDetails) => {
-    sendingDataToServer(data); //calling the function to submit the data
+  const createUser = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const isFormValid: boolean = checkFormValidation();
+    if (!isFormValid) return;
+
+    const userData = {
+      username: inputValue.username,
+      fullname: inputValue.fullname,
+      email: inputValue.email,
+      password: inputValue.password,
+    };
+
+    sendingDataToServer(userData); //calling the function to submit the data
   };
 
   return (
@@ -46,82 +99,109 @@ const SignUpPage = () => {
         </h1>
         <form
           className="flex flex-col justify-between mx-auto items-start w-full md:w-4/5"
-          onSubmit={handleSubmit(createUser)}
+          onSubmit={createUser}
         >
-          <Input<UserDetails>
-            label="Full name"
-            inputType="text"
+          {errorMsg && (
+            <p className="text-red-600 text-sm mb-3 w-full text-left">
+              {errorMsg}
+            </p>
+          )}
+
+          <label
+            htmlFor="fullname"
+            className="font-semibold mb-1 text-gray-600"
+          >
+            Fullname
+          </label>
+          <input
+            id="fullname"
+            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
+            type="text"
             name="fullname"
-            register={register}
-            minLength={5}
-            error={errors.fullname}
-            errorMsg="Fullname is required"
-            inputPlaceholder="Enter your Fullname"
-            required={true}
+            autoComplete="name"
+            value={inputValue.fullname}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="Enter your full name"
+            required
           />
-          <Input<UserDetails>
-            label="Username"
-            inputType="text"
+
+          <label
+            htmlFor="username"
+            className="font-semibold mb-1 text-gray-600"
+          >
+            Username
+          </label>
+          <input
+            id="username"
+            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
+            type="text"
             name="username"
-            register={register} 
-            minLength={5}
-            error={errors.username}
-            errorMsg="Username is required"
-            inputPlaceholder="Enter your username"
-            required={true}
+            autoComplete="username"
+            value={inputValue.username}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="Enter your username"
+            required
           />
-          <Input<UserDetails>
-            label="Email"
-            inputType="text"
+
+          <label htmlFor="email" className="font-semibold mb-1 text-gray-600">
+            Email
+          </label>
+          <input
+            id="email"
+            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
+            type="email"
             name="email"
-            register={register}
-            pattern={{
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Invalid email address",
-            }}
-            error={errors.email}
-            errorMsg="Email is required"
-            inputPlaceholder="Enter your Email"
-            required={true}
+            autoComplete="email"
+            value={inputValue.email}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="Enter your email"
+            required
           />
-          <Input<UserDetails>
-            label="Password"
-            inputType="password"
+
+          <label htmlFor="password" className="font-semibold">
+            Password
+          </label>
+          <input
+            id="password"
+            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
+            type="password"
             name="password"
-            register={register}
-            pattern={{
-              value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
-              message:
-                "Password must contain uppercase, lowercase, digit and 8+ characters",
-            }}
-            error={errors.password}
-            errorMsg="Password must include a capital, number, and be at least 8 chars"
+            autoComplete="new-password"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             minLength={8}
-            inputPlaceholder="Enter your password"
-            required={true}
+            value={inputValue.password}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="Enter your password"
+            required
           />
-          <Input<UserDetails>
-            label="Confirm Password"
-            inputType="password"
+
+          <label htmlFor="confirmPassword" className="font-semibold">
+            Confirm Password
+          </label>
+          <input
+            id="confirmPassword"
+            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
+            type="password"
             name="confirmPassword"
-            register={register}
-            matchWith={matchPassword}
-            error={errors.password}
-            errorMsg="Password does not match!"
+            autoComplete="new-password"
+            title="Must match the password above"
             minLength={8}
-            inputPlaceholder="Enter your password"
-            required={true}
+            value={inputValue.confirmPassword}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="Confirm your password"
+            required
           />
+
           <button
             type="submit"
-            disabled={
-              !formData.fullname ||
-              !formData.username ||
-              !formData.email ||
-              !formData.password ||
-              !formData.confirmPassword
-            }
-            className="bg-purple-600 mt-4 text-white py-2 px-4 mb-3 w-full rounded-xl font-semibold hover:bg-purple-700 disabled:bg-purple-300 "
+            // disabled={isFormValid}
+            className={`bg-purple-600 mt-5 text-white py-2 px-4 mb-3 w-full rounded-xl font-semibold disabled:bg-purple-300`}
           >
             Sign up
           </button>
