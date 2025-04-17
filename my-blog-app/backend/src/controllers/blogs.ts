@@ -31,8 +31,6 @@ export const createBlog = async (req: Request, res: Response) => {
         return;
       }
 
-      // console.log("here is the blog image:",blogCoverImg);
-
       const removeFilePrefix =  blogImageLink.replace(/^data:.*;base64,/,"");
       const fileBuffer = Buffer.from(removeFilePrefix, "base64");
       const fileName = `blog-img-${Date.now()}.jpg`;
@@ -59,12 +57,13 @@ export const getBlogById = async (req: Request, res: Response) => {
   const { blogId } = req.params;
   try {
     if (!blogId) {
-      console.log("Blog id is invalid or not provided");
+      res.status(400).json({message:"Blog id is invalid or not provided"});
+      return;
     }
     const blog = await Blogs.findOne({ where: { blogId: blogId } }); // fetching the blog with given blogId
     if (!blog) {
-      res.status(404);
-      throw new Error(`Blog with this ${blogId} not found`);
+      res.status(404).json({message:`Blog with this ${blogId} not found`});
+      return;
     }
     res.status(200).json(blog);
   } catch (error) {

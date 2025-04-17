@@ -15,7 +15,9 @@ const NewBlogs = () => {
   });
   const [btnActive, setBtnActive] = useState<boolean>(false); // publish toggel button
 
-  const [editorState, setEditorState] = useState(EditorState.createEmpty()); //initializiing the editor state
+  const [editorState, setEditorState] = useState<EditorState>(
+    EditorState.createEmpty()
+  ); //initializiing the editor state
 
   const user = useAppSelector((state) => state.auth.user); // getting userData form redux to show in author name
   const username: string =
@@ -120,7 +122,7 @@ const NewBlogs = () => {
   //handling(publishing or updating) the blog on the click of handleSubmit function
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const contentState = editorState.getCurrentContent(); //getting the content of the blog from editor state
+    const contentState = editorState.getCurrentContent(); // it retruning the current content object(which contains complex methods, prototype, etc.) of the blog from editor
     const rawContent = JSON.stringify(convertToRaw(contentState)); // converting the blog content into html format and saving it as a string type raw content
 
     // console.log("here is the editor content", rawContent);
@@ -143,19 +145,16 @@ const NewBlogs = () => {
   };
 
   return (
-    <div className="w-full mx-auto py-10 md:w-4/5 font-serif ">
+    <div className="w-full mx-auto py-10 md:w-4/5 ">
       <div className="w-3/4 mx-auto ">
-        <h1 className="text-4xl font-bold py-7 tracking-tight ">
-          CREATE YOUR STORY
+        <h1 className="text-4xl text-center font-bold py-7 tracking-tight ">
+          Create Your Story
         </h1>
-        <div className="border shadow-lg p-5 rounded-lg">
+        <div className="shadow-xl p-5 rounded-lg">
           <form
             onSubmit={handleSubmit}
             className="flex flex-col justify-between mx-auto items-start gap-2 w-4/5 md:w-3/4"
           >
-            <label htmlFor="title" className="text-lg">
-              Title
-            </label>
             <input
               type="text"
               id="title"
@@ -164,12 +163,9 @@ const NewBlogs = () => {
                 setBlogContent({ ...blogContent, title: e.target.value })
               }
               placeholder="Title"
-              className="border outline-none text-2xl font-medium py-1 px-4 mb-2 rounded-lg w-full"
+              className="border-b border-purple-300 outline-none py-1 pl-3 w-full text-2xl font-bold mb-5"
             />
 
-            <label className="text-lg" htmlFor="subtitle">
-              Subtitle
-            </label>
             <input
               type="text"
               id="subtitle"
@@ -178,34 +174,70 @@ const NewBlogs = () => {
                 setBlogContent({ ...blogContent, subtitle: e.target.value })
               }
               placeholder="Subtitle"
-              className="border outline-none py-1 px-4 text-2xl mb-2 rounded-lg w-full"
+              className="border-b border-purple-300 outline-none py-1 pl-3 text-xl mb-4 w-full font-medium"
             />
 
-            <label className="text-lg" htmlFor="blogCoverImg">
-              Insert Image
-            </label>
+            {/* {previewUrl ? (
+                      <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+                        <img
+                          src={previewUrl || "/placeholder.svg"}
+                          alt="Cover preview"
+                          className="h-full w-full object-cover"
+                        />
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          className="absolute right-2 top-2"
+                          onClick={() => {
+                            setSelectedFile(null)
+                            setPreviewUrl(null)
+                          }}
+                        >
+                          Change
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed p-8 text-center">
+                        <div className="rounded-full bg-purple-100 p-3 dark:bg-purple-900/30">
+                          <ImageIcon className="h-6 w-6 text-purple-500" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium">Add a cover image</p>
+                          <p className="text-xs text-muted-foreground">Recommended size: 1200 x 630px</p>
+                        </div>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => document.getElementById("file-upload")?.click()}
+                        >
+                          <Upload className="mr-2 h-4 w-4" />
+                          Upload Image
+                        </Button>
+                        <input
+                          id="file-upload"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleFileChange}
+                        />
+                      </div>
+                    )} */}
+
             <input
               type="file"
               name="blogImg"
-              className="block w-full text-sm text-slate-500
-        file:mr-4 file:py-2 file:px-4 file:rounded-md
-        file:border-0 file:text-sm file:font-semibold
-        file:bg-purple-300 file:text-purple-700
-        hover:file:bg-purple-100"
+              className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold
+            file:bg-purple-300 file:text-purple-700 hover:file:bg-purple-100"
               id="blogCoverImg"
               accept="image/*"
               onChange={handleFile}
             />
-
-            <label className="text-lg" htmlFor="content">
-              Blog Content
-            </label>
             <TextEditor content={editorState} setContent={setEditorState} />
 
             <button
               disabled={btnActive}
               type="submit"
-              className="bg-green-600 font-semibold text-lg text-white py-2 mt-4 px-4 rounded-lg w-1/3 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-purple-600 font-semibold text-lg text-white py-2 mt-4 px-4 rounded-lg w-1/3 disabled:opacity-50"
             >
               {isEditing ? "Update" : "Publish"}
             </button>
