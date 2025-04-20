@@ -49,5 +49,5 @@ export interface NewBlogData {
   title?:string;
   subtitle?:string;
   blogContent?:string;
-  blogImageLink?:string|ArrayBuffer|null;
+  blogImageLink?:string|null;
 }

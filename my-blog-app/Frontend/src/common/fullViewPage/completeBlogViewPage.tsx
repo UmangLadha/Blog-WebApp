@@ -67,7 +67,7 @@ const CompleteBlogViewPage = () => {
           dangerouslySetInnerHTML={{ __html: blogContent }}
         />
         {/* getting the content displaying the html format into text format  USING THE REACT INNER HTML FUNCTION to display data in text*/}
-        <hr />
+        {/* <hr /> */}
         <h2 className="text-2xl font-semibold py-4">
           Comments({fullBlog.blogCommentsCount})
         </h2>
