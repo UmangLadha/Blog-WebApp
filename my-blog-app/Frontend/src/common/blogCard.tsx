@@ -1,7 +1,7 @@
-import LikesAndComment from "../likesAndComment/likesAndComment";
+import LikesAndComment from "./likesAndComment/likesAndComment";
 import { Link, useNavigate } from "react-router-dom";
 import { BsPencilSquare } from "react-icons/bs";
-import { Blog, BlogCardProps } from "../types/types";
+import { Blog, BlogCardProps } from "./types/types";
 // import axios from "axios";
 // import { MdDelete } from "react-icons/md";
 

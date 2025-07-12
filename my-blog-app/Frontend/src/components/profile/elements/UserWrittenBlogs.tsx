@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import BlogCard from "../../../common/blogCardComponent/blogCard";
+import BlogCard from "../../../common/blogCard";
 import { useAppSelector } from "../../../redux/app/hooks/hooks";
 import axios from "axios";
 import { Blog } from "../../../common/types/types";

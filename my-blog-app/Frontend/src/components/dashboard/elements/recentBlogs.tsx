@@ -1,4 +1,4 @@
-import BlogCard from "../../../common/blogCardComponent/blogCard";
+import BlogCard from "../../../common/blogCard";
 
 const RecentBlogs = () => {
   return (
