@@ -15,7 +15,7 @@ export type Blog = {
 //using this in blogCard component
 export type BlogCardProps = {
     editOption?: boolean;
-    blogData: Blog[];
+    blogData?: Blog[];
   };
 
   export type CommentsInteractionProps = {
