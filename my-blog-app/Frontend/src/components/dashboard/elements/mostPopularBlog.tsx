@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useState } from "react";
-import BlogCard from "../../../common/blogCardComponent/blogCard";
+import BlogCard from "../../../common/blogCard";
 import axios from "axios";
 import { Blog } from "../../../common/types/types";
 import { FaArrowTrendUp } from "react-icons/fa6";
