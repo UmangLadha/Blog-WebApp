@@ -43,7 +43,6 @@ export const getComment = async (req: Request, res: Response) => {
     throw new Error("Invailed BlogId provided!");
   }
     const comments = await Comments.findAll({where:{blogId:blogId}});
-    console.log(comments);
     res.status(200).json(comments);
   } catch (error) {
     console.log(error);
