@@ -12,7 +12,6 @@ const app = express();
 
 // Middleware functions
 app.use(cors()); // Enables the backend to accept requests from frontend  
-// app.use(express.json());
 app.use(express.json({ limit: '50mb' })); // Adjust limit as needed
 app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Adjust limit as needed
 app.use("/uploads", express.static(path.join(__dirname,"../uploads"))); //accessing the my-uploads folder

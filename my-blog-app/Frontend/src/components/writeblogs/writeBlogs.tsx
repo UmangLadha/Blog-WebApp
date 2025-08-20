@@ -91,8 +91,7 @@ const NewBlogs = () => {
         await axios.patch(`http://localhost:5000/blogs/${editingData.blogId}`,blogData);
         toast.success("Blog has updated!");
       } else {
-        const response = await axios.post("http://localhost:5000/blogs", blogData);
-        console.log(response); //////////////
+        await axios.post("http://localhost:5000/blogs", blogData);
         toast.success("Blog has been published!");
       }
       setBlogContent({
@@ -121,8 +120,6 @@ const NewBlogs = () => {
       content: rawContent,
       blogImageLink: blogContent.blogImageLink,
     };
-
-    console.log(blogData); /////////////////
 
     handleBlogData(blogData);
   };
