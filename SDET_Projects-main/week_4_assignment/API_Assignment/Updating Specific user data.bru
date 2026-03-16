@@ -1,0 +1,46 @@
+meta {
+  name: Updating Specific user data
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{baseUrl}}/{{path}}/{{Id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  : 
+}
+
+body:json {
+  {
+    "data": {
+      "price": 2249.99,
+      "color": "{{$randomColor}}",
+      "capacity": "256GB"
+    }
+  }
+}
+
+tests {
+  test("Status code should be 200", function(){
+    expect(res.getStatus()).to.equal(200);
+  })
+  
+  test("Response time is less than 2000ms", function(){
+    expect(res.getResponseTime()).to.be.below(2000);
+  });
+  
+  test("verify specific fields have updated", function(){
+    const jsonData = res.getBody();
+    expect(jsonData.data.price).to.equal(2249.99);
+    expect(jsonData.data.capacity).to.equal("256GB");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

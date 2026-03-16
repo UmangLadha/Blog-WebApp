@@ -1,0 +1,51 @@
+meta {
+  name: updating full object
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/{{path}}/{{Id}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+     "name": "Apple MacBook Pro 20",
+     "data": {
+        "year": 2020,
+        "price": 2149.99,
+        "CPU model": "Intel Core i99",
+        "Hard disk size": "4 TB",
+        "color": "gold"
+     }
+  }
+}
+
+tests {
+  test("Status code should be 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("Response time is less than 2000ms", function() {
+    expect(res.getResponseTime()).to.be.below(2000);
+  });
+  
+  test("Verify updated object data", function() {
+    const jsonData = res.getBody();
+    expect(jsonData.name).to.eql("Apple MacBook Pro 20");
+    expect(jsonData.data.year).to.eql(2020);
+    expect(jsonData.data.price).to.eql(2149.99);
+    expect(jsonData.data["CPU model"]).to.eql("Intel Core i99");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

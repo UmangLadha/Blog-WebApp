@@ -1,0 +1,9 @@
+# Ignore bin and obj folders from all assignments
+**/bin/
+**/obj/
+
+# Visual Studio files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates

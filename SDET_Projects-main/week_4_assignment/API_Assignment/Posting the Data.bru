@@ -1,0 +1,55 @@
+meta {
+  name: Posting the Data
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/{{path}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Apple MacBook Pro 16",
+    "data": {
+      "year": 2019,
+      "price": 1849.99,
+      "color": "{{$randomColor}}",
+      "CPU model": "Intel Core i9",
+      "Hard disk size": "1 TB"
+    }
+  }
+}
+
+vars:post-response {
+  Id: res.body.id
+}
+
+script:post-response {
+  const jsonData = res.getBody();
+  bru.setEnvVar("id", jsonData.id);
+  
+}
+
+tests {
+  test("status code 200", function() {
+    const status = res.getStatus();
+    expect(status).to.equal(200);
+  });
+  
+  test("Response should get an id", function(){
+    const jsonRes = res.getBody();
+    expect(jsonRes).to.have.property("id");
+  })
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

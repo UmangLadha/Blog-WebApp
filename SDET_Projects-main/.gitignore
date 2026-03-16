@@ -1,0 +1,11 @@
+# Ignore bin and obj folders from all assignments
+**/bin/
+**/obj/
+
+# Visual Studio files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+week_2_assignment/The_Gourmet_Spot_App/inventory.txt
+week_3_assignment/Daily_Printer/dailyPrinterFlow.txt

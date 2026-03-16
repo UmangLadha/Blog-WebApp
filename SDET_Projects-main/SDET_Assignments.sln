@@ -1,0 +1,50 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "week_2_assignment", "week_2_assignment", "{1577E36D-EA66-FBDA-811B-DC272E580F7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "The_Gourmet_Spot_App", "week_2_assignment\The_Gourmet_Spot_App\The_Gourmet_Spot_App.csproj", "{E8CD2771-FDEC-4C9E-F3D4-0C0FA4A09CBA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "week_3_assignment", "week_3_assignment", "{4D25DD7E-EBF8-BCFB-AFA7-D9404FC0E0DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Daily_Printer", "Daily_Printer", "{9A340377-285C-B5EC-AF99-38D83A2B3A6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Printer", "week_3_assignment\Daily_Printer\Printer.csproj", "{09307011-9BD3-80AD-12C0-F59A07A08659}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "The_Gourmet_App", "week_3_assignment\The_Gourmet_App\The_Gourmet_App.csproj", "{576FF2BA-AECE-CF72-5130-4F14B70B5C23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8CD2771-FDEC-4C9E-F3D4-0C0FA4A09CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8CD2771-FDEC-4C9E-F3D4-0C0FA4A09CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8CD2771-FDEC-4C9E-F3D4-0C0FA4A09CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8CD2771-FDEC-4C9E-F3D4-0C0FA4A09CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09307011-9BD3-80AD-12C0-F59A07A08659}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09307011-9BD3-80AD-12C0-F59A07A08659}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09307011-9BD3-80AD-12C0-F59A07A08659}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09307011-9BD3-80AD-12C0-F59A07A08659}.Release|Any CPU.Build.0 = Release|Any CPU
+		{576FF2BA-AECE-CF72-5130-4F14B70B5C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{576FF2BA-AECE-CF72-5130-4F14B70B5C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{576FF2BA-AECE-CF72-5130-4F14B70B5C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{576FF2BA-AECE-CF72-5130-4F14B70B5C23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E8CD2771-FDEC-4C9E-F3D4-0C0FA4A09CBA} = {1577E36D-EA66-FBDA-811B-DC272E580F7B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F85C6124-C37D-44EE-837C-D46CE4872C3B}
+		{9A340377-285C-B5EC-AF99-38D83A2B3A6E} = {4D25DD7E-EBF8-BCFB-AFA7-D9404FC0E0DE}
+		{09307011-9BD3-80AD-12C0-F59A07A08659} = {9A340377-285C-B5EC-AF99-38D83A2B3A6E}
+		{576FF2BA-AECE-CF72-5130-4F14B70B5C23} = {4D25DD7E-EBF8-BCFB-AFA7-D9404FC0E0DE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C5B9B691-80E4-49A6-B43D-37CAC5CA2CB2}
+	EndGlobalSection
+EndGlobal

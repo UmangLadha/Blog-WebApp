@@ -1,0 +1,27 @@
+meta {
+  name: Creating Invalid data request
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{baseUrl}}/{{path}}
+  body: json
+  auth: inherit
+}
+
+tests {
+  test("Should return error for bad Request", function() {
+    expect(res.getStatus()).to.equal(400);
+  });
+  
+  test("Verify error message", function() {
+  const jsonData = res.getBody();
+  expect(jsonData.error).to.contain("sending incorrect body json");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

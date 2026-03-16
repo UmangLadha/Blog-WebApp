@@ -1,0 +1,23 @@
+meta {
+  name: Deleteing the specific user
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{baseUrl}}/{{path}}/{{Id}}
+  body: none
+  auth: inherit
+}
+
+tests {
+  test("Verify deletion message", function() {
+    const jsonData = res.getBody();
+    expect(jsonData.message).to.contain("has been deleted");
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

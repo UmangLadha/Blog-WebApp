@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: OpenApiDoc
+  version: 1.0.0
+paths:
+  /objects/ff8081819782e69e019c3424ab051009:
+    get:
+      summary: get specific id data
+      operationId: get specific id data
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+    put:
+      summary: updating full object
+      operationId: updating full object
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+      parameters:
+        - name: Content-Type
+          in: header
+          description: ''
+          required: true
+          example: application/json
+      requestBody:
+        $ref: '#/components/requestBodies/updating_full_object'
+    patch:
+      summary: Updating Specific user data
+      operationId: Updating Specific user data
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+      parameters:
+        - name: ''
+          in: header
+          description: ''
+          required: true
+          example: ''
+      requestBody:
+        $ref: '#/components/requestBodies/updating_specific_user_data'
+    delete:
+      summary: Deleteing the specific user
+      operationId: Deleteing the specific user
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+  /objects:
+    get:
+      summary: Fetching All Data
+      operationId: Fetching All Data
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+    post:
+      summary: Creating Invalid data request
+      operationId: Creating Invalid data request
+      description: ''
+      tags:
+        - ''
+      responses:
+        '200':
+          description: ''
+servers:
+  - url: https://api.restful-api.dev
+components:
+  schemas:
+    posting_the_data:
+      type: object
+      properties:
+        name:
+          type: string
+        data:
+          type: object
+          properties:
+            year:
+              type: number
+            price:
+              type: number
+            color:
+              type: string
+            CPU model:
+              type: string
+            Hard disk size:
+              type: string
+    updating_full_object:
+      type: object
+      properties:
+        name:
+          type: string
+        data:
+          type: object
+          properties:
+            year:
+              type: number
+            price:
+              type: number
+            CPU model:
+              type: string
+            Hard disk size:
+              type: string
+            color:
+              type: string
+    updating_specific_user_data:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            price:
+              type: number
+            color:
+              type: string
+            capacity:
+              type: string
+  requestBodies:
+    posting_the_data:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/posting_the_data'
+      description: ''
+      required: true
+    updating_full_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/updating_full_object'
+      description: ''
+      required: true
+    updating_specific_user_data:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/updating_specific_user_data'
+      description: ''
+      required: true
+  securitySchemes: {}

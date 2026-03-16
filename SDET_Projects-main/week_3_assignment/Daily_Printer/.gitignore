@@ -1,0 +1,12 @@
+# Ignore bin and obj folders from all assignments
+**/bin/
+**/obj/
+# Visual Studio files
+.txt
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore project-specific documentation
+DailyPrinterFlow.md

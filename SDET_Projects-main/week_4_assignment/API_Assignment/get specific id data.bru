@@ -1,0 +1,35 @@
+meta {
+  name: get specific id data
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/{{path}}/{{id}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("Verify Name", function() {
+    const jsonData = res.getBody();
+    expect(jsonData.name).to.equal("Apple MacBook Pro 16");
+  });
+  
+  test("Correct Id returned", function(){
+    const jsonData = res.getBody();
+    const requestId = bru.getEnvVar("id");
+    expect(jsonData.id).to.eql(requestId);
+  });
+  
+  test("Content-Type should be JSON", function() {
+      expect(res.getHeader('content-type')).to.include('application/json');
+  });
+  
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

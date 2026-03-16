@@ -1,0 +1,44 @@
+meta {
+  name: Fetching All Data
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/{{path}}
+  body: json
+  auth: none
+}
+
+tests {
+  test("Status code 200", function() {
+    const status = res.getStatus();
+    expect(status).to.equal(200);
+  });
+  
+  test("Response time less than 2000ms", function() {
+    expect(res.getResponseTime()).to.be.below(2000);
+  });
+
+  test("Response is an array of objects", function() {
+    const jsonData = res.getBody();
+    expect(jsonData).to.be.an('array');
+  });
+  
+  test("Verify Response Schema", function() {
+    const jsonData = res.getBody();
+    expect(jsonData[0].name).to.be.a("string");
+    expect(jsonData[0].id).to.be.a("string");
+  });
+  
+  test("Content-Type should be JSON", function() {
+      expect(res.getHeader('content-type')).to.include('application/json');
+  });
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 2
+}
