@@ -14,10 +14,10 @@ const app = express();
 app.use(cors()); // Enables the backend to accept requests from frontend  
 app.use(express.json({ limit: '50mb' })); // Adjust limit as needed
 app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Adjust limit as needed
-app.use("/uploads", express.static(path.join(__dirname,"../uploads"))); //accessing the my-uploads folder
+app.use("/uploads", express.static(path.join(__dirname, "../uploads"))); //accessing the my-uploads folder
 
 // Connecting with the database and creating the database in table form 
-const connectAndCreate = async()=>{
+const connectAndCreate = async () => {
 	try {
 		await sequelize.authenticate(); //Testing the connection before syncing with it
 		console.log("Connected to database");
