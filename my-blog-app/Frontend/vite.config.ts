@@ -7,13 +7,19 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    rollupNodePolyFill(), // only if you need Node.js polyfills
   ],
   optimizeDeps: {
     esbuildOptions: {
       define: {
         global: "globalThis",
       },
+    },
+  },
+  build: {
+    rollupOptions: {
+      plugins: [
+        rollupNodePolyFill(),
+      ],
     },
   },
 })
