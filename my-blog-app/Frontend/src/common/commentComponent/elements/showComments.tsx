@@ -1,27 +1,25 @@
 import { useEffect,useState } from 'react';
 import DefaultProfile from "../../../images/defaultProfile.png";
 import axios from 'axios';
-import {CommentsData} from "../../types/types";
+import {CommentsData, CommentProps} from "../../types/types";
 
-type CommentProps = {
-  blogId:number
-}
 
-const ShowingComments = ({blogId}:CommentProps) => {
+
+const ShowingComments = ({_id}:CommentProps) => {
     const [showComment, setShowComment] = useState<CommentsData[]>([]);
 
 	// getting the comments
 	useEffect(()=>{
 		async function getComments (){
 			try {
-				const response = await axios.get(`http://localhost:5000/comments/${blogId}`);
+				const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/comments/${_id}`);
 				setShowComment(response.data);
 			} catch (error) {
 				console.log(error, "cannot get the comments of this blog");
 			}
 		}
 		getComments();
-	},[blogId])
+	},[_id])
 
   return (
 	<div className="w-full flex flex-col gap-6 p-2 rounded-xl my-2">

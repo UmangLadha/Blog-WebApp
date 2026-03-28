@@ -9,13 +9,13 @@ import { Blog } from "../types/types";
 const CompleteBlogViewPage = () => {
   const [fullBlog, setFullBlog] = useState<Blog | null>(null);
   const { id } = useParams<{ id: string }>();
-  const blogId = Number(id); //converting the id into nummber
+  const blogId = id; // MongoDB _id is a string
 
   useEffect(() => {
     async function fetchingBlogById() {
       try {
         const response = await axios.get<Blog>(
-          `http://localhost:5000/blogs/${blogId}`
+          `${import.meta.env.VITE_SERVER_URL}/blogs/${blogId}`
         );
         setFullBlog(response.data);
       } catch (error) {
@@ -46,7 +46,7 @@ const CompleteBlogViewPage = () => {
           <hr />
           <div className="py-4 px-8">
             <LikesAndComment
-              blogId={fullBlog?.blogId}
+              _id={fullBlog?._id}
               likeCounts={fullBlog.blogLikesCount}
               commentCounts={fullBlog.blogCommentsCount}
             />
@@ -56,7 +56,7 @@ const CompleteBlogViewPage = () => {
         <div className="w-full mx-auto h-96 mb-14 ">
           <img
             className="w-full h-full rounded-xl"
-            src={`http://localhost:5000/uploads/${
+            src={`${import.meta.env.VITE_SERVER_URL}/uploads/${
               fullBlog.blogImageLink ?? ""
             }`}
             alt="CoverImg"
@@ -71,7 +71,7 @@ const CompleteBlogViewPage = () => {
         <h2 className="text-2xl font-semibold py-4">
           Comments({fullBlog.blogCommentsCount})
         </h2>
-        <CommentComponent blogId={fullBlog?.blogId} />
+        <CommentComponent _id={fullBlog?._id} />
       </div>
     </div>
   );

@@ -1,23 +1,21 @@
-import { sequelize } from "../config/database";
-import { DataTypes, Optional, Model } from "sequelize";
+import mongoose, { Schema, Document } from "mongoose";
 
-interface LikeAttributes { // interface defining the structure of Like model
-	id?: number;
-	blogId:number;
-	username:string;
-	createdAt?:Date;
-	updatedAt?:Date;
-	};
+// interface defining the structure of Like document
+export interface ILike extends Document {
+  blogId: mongoose.Types.ObjectId;
+  username: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-	// interface defining which fields has to be optional 
-	interface LikeCreationAttributes extends Optional<LikeAttributes, "id"|"createdAt"|"updatedAt">{} 
-	
-	// telling the typescript which values are required and also inherting the model class funtions from sequilize
-	interface LikeInstance extends Model<LikeAttributes, LikeCreationAttributes>, LikeAttributes{} 
+const likeSchema = new Schema<ILike>(
+  {
+    blogId: { type: Schema.Types.ObjectId, ref: "Blogs", required: true },
+    username: { type: String, required: true },
+  },
+  { timestamps: true } // automatically adds createdAt and updatedAt
+);
 
-const Likes = sequelize.define<LikeInstance>("Likes",{
-	blogId: {type:DataTypes.INTEGER,allowNull: false},
-	username: {type: DataTypes.STRING,allowNull: false},
-})
- 
+const Likes = mongoose.model<ILike>("Likes", likeSchema);
+
 export default Likes;

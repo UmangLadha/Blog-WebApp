@@ -88,10 +88,10 @@ const NewBlogs = () => {
   const handleBlogData = async (blogData: NewBlogData) => {
     try {
       if (isEditing) {
-        await axios.patch(`http://localhost:5000/blogs/${editingData.blogId}`,blogData);
+        await axios.patch(`${import.meta.env.VITE_SERVER_URL}/blogs/${editingData.blogId}`,blogData);
         toast.success("Blog has updated!");
       } else {
-        await axios.post("http://localhost:5000/blogs", blogData);
+        await axios.post(`${import.meta.env.VITE_SERVER_URL}/blogs`, blogData);
         toast.success("Blog has been published!");
       }
       setBlogContent({

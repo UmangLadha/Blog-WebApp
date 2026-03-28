@@ -5,9 +5,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import React, { useState } from "react";
 
-interface  Userdetails{
-  username:string,
-  password:string,
+interface Userdetails {
+  username: string,
+  password: string,
 };
 
 const LoginPage = () => {
@@ -20,9 +20,9 @@ const LoginPage = () => {
   });
   const [errorMsg, setErrorMsg] = useState<string>("");
   // const [loginBtn, setLoginBtn] = useState<boolen>(false);
-  
 
-  const handleBlur = (e:React.FocusEvent<HTMLInputElement>) => {
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!inputValue.username || !inputValue.password) {
       setErrorMsg("Username or Password fields cannot be blank!");
@@ -32,7 +32,7 @@ const LoginPage = () => {
     }
   };
 
-  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInputValue((prev) => ({
       ...prev,
@@ -46,13 +46,13 @@ const LoginPage = () => {
   }) {
     try {
       const response = await axios.post(
-        "http://localhost:5000/login",
+        `${import.meta.env.VITE_SERVER_URL}/login`,
         userCredential
       );
       localStorage.setItem("authenticated", response.data.authenticated);
       dispatch(login(response.data.user)); //
       toast.success("Login successfully!");
-      setInputValue({username:"",password:""});
+      setInputValue({ username: "", password: "" });
       navigate("/");
     } catch (error) {
       console.log("login error", error);
@@ -60,7 +60,7 @@ const LoginPage = () => {
     }
   }
 
-  const handleLogin = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userCredential = {
       username: inputValue.username,

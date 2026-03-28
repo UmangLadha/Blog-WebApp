@@ -4,12 +4,12 @@ import Likes from "../models/blogLikesTable";
 
 // fetching all the likes from the table
 export const getLikes = async (req: Request, res: Response) => {
-  const {blogId} = req.params;
-  if(!blogId){
+  const { blogId } = req.params;
+  if (!blogId) {
     throw new Error("Invaild blogId!");
   }
   try {
-    const like = await Likes.findAll({where:{blogId : blogId}});
+    const like = await Likes.find({ blogId: blogId });
     res.status(200).json(like);
   } catch (error) {
     console.log(error);
@@ -26,25 +26,14 @@ export const createLike = async (req: Request, res: Response) => {
       throw new Error("Both blogId and username are required");
     }
 
-    await Likes.create({
+    const newLike = new Likes({
       blogId: blogId,
       username: username,
     });
+    await newLike.save();
 
-    const blog = await Blogs.findOne({ where: { blogId: blogId } }); //retriving the likes count from the blog
-
-    if (!blog) {
-      throw new Error("Blog not Found");
-    }
-
-    const updatedLikeCount = blog.blogLikesCount + 1; // incrementing the like count
-
-    await Blogs.update(
-      {
-        blogLikesCount: updatedLikeCount,
-      },
-      { where: { blogId: blogId } }
-    );
+    // incrementing the like count in the blog
+    await Blogs.findByIdAndUpdate(blogId, { $inc: { blogLikesCount: 1 } });
 
     res.status(200).json("Added the like data and updated the likecount");
   } catch (error) {
@@ -53,7 +42,7 @@ export const createLike = async (req: Request, res: Response) => {
   }
 };
 
-//deleting the spacific blog from the like table and reducing the like count in blog table
+//deleting the specific blog from the like table and reducing the like count in blog table
 export const deleteLike = async (req: Request, res: Response) => {
   const { blogId, username } = req.params;
   try {
@@ -62,23 +51,10 @@ export const deleteLike = async (req: Request, res: Response) => {
       throw new Error("Both blogId and username are required");
     }
 
-    await Likes.destroy({ where: { blogId: blogId, username: username } });
+    await Likes.deleteOne({ blogId: blogId, username: username });
 
-    const blog = await Blogs.findOne({ where: { blogId: blogId } }); //retriving the likes count from the blog
-
-    if (!blog) {
-      res.status(404);
-      throw new Error("blog not Found");
-    }
-
-    const updatedLikeCount = blog.blogLikesCount - 1; // decrementing the like count
-
-    await Blogs.update(
-      {
-        blogLikesCount: updatedLikeCount,
-      },
-      { where: { blogId: blogId } }
-    );
+    // decrementing the like count in the blog
+    await Blogs.findByIdAndUpdate(blogId, { $inc: { blogLikesCount: -1 } });
 
     res.status(200).json({ message: "dislikes the blog" });
   } catch (error) {
