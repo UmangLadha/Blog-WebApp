@@ -13,12 +13,16 @@ dotenv.config();
 const app = express();
 
 // Middleware functions
+const allowedOrigins = [
+	"http://localhost:5173",
+	"http://localhost:5000",
+	process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
+
+console.log("Allowed CORS origins:", allowedOrigins);
+
 app.use(cors({
-	origin: [
-		"http://localhost:5173",
-		"http://localhost:5000",
-		process.env.FRONTEND_URL!,
-	],
+	origin: allowedOrigins,
 	methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 	credentials: true,
 }));
