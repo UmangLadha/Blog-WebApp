@@ -14,13 +14,13 @@ const app = express();
 
 // Middleware functions
 app.use(cors({
-  origin: [
-    "http://localhost:5173",          // Vite dev server
-    "http://localhost:5000",          // local backend
-    process.env.FRONTEND_URL || ""    // deployed frontend URL (set in Render env vars)
-  ],
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  credentials: true,
+	origin: [
+		"http://localhost:5173",
+		"http://localhost:5000",
+		process.env.FRONTEND_URL!,
+	],
+	methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+	credentials: true,
 }));
 app.use(express.json({ limit: '50mb' })); // Adjust limit as needed
 app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Adjust limit as needed
