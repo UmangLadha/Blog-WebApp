@@ -10,11 +10,7 @@ export const loginUser = async (req: Request, res: Response) => {
       throw new Error("username or password required");
     }
 
-    const user = await Users.findOne({
-      where: {
-        userName: username,
-      },
-    });
+    const user = await Users.findOne({ userName: username });
 
     if (!user) {
       res.status(401);

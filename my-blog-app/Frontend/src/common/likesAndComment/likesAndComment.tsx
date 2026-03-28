@@ -8,7 +8,7 @@ import { BlogInteractionProps } from "../types/types";
 import toast from "react-hot-toast";
 import { useAppSelector } from "../../redux/app/hooks/hooks";
 
-const LikesAndComment = ({ blogId, likeCounts, commentCounts }:BlogInteractionProps) => {
+const LikesAndComment = ({ _id, likeCounts, commentCounts }:BlogInteractionProps) => {
 
   const [liked, setLiked] = useState<boolean>(false);
   const [updatingLikesCount, setUpdatingLikesCount] = useState<number>(likeCounts);
@@ -24,7 +24,7 @@ const LikesAndComment = ({ blogId, likeCounts, commentCounts }:BlogInteractionPr
     if (isLoggedIn && userName) {
       async function getLikesByUsername() {
         try {
-          const response = await axios.get(`http://localhost:5000/likes/${blogId}`);
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/likes/${_id}`);
           const allLikes = response.data;
           setLiked(
             allLikes.some((like:{username:string}) => like.username === userName)
@@ -36,13 +36,13 @@ const LikesAndComment = ({ blogId, likeCounts, commentCounts }:BlogInteractionPr
       }
       getLikesByUsername();
     }
-  }, [userName, blogId, isLoggedIn]);
+  }, [userName, _id, isLoggedIn]);
 
   // create post api for updating the likes count
-  async function sendingLikeDataToServer(likeData: { blogId: number; username: string }) {
+  async function sendingLikeDataToServer(likeData: { blogId: string; username: string }) {
     try {
       const response = await axios.post(
-        "http://localhost:5000/likes",
+        `${import.meta.env.VITE_SERVER_URL}/likes`,
         likeData
       );
       console.log(
@@ -57,7 +57,7 @@ const LikesAndComment = ({ blogId, likeCounts, commentCounts }:BlogInteractionPr
   const handleLike = () => {
     if (isLoggedIn && userName) {
       const likeData = {
-        blogId,
+        blogId: _id,
         username: userName,
       };
       sendingLikeDataToServer(likeData); //calling the sending like function
@@ -73,7 +73,7 @@ const LikesAndComment = ({ blogId, likeCounts, commentCounts }:BlogInteractionPr
   async function deleteTheLikePost() {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/likes/${blogId}/${userName}`
+        `${import.meta.env.VITE_SERVER_URL}/likes/${_id}/${userName}`
       );
       console.log("blog unliked", response.data);
     } catch (error) {

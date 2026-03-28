@@ -14,7 +14,7 @@ const UserWrittenBlogs = () => {
   useEffect(() => {
     async function getBlogs() {
       try {
-        const response = await axios.get<Blog[]>(`http://localhost:5000/blogs`);
+        const response = await axios.get<Blog[]>(`${import.meta.env.VITE_SERVER_URL}/blogs`);
         const allBlogs = response.data;
         const blogsWrittenByUser = allBlogs.filter(
           (blog) => username === blog.blogAuthor

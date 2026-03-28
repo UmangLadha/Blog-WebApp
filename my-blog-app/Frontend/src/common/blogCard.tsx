@@ -32,14 +32,14 @@ const BlogCard = ({ editOption, blogData }: BlogCardProps) => {
       {blogData?.map((blog) => (
         <div
           className=" w-full md:w-[49%] flex flex-col items-start p-3 gap-3 border rounded-lg shadow cursor-pointer hover:shadow-lg overflow-hidden"
-          key={blog.blogId}
+          key={blog._id}
         >
           {/* //sending blogData with navigate function of router */}
-          <Link to={`/blog/${blog.blogId}`}>
+          <Link to={`/blog/${blog._id}`}>
             <div className="w-full flex flex-row-reverse gap-2 justify-between items-start">
               <div className="size-40">
                 <img
-                  src={`http://localhost:5000/uploads/${blog.blogImageLink ?? ""}`} // getting the image
+                  src={`${import.meta.env.VITE_SERVER_URL}/uploads/${blog.blogImageLink ?? ""}`} // getting the image
                   alt="Blog related"
                   className=" w-full h-full rounded-lg"
                 />
@@ -60,7 +60,7 @@ const BlogCard = ({ editOption, blogData }: BlogCardProps) => {
 
           <div className="flex w-full justify-between items-center px-2 ">
             <LikesAndComment
-              blogId={blog.blogId}
+              _id={blog._id}
               likeCounts={blog.blogLikesCount}
               commentCounts={blog.blogCommentsCount}
             />

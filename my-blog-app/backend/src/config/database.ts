@@ -1,12 +1,12 @@
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { Sequelize } from 'sequelize';
-
 dotenv.config();
 
-// const sequelize = new Sequelize(process.env.DATABASE_URL!, {
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: '../data/database.sqlite'
-});
-
-export { sequelize };
+export const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI!);
+    console.log("Connected with MongoDB Atlas");
+  } catch (error) {
+    console.error('MongoDB connection failed:', error);
+  }
+};

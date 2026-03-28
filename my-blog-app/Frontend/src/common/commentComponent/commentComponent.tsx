@@ -6,7 +6,7 @@ import { CommentsInteractionProps } from "../types/types";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
-const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
+const CommentComponent = ({ _id }: CommentsInteractionProps) => {
   const [inputCommentValue, setInputCommentValue] = useState("");
   const [cmtBtn, setCmtBtn] = useState(true); // state for handling toggel of comment button
 
@@ -27,13 +27,13 @@ const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
 
   //saving the comments in database
   async function postComments(newComment: {
-    blogId: number;
+    blogId: string;
     username: string;
     commentText: string;
   }) {
     try {
       const comment = await axios.post(
-        "http://localhost:5000/comments",
+        `${import.meta.env.VITE_SERVER_URL}/comments`,
         newComment
       );
       toast.success("comment posted successfully");
@@ -51,7 +51,7 @@ const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
     //getting the comment data from Form
     if (isLoggedIn && userName) {
       const commentContent = {
-        blogId,
+        blogId: _id,
         username: userName, //
         commentText: inputCommentValue,
       };
@@ -84,7 +84,7 @@ const CommentComponent = ({ blogId }: CommentsInteractionProps) => {
           Comment
         </button>
       </div>
-      <ShowingComments blogId={blogId} />
+      <ShowingComments _id={_id} />
     </>
   );
 };

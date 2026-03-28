@@ -53,7 +53,7 @@ const SignUpPage = () => {
   const sendingDataToServer = async (userdata: UserDetails) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/users",
+        `${import.meta.env.VITE_SERVER_URL}/users`,
         userdata
       );
       toast.success(response.data.message || "Signup successfull!");

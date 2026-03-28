@@ -1,27 +1,23 @@
-import { sequelize } from "../config/database";
-import { DataTypes, Optional, Model } from "sequelize";
+import mongoose, { Schema, Document } from "mongoose";
 
-interface CommentAttributes { // interface defining the structure of comment model
-id?: number;
-blogId:number;
-username:string;
-commentText:string;
-createdAt?:Date;
-updatedAt?:Date;
-};
+// interface defining the structure of Comment document
+export interface IComment extends Document {
+  blogId: mongoose.Types.ObjectId;
+  username: string;
+  commentText: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-// interface defining which fields has to be optional 
-interface CommentCreationAttributes extends Optional<CommentAttributes, "id"|"createdAt"|"updatedAt">{} 
+const commentSchema = new Schema<IComment>(
+  {
+    blogId: { type: Schema.Types.ObjectId, ref: "Blogs", required: true },
+    username: { type: String, required: true },
+    commentText: { type: String, required: true },
+  },
+  { timestamps: true } // automatically adds createdAt and updatedAt
+);
 
-// telling the typescript which values are required and also inherting the model class funtions from sequilize
-interface CommentInstance extends Model<CommentAttributes, CommentCreationAttributes>, CommentAttributes{} 
-
-//defining the model and providing the type safety
-const Comments = sequelize.define<CommentInstance>("comments",{
-	blogId: {type: DataTypes.INTEGER,allowNull: false},
-	username: {type: DataTypes.STRING,allowNull: false},
-	commentText: {type: DataTypes.TEXT,allowNull: false}, 
-});
+const Comments = mongoose.model<IComment>("Comments", commentSchema);
 
 export default Comments;
-

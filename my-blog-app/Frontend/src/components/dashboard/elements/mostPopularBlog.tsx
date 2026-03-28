@@ -12,16 +12,18 @@ const MostPopularBlog = () => {
   useEffect(() => {
     async function fetchBlogs() {
       try {
-        const Blogs = await axios.get("http://localhost:5000/blogs");
+        const Blogs = await axios.get(`${import.meta.env.VITE_SERVER_URL}/blogs`);
         console.log("here is the blog data", Blogs.data);
-        const mostLikedBlogs = Blogs.data.filter(
-          (blog: Blog) => blog.blogLikesCount > 10
-        ); // filtering out the most liked blogs from server respones
-        mostLikedBlogs.sort(
-          (b: Blog, a: Blog) => a.blogLikesCount - b.blogLikesCount
-        ); // after filtering we are sorting the blogs on the base of its like counts
-        // console.log("here is the moreLikedBlogData:",mostLikedBlogs);
-        setBlogData(mostLikedBlogs);
+        const allBlogs = Blogs.data;
+
+        // const mostLikedBlogs = allBlogs.filter(
+        //   (blog: Blog) => blog.blogLikesCount > 10
+        // ); // filtering out the most liked blogs from server respones
+        // mostLikedBlogs.sort(
+        //   (b: Blog, a: Blog) => a.blogLikesCount - b.blogLikesCount
+        // ); // after filtering we are sorting the blogs on the base of its like counts
+
+        setBlogData(allBlogs);
       } catch (error) {
         console.log("Error in fetching the data:", error);
       }
