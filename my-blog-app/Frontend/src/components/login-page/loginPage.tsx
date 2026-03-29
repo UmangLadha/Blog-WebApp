@@ -71,69 +71,71 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex py-8 items-center justify-center text-center w-full">
-      <div className="shadow-xl bg-white w-full mx-4 border rounded-lg p-8 sm:w-4/5 md:w-3/5 lg:w-2/5 xl:1/3">
-        <h1 className="text-2xl font-bold pb-6 pt-3 text-gray-700">Login</h1>
-        <form
-          className="flex flex-col justify-between mx-auto items-start w-3/5"
-          onSubmit={handleLogin}
-        >
+    <div className="flex min-h-[85vh] items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl shadow-purple-500/10 border border-purple-100 p-8 sm:p-10">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Welcome back</h1>
+          <p className="text-gray-500 mt-2">Please enter your details to sign in.</p>
+        </div>
+        
+        <form className="space-y-6" onSubmit={handleLogin}>
           {errorMsg && (
-            <p className="text-red-600 text-sm mb-3 w-full text-left">
+            <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm font-medium">
               {errorMsg}
-            </p>
+            </div>
           )}
 
-          <label htmlFor="userName" className="font-semibold ">
-            Username
-          </label>
-          <input
-            id="username"
-            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
-            type="text"
-            name="username"
-            autoComplete="username"
-            value={inputValue.username}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            placeholder="Enter your username"
-            required
-          />
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+              Username
+            </label>
+            <input
+              id="username"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition-all focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20"
+              type="text"
+              name="username"
+              autoComplete="username"
+              value={inputValue.username}
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              placeholder="Enter your username"
+              required
+            />
+          </div>
 
-          <label htmlFor="Password" className="font-semibold">
-            Password
-          </label>
-          <input
-            id="password"
-            className="border outline-none py-2 px-4 rounded-lg w-full mb-4 focus:ring-2 focus:ring-purple-300"
-            type="password"
-            name="password"
-            autoComplete="new-password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-            minLength={8}
-            value={inputValue.password}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-            placeholder="Enter your password"
-            required
-          />
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+            <input
+              id="password"
+              className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none transition-all focus:border-purple-500 focus:ring-4 focus:ring-purple-500/20"
+              type="password"
+              name="password"
+              autoComplete="current-password"
+              value={inputValue.password}
+              onChange={handleInputChange}
+              onBlur={handleBlur}
+              placeholder="••••••••"
+              required
+            />
+          </div>
 
           <button
             type="submit"
-            // disabled={loginBtn}
-            className={`bg-purple-600 mt-4 text-white py-2 px-4 mb-3 w-full rounded-xl font-semibold hover:bg-purple-700 transition-colors disabled:bg-purple-300`}
+            className="w-full bg-purple-600 text-white rounded-xl py-3 px-4 font-semibold hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-500/30 transition-all shadow-md active:scale-[0.98]"
           >
-            Login
+            Sign in
           </button>
         </form>
-        <p className="mt-2 text-sm text-gray-600">
+
+        <p className="mt-8 text-center text-sm text-gray-600">
           Don&apos;t have an account?{" "}
           <Link
             to="/signup"
-            className="underline text-purple-600 hover:text-purple-700"
+            className="font-semibold text-purple-600 hover:text-purple-500 transition-colors"
           >
-            Sign up
+            Sign up for free
           </Link>
         </p>
       </div>

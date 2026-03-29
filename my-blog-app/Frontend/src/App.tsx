@@ -20,7 +20,7 @@ function App() {
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
             <Header />
-            <div className="w-full h-[calc(100vh-12vh)] mt-[10vh] pb-10">
+            <div className="w-full min-h-screen pt-[12vh] pb-10 bg-slate-50 text-slate-800 font-sans">
               <Toaster position="top-center" />
               <Routes>
                 <Route path="/" element={<Dashboard />} />

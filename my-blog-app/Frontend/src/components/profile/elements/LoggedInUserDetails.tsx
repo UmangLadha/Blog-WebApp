@@ -27,24 +27,29 @@ const LoggedInUserDetails = () => {
     navigate("/");
   };
   return (
-    <div className="shadow-md w-full  md:w-2/6 border rounded-xl flex justify-between gap-3 flex-col p-4">
-      <div className="flex items-start leading-3 justify-start gap-3">
-        <div className="size-20 border rounded-full">
-          <img className="w-20 h-20 rounded-full border" src={DefaultProfile} alt="Profile" />
+    <div className="w-full md:w-1/3 xl:w-1/4 bg-white shadow-xl shadow-purple-900/5 rounded-2xl border border-gray-100 flex flex-col p-6 relative md:sticky md:top-24 z-10 h-max">
+      <div className="flex flex-col items-center text-center gap-4 mb-6">
+        <div className="relative">
+          <img 
+            className="w-24 h-24 rounded-full border-4 border-purple-50 object-cover shadow-sm" 
+            src={DefaultProfile} 
+            alt="Profile" 
+          />
+          <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h2 className="font-medium text-xl">{userData?.userFullname}</h2>
-          <p>{userData?.userEmail}</p>
+        <div className="flex flex-col gap-1">
+          <h2 className="font-bold text-2xl text-gray-900">{userData?.userFullname}</h2>
+          <p className="text-gray-500 font-medium">{userData?.userEmail}</p>
         </div>
       </div>
 
       <button
         type="button"
         onClick={handleLogout}
-        className="font-semibold text-white py-2 w-full flex items-center justify-center mx-auto rounded-lg bg-red-400"
+        className="w-full font-semibold text-red-600 bg-red-50 hover:bg-red-100 py-3 rounded-xl flex items-center justify-center transition-colors shadow-sm focus:outline-none focus:ring-4 focus:ring-red-50"
       >
-        <MdLogout className="mr-2 h-4 w-4" />
+        <MdLogout className="mr-2 text-xl" />
         Log Out
       </button>
     </div>

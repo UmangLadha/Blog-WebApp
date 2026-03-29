@@ -88,19 +88,28 @@ const LikesAndComment = ({ _id, likeCounts, commentCounts }:BlogInteractionProps
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-4 text-gray-500">
       {/* like button */}
-      {liked ? (
-        <FaHeart className="text-lg text-red-500 cursor-pointer" onClick={handleDislike} />
-      ) : (
-        <FaRegHeart className="text-lg cursor-pointer" onClick={handleLike} />
-      )}
-      <span className="text-lg">{updatingLikesCount}</span>
+      <button 
+        onClick={liked ? handleDislike : handleLike}
+        className="flex items-center gap-1.5 hover:text-red-500 group focus:outline-none transition-colors"
+      >
+        <div className={`p-2 rounded-full transition-colors ${liked ? "bg-red-50" : "group-hover:bg-red-50"}`}>
+          {liked ? (
+            <FaHeart className="text-xl text-red-500 scale-110 transition-transform" />
+          ) : (
+            <FaRegHeart className="text-xl group-hover:scale-110 transition-transform" />
+          )}
+        </div>
+        <span className="font-medium text-gray-700">{updatingLikesCount}</span>
+      </button>
 
-      {/* comment button */}
-      <div className=" flex items-center gap-1 text-lg">
-        <BiComment/>
-        {commentCounts}
+      {/* comment count */}
+      <div className="flex items-center gap-1.5 hover:text-purple-600 group transition-colors cursor-default">
+        <div className="p-2 rounded-full group-hover:bg-purple-50 transition-colors">
+          <BiComment className="text-xl group-hover:scale-110 transition-transform" />
+        </div>
+        <span className="font-medium text-gray-700">{commentCounts}</span>
       </div>
     </div>
   );

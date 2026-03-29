@@ -3,7 +3,7 @@ import LoggedInUserDetails from "./elements/LoggedInUserDetails";
 
 const UserProfileOverview = () => {
   return (
-    <div className="w-[95%] h-full mx-auto py-10 mt-4 flex flex-col sm:flex-wrap justify-between items-start gap-4 md:flex-nowrap md:flex md:flex-row-reverse ">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row gap-8 items-start">
       <LoggedInUserDetails />
       <UserWrittenBlogs />
     </div>

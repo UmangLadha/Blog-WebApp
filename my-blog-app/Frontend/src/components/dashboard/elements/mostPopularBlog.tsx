@@ -32,21 +32,24 @@ const MostPopularBlog = () => {
   }, []);
 
   return (
-    <>
-      <div className="w-11/12 mx-auto text-start py-10 ">
-        <div className="flex items-center gap-3 pb-10 ">
-          <span className="text-2xl text-purple-500 ">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-start py-8">
+      <div className="flex items-center gap-4 mb-10 border-b border-gray-100 pb-5">
+        <div className="p-3 bg-purple-100 rounded-xl shadow-sm">
+          <span className="text-2xl text-purple-600">
             <FaArrowTrendUp />
           </span>
-          <h1 className="font-bold tracking-wide text-3xl">
+        </div>
+        <div>
+          <h1 className="font-extrabold tracking-tight text-3xl md:text-4xl text-gray-900">
             Most Popular Blogs
           </h1>
+          <p className="text-gray-500 mt-1 text-sm md:text-base font-medium">Discover trending stories and fresh perspectives</p>
         </div>
-        <Suspense fallback={<p>loading..</p>}>
-          <BlogCard blogData={blogData} editOption={false} />
-        </Suspense>
       </div>
-    </>
+      <Suspense fallback={<Loading />}>
+        <BlogCard blogData={blogData} editOption={false} />
+      </Suspense>
+    </div>
   );
 };
 

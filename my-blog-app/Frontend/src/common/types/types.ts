@@ -23,9 +23,10 @@ export type CommentsInteractionProps = {
 }
 
 export type CommentsData = {
-  blogId: number,
-  username: string,
-  commentText: string
+  blogId: number;
+  username: string;
+  commentText: string;
+  createdAt?: string;
 }
 
 // using this in likeAndComment component
